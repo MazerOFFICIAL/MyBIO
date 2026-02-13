@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Мой первый сайт</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding-top: 50px; }
+        h1 { color: #2c3e50; }
+        p { color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <h1>Ура! Мой сайт работает!</h1>
+    <p>Создано вместе с моим ИИ-напарником.</p>
+</body>
+</html>
