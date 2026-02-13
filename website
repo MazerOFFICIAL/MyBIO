@@ -1,16 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой первый сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mazer Bio</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding-top: 50px; }
-        h1 { color: #2c3e50; }
-        p { color: #7f8c8d; }
+        /* Основные стили и фон */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Стеклянная карточка */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            width: 320px;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+        }
+
+        /* Анимация появления */
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Аватарка с неоновым свечением */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid #00d2ff;
+            box-shadow: 0 0 20px #00d2ff;
+            transition: 0.5s;
+            object-fit: cover;
+        }
+
+        .avatar:hover {
+            transform: rotate(360s); /* Бесконечный медленный поворот при наведении */
+            box-shadow: 0 0 40px #00d2ff, 0 0 60px #3a7bd5;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        /* Имбовые кнопки */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-btn {
+            text-decoration: none;
+            color: white;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+            font-weight: 500;
+        }
+
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            border: 1px solid #00d2ff;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        /* Плавающие частицы на фоне */
+        .bg-circle {
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            filter: blur(80px);
+            animation: float 10s infinite alternate;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(100px, 150px); }
+        }
     </style>
 </head>
 <body>
-    <h1>Ура! Мой сайт работает!</h1>
-    <p>Создано вместе с моим ИИ-напарником.</p>
+    <div class="bg-circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
+    <div class="bg-circle" style="width: 200px; height: 200px; bottom: -50px; right: -50px; background: #9d50bb;"></div>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+        <h1>Mazer Official</h1>
+        <p>Future Web Developer & Creator</p>
+        
+        <div class="links">
+            <a href="#" class="link-btn">Telegram</a>
+            <a href="#" class="link-btn">YouTube</a>
+            <a href="#" class="link-btn">VK</a>
+            <a href="#" class="link-btn">Discord</a>
+        </div>
+    </div>
 </body>
 </html>
