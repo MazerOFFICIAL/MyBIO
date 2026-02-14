@@ -783,13 +783,36 @@
             localStorage.setItem('musicPlaylistLoop', String(isLooping));
         });
 
-        volumeSlider.addEventListener('input', e => { audio.volume = e.target.value; localStorage.setItem('musicVolume', e.target.value); });
+        volumeBtn.addEventListener('click', (e) => { e.stopPropagation(); volumePopup.classList.toggle('active'); });
+
+        volumeSlider.addEventListener('input', e => { 
+            audio.volume = e.target.value; 
+            localStorage.setItem('musicVolume', e.target.value);
+            updateVolumeIcon(audio.volume);
+        });
+
+        progressBarContainer.addEventListener('click', (e) => {
+            const rect = progressBarContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            if (audio.duration) audio.currentTime = pos * audio.duration;
+        });
+
         audio.addEventListener('play', () => { isPlaying = true; updatePlayPauseIcon(); });
         audio.addEventListener('pause', () => { isPlaying = false; updatePlayPauseIcon(); });
         audio.addEventListener('ended', playNext);
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                progressBarFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+            }
+        });
+        audio.addEventListener('loadedmetadata', () => {
+            totalDurationEl.textContent = formatTime(audio.duration);
+        });
 
         loadTrack(currentTrackIndex);
         updatePlayPauseIcon();
+        updateVolumeIcon(audio.volume);
     </script>
 </body>
 </html>
