@@ -23,7 +23,7 @@
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             font-family: 'Segoe UI', sans-serif;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         #stars-container, #snow-container, #particle-container {
             position: fixed;
@@ -121,7 +121,7 @@
             padding: 50px 40px;
             border-radius: 30px;
             text-align: center;
-            width: 360px;
+            width: 100%; max-width: 360px;
             min-height: 500px;
             z-index: 1;
             position: relative;
@@ -188,6 +188,16 @@
         }
         .modal.active { display: flex; animation: fadeIn 0.3s; }
         .modal img { max-width: 80%; max-height: 80%; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); pointer-events: auto; transform: scale(3); }
+
+        @media (max-width: 768px) {
+            #cursor { display: none; }
+            body { overflow-y: auto; }
+            .card { margin: 20px; min-height: auto; padding: 40px 20px; }
+            h1 { font-size: 2.8rem; }
+            .sidebar { width: 260px; left: -270px; }
+            .sidebar.active { left: 0; }
+            .modal img { transform: scale(1.2); }
+        }
     </style>
 </head>
 <body>
@@ -267,33 +277,37 @@
         }
         animateCursor();
 
-        document.addEventListener('mousedown', (e) => {
+        const createClickSnow = (e) => {
             if(e.target.tagName !== 'A' && e.target.id !== 'menu-toggle' && !e.target.closest('.menu-btn')) {
                 for(let i=0; i<4; i++) {
                     const p = document.createElement('div');
                     p.className = 'click-snow';
                     p.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-                    p.style.left = e.clientX + 'px';
-                    p.style.top = e.clientY + 'px';
+                    p.style.left = (e.clientX || e.touches[0].clientX) + 'px';
+                    p.style.top = (e.clientY || e.touches[0].clientY) + 'px';
                     p.style.fontSize = Math.random() * 8 + 8 + 'px';
                     pContainer.appendChild(p);
                     const angle = (Math.random() * Math.PI) + Math.PI;
                     const force = Math.random() * 2 + 1;
                     let vx = Math.cos(angle) * force;
                     let vy = Math.sin(angle) * force;
-                    let px = e.clientX, py = e.clientY;
+                    let startX = (e.clientX || e.touches[0].clientX);
+                    let startY = (e.clientY || e.touches[0].clientY);
+                    let px = startX, py = startY;
                     let op = 1;
                     let grav = 0.05;
                     function moveP() {
                         vy += grav; px += vx; py += vy; op -= 0.015;
-                        p.style.transform = `translate3d(${px - e.clientX}px, ${py - e.clientY}px, 0)`;
+                        p.style.transform = `translate3d(${px - startX}px, ${py - startY}px, 0)`;
                         p.style.opacity = op;
                         if(op > 0) requestAnimationFrame(moveP); else p.remove();
                     }
                     moveP();
                 }
             }
-        });
+        };
+        document.addEventListener('mousedown', createClickSnow);
+        document.addEventListener('touchstart', createClickSnow, {passive: true});
 
         menuToggle.addEventListener('click', (e) => { e.stopPropagation(); menuToggle.classList.toggle('active'); sidebar.classList.toggle('active'); });
         document.addEventListener('click', (e) => {
