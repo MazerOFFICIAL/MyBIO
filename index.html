@@ -234,7 +234,13 @@
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
         const speed = 0.8;
 
-        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1'; });
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1';
+            if (e.clientX < 20 && !sidebar.classList.contains('active')) {
+                sidebar.classList.add('active');
+                menuToggle.classList.add('active');
+            }
+        });
         document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
 
         function animateCursor() {
