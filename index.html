@@ -24,7 +24,7 @@
             color: white;
             overflow: hidden;
         }
-        #stars-container, #snow-container {
+        #stars-container, #snow-container, #particle-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -33,6 +33,7 @@
             z-index: -2;
             pointer-events: none;
         }
+        #particle-container { z-index: 9999; }
         #cursor {
             position: fixed;
             width: 32px;
@@ -46,7 +47,6 @@
             opacity: 0;
             transition: opacity 0.2s ease;
             will-change: transform;
-            backface-visibility: hidden;
         }
         .menu-btn {
             position: absolute;
@@ -70,16 +70,9 @@
             transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
             box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
         }
-        .menu-btn.active span:nth-child(1) {
-            transform: translateY(10px) rotate(45deg);
-        }
-        .menu-btn.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        .menu-btn.active span:nth-child(3) {
-            transform: translateY(-10px) rotate(-45deg);
-        }
+        .menu-btn.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
+        .menu-btn.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
         .sidebar {
             position: fixed;
             top: 0;
@@ -101,9 +94,7 @@
                         linear-gradient(180deg, rgba(0, 210, 255, 0.3), rgba(157, 80, 187, 0.3)) border-box;
             box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
         }
-        .sidebar.active {
-            left: 0;
-        }
+        .sidebar.active { left: 0; }
         .card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(30px);
@@ -126,86 +117,33 @@
                         linear-gradient(45deg, rgba(0, 210, 255, 0.4), rgba(157, 80, 187, 0.4)) border-box;
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
         }
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease-out;
-        }
-        .content-section.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .content-section { display: none; animation: fadeIn 0.5s ease-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         .avatar {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(0, 210, 255, 0.5);
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
-            margin-bottom: 30px;
-            pointer-events: auto;
+            width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(0, 210, 255, 0.5); box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            margin-bottom: 30px; pointer-events: auto;
         }
-        h1 {
-            font-size: 3.5rem;
-            margin: 10px 0;
-            color: #00d2ff;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-        .status-text {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.2);
-            margin-bottom: 40px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
+        h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
+        .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.2); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; }
         .link-btn {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.6);
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 0.75rem;
-            display: block;
-            margin-bottom: 5px;
-            pointer-events: auto;
+            text-decoration: none; color: rgba(255, 255, 255, 0.6); padding: 16px;
+            background: rgba(255, 255, 255, 0.03); border-radius: 12px; transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05); font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1.5px; font-size: 0.75rem; display: block; margin-bottom: 5px; pointer-events: auto;
         }
-        .link-btn:hover {
-            background: rgba(0, 210, 255, 0.05);
-            color: #00d2ff;
-            border-color: rgba(0, 210, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
-        }
-        .snow {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.8;
-        }
-        @keyframes starFade {
-            from { opacity: 0.2; }
-            to { opacity: 0.8; }
-        }
-        @keyframes fall {
-            to { transform: translateY(100vh); }
-        }
-        @keyframes drift {
-            from { margin-left: 0px; }
-            to { margin-left: 50px; }
-        }
+        .link-btn:hover { background: rgba(0, 210, 255, 0.05); color: #00d2ff; border-color: rgba(0, 210, 255, 0.4); box-shadow: 0 0 15px rgba(0, 210, 255, 0.1); }
+        .snow, .click-snow { position: absolute; color: white; user-select: none; pointer-events: none; }
+        @keyframes starFade { from { opacity: 0.2; } to { opacity: 0.8; } }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        @keyframes drift { from { margin-left: -20px; } to { margin-left: 20px; } }
     </style>
 </head>
 <body>
     <div id="stars-container"></div>
     <div id="snow-container"></div>
+    <div id="particle-container"></div>
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar">
@@ -226,9 +164,7 @@
             <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
-    <div class="menu-btn" id="menu-toggle">
-        <span></span><span></span><span></span>
-    </div>
+    <div class="menu-btn" id="menu-toggle"><span></span><span></span><span></span></div>
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
@@ -237,13 +173,14 @@
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
+        const pContainer = document.getElementById('particle-container');
+        const snowChars = ['❄', '❅', '❆'];
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
         const speed = 0.3;
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX; mouseY = e.clientY;
-            cursor.style.opacity = '1';
-        });
+
+        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1'; });
         document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;
             cursorY += (mouseY - cursorY) * speed;
@@ -251,51 +188,68 @@
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuToggle.classList.toggle('active');
-            sidebar.classList.toggle('active');
+
+        document.addEventListener('mousedown', (e) => {
+            for(let i=0; i<6; i++) {
+                const p = document.createElement('div');
+                p.className = 'click-snow';
+                p.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                p.style.fontSize = Math.random() * 10 + 10 + 'px';
+                pContainer.appendChild(p);
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 3 + 2;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                let opacity = 1;
+                let px = e.clientX, py = e.clientY;
+                let rotation = 0;
+                function moveP() {
+                    px += vx; py += vy; opacity -= 0.02; rotation += 5;
+                    p.style.transform = `translate3d(${px - e.clientX}px, ${py - e.clientY}px, 0) rotate(${rotation}deg)`;
+                    p.style.opacity = opacity;
+                    if(opacity > 0) requestAnimationFrame(moveP); else p.remove();
+                }
+                moveP();
+            }
         });
+
+        menuToggle.addEventListener('click', (e) => { e.stopPropagation(); menuToggle.classList.toggle('active'); sidebar.classList.toggle('active'); });
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active'); menuToggle.classList.remove('active');
             }
         });
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            sidebar.classList.remove('active');
-            menuToggle.classList.remove('active');
+            sidebar.classList.remove('active'); menuToggle.classList.remove('active');
         }
+
         const starsContainer = document.getElementById('stars-container');
         for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
-            star.style.position = 'absolute';
-            star.style.width = '1px'; star.style.height = '1px';
-            star.style.background = 'white';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.opacity = Math.random();
+            star.style.position = 'absolute'; star.style.width = '1px'; star.style.height = '1px';
+            star.style.background = 'white'; star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%'; star.style.opacity = Math.random();
             star.style.animation = `starFade ${Math.random() * 3 + 2}s infinite alternate`;
             starsContainer.appendChild(star);
         }
+
         const snowContainer = document.getElementById('snow-container');
         function createSnow() {
             const snowflake = document.createElement('div');
-            const size = Math.random() * 3 + 1 + 'px';
-            snowflake.classList.add('snow');
-            snowflake.style.width = size;
-            snowflake.style.height = size;
+            snowflake.className = 'snow';
+            snowflake.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
             snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.top = '-10px';
-            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-            const duration = Math.random() * 5 + 5 + 's';
-            snowflake.style.animation = `fall ${duration} linear infinite, drift ${Math.random() * 2 + 2}s ease-in-out infinite alternate`;
-            snowContainer.appendChild(snowflake);
-            setTimeout(() => snowflake.remove(), parseFloat(duration) * 1000);
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+            const duration = Math.random() * 5 + 7 + 's';
+            snowflake.style.animation = `fall ${duration} linear forwards, drift ${Math.random() * 3 + 2}s ease-in-out infinite alternate`;
+            snowContainer.appendChild(snowflake); setTimeout(() => snowflake.remove(), parseFloat(duration) * 1000);
         }
-        setInterval(createSnow, 150);
+        setInterval(createSnow, 300);
     </script>
 </body>
 </html>
