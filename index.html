@@ -315,6 +315,21 @@
             font-size: 1.2rem; font-weight: 700; color: #fff; text-align: center; margin-bottom: 5px; text-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
+        .lang-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; cursor: pointer; z-index: 2100; transition: 0.3s;
+            font-size: 0.9rem; pointer-events: auto;
+        }
+        .lang-btn:hover { background: rgba(0, 210, 255, 0.1); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
 
         @media (max-width: 768px) {
             #cursor { display: none; }
@@ -336,6 +351,7 @@
     <div id="stars-container"></div>
     <div id="snow-container"></div>
     <div id="particle-container"></div>
+    <div class="lang-btn" id="lang-btn">EN</div>
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
@@ -366,7 +382,7 @@
             </div>
             -->
             <div style="padding: 50px; text-align: center; opacity: 0.5;">
-                <h3 id="soon-trigger" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
+                <h3 class="soon-text" id="soon-trigger" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
         </div>
         <div id="skills" class="content-section">
@@ -396,7 +412,7 @@
             </div>
             -->
             <div style="padding: 50px; text-align: center; opacity: 0.5;">
-                <h3 style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
+                <h3 class="soon-text" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
         </div>
     </div>
@@ -478,6 +494,62 @@
         const snowChars = ['❄', '❅', '❆'];
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
         let lastTouchTime = 0;
+        
+        const langBtn = document.getElementById('lang-btn');
+        let currentLang = localStorage.getItem('siteLang') || 'en';
+        let phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
+
+        const translations = {
+            en: {
+                bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills",
+                worksTitle: "Works", skillsTitle: "Skills", soon: "Soon...",
+                telegram: "Telegram", youtube: "Youtube",
+                riddleTrigger: "U need 80+ IQ to solve this",
+                riddleTitle: "RIDDLE",
+                riddleText: "You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?",
+                riddlePlaceholder: "Answer",
+                passwordPrefix: "Password is ",
+                typewriter: ['Gamer', 'Developer', 'Dreamer', 'Creator']
+            },
+            ru: {
+                bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
+                worksTitle: "Работы", skillsTitle: "Навыки", soon: "Скоро...",
+                telegram: "Telegram", youtube: "Youtube",
+                riddleTrigger: "Нужен IQ 80+ чтобы решить",
+                riddleTitle: "ЗАГАДКА",
+                riddleText: "Вы входите в темную комнату. В ней есть свеча, керосиновая лампа и камин. У вас в кармане только один коробок спичек. Что вы зажжете первым?",
+                riddlePlaceholder: "Ответ",
+                passwordPrefix: "Пароль: ",
+                typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец']
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('siteLang', lang);
+            langBtn.textContent = lang.toUpperCase();
+            const t = translations[lang];
+
+            document.querySelector('[data-section="bio"]').textContent = t.bioBtn;
+            document.querySelector('[data-section="projects"]').textContent = t.projectsBtn;
+            document.querySelector('[data-section="skills"]').textContent = t.skillsBtn;
+            document.querySelector('#projects h1').textContent = t.worksTitle;
+            document.querySelector('#skills h1').textContent = t.skillsTitle;
+            document.querySelectorAll('.soon-text').forEach(el => el.textContent = t.soon);
+            document.getElementById('telegram-btn').textContent = t.telegram;
+            document.querySelector('a[href*="youtube"]').textContent = t.youtube;
+            document.getElementById('riddle-trigger').textContent = t.riddleTrigger;
+            document.querySelector('#riddle-modal h3').textContent = t.riddleTitle;
+            document.querySelector('#riddle-modal p').textContent = t.riddleText;
+            document.getElementById('riddle-answer').placeholder = t.riddlePlaceholder;
+            document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span style="color: #00d2ff;">Telegram</span>`;
+            
+            phrases = t.typewriter;
+            phraseIndex = 0; charIndex = 0; isDeleting = false;
+        }
+        langBtn.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'ru' : 'en'));
+        setLanguage(currentLang);
+
         const speed = 0.8;
 
         document.addEventListener('mousemove', e => {
@@ -658,7 +730,7 @@
         riddleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') riddleSubmit.click(); });
         riddleSubmit.addEventListener('click', () => {
             const val = riddleInput.value.toLowerCase().trim();
-            if(val === 'match' || val === 'a match' || val === 'the match') {
+            if(['match', 'a match', 'the match', 'спичку', 'спичка'].includes(val)) {
                 riddleModal.classList.remove('active');
                 successModal.classList.add('active');
             }
@@ -895,7 +967,6 @@
         });
 
         const typeWriterElement = document.getElementById('typewriter');
-        const phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
