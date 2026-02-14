@@ -62,6 +62,11 @@
             z-index: 2100;
             transition: 0.3s;
         }
+        @keyframes burgerPulse {
+            0% { box-shadow: 0 0 6px rgba(0, 210, 255, 0.5); }
+            50% { box-shadow: 0 0 14px rgba(0, 210, 255, 0.8), 0 0 8px rgba(157, 80, 187, 0.6); }
+            100% { box-shadow: 0 0 6px rgba(0, 210, 255, 0.5); }
+        }
         .menu-btn span {
             display: block;
             width: 100%;
@@ -70,10 +75,12 @@
             border-radius: 2px;
             transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
             box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
+            animation: burgerPulse 2s infinite;
         }
         .menu-btn:hover span {
             background: #fff;
             box-shadow: 0 0 10px #00d2ff, 0 0 20px #9d50bb;
+            animation: none;
         }
         .menu-btn.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
         .menu-btn.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
