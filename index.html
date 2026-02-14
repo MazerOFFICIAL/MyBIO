@@ -149,7 +149,7 @@
             -webkit-user-drag: none;
         }
         h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
-        .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; min-height: 19px; }
+        .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; min-height: 19px; transition: opacity 0.5s ease; opacity: 1; }
         .link-btn {
             text-decoration: none; color: rgba(255, 255, 255, 0.6); padding: 16px;
             background: rgba(255, 255, 255, 0.03); border-radius: 12px; transition: 0.3s;
@@ -528,10 +528,7 @@
         let phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
         const typeWriterElement = document.getElementById('typewriter');
         let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typeSpeed = 100;
-        let typewriterTimeout;
+        let statusTimeout;
 
         const translations = {
             en: {
@@ -626,10 +623,10 @@
             document.getElementById('volume-btn').title = t.audioVolume;
             
             phrases = t.typewriter;
-            phraseIndex = 0; charIndex = 0; isDeleting = false;
+            phraseIndex = 0;
             
-            clearTimeout(typewriterTimeout);
-            typeWriter();
+            clearTimeout(statusTimeout);
+            startStatusAnimation();
             
             document.querySelectorAll('.lang-option').forEach(opt => {
                 opt.classList.toggle('selected', opt.getAttribute('data-lang') === lang);
@@ -1084,22 +1081,25 @@
             }
         });
 
-        function typeWriter() {
-            const currentPhrase = phrases[phraseIndex];
-            if (isDeleting) {
-                typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-                typeSpeed = 30;
-            } else {
-                typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-                typeSpeed = 80;
-            }
-            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; }
-            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
-            typewriterTimeout = setTimeout(typeWriter, typeSpeed);
+        function changeStatusText() {
+            typeWriterElement.style.opacity = '0';
+            statusTimeout = setTimeout(() => {
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeWriterElement.textContent = phrases[phraseIndex];
+                typeWriterElement.style.opacity = '1';
+                statusTimeout = setTimeout(changeStatusText, 3000);
+            }, 500);
         }
-        typeWriter();
+
+        function startStatusAnimation() {
+            typeWriterElement.style.opacity = '0';
+            setTimeout(() => {
+                typeWriterElement.textContent = phrases[phraseIndex];
+                typeWriterElement.style.opacity = '1';
+                statusTimeout = setTimeout(changeStatusText, 3000);
+            }, 50);
+        }
+        startStatusAnimation();
     </script>
 </body>
 </html>
