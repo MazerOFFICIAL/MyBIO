@@ -226,7 +226,7 @@
         const pContainer = document.getElementById('particle-container');
         const snowChars = ['❄', '❅', '❆'];
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        const speed = 0.3;
+        const speed = 0.8;
 
         document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1'; });
         document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
@@ -234,7 +234,7 @@
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;
             cursorY += (mouseY - cursorY) * speed;
-            cursor.style.transform = `translate3d(${cursorX - 5}px, ${cursorY - 5}px, 0)`;
+            cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 2}px, 0)`;
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
