@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mazer Bio</title>
     <style>
-        /* Основные стили и фон */
         body {
             margin: 0;
             padding: 0;
@@ -14,12 +13,10 @@
             align-items: center;
             min-height: 100vh;
             background: radial-gradient(circle at top left, #1a1a2e, #16213e, #0f3460);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             color: white;
             overflow: hidden;
         }
-
-        /* Стеклянная карточка */
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -33,29 +30,23 @@
             opacity: 0;
             animation: slideUp 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
         }
-
-        /* Анимация появления */
         @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            to { transform: translateY(0); opacity: 1; }
         }
-
-        /* Аватарка с неоновым свечением */
-.avatar {
-    width: 150px;         /* Ширина */
-    height: 150px;        /* Высота (такая же!) */
-    border-radius: 50%;   /* Делает круг */
-    object-fit: cover;    /* Чтобы не сплющило */
-    border: 3px solid #00d2ff; /* Синяя рамка */
-}
-
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00d2ff;
+            box-shadow: 0 0 20px #00d2ff;
+            transition: 0.5s;
+            margin-bottom: 20px;
+        }
         .avatar:hover {
-            transform: rotate(360s); /* Бесконечный медленный поворот при наведении */
+            transform: rotate(360s);
             box-shadow: 0 0 40px #00d2ff, 0 0 60px #3a7bd5;
         }
-
         h1 {
             font-size: 2rem;
             margin: 10px 0;
@@ -63,20 +54,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         p {
             font-size: 1rem;
             color: #ccc;
             margin-bottom: 30px;
         }
-
-        /* Имбовые кнопки */
         .links {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
         .link-btn {
             text-decoration: none;
             color: white;
@@ -87,15 +74,12 @@
             border: 1px solid transparent;
             font-weight: 500;
         }
-
         .link-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
             border: 1px solid #00d2ff;
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
-
-        /* Плавающие частицы на фоне */
         .bg-circle {
             position: absolute;
             z-index: -1;
@@ -104,7 +88,6 @@
             filter: blur(80px);
             animation: float 10s infinite alternate;
         }
-
         @keyframes float {
             from { transform: translate(0, 0); }
             to { transform: translate(100px, 150px); }
@@ -114,18 +97,37 @@
 <body>
     <div class="bg-circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
     <div class="bg-circle" style="width: 200px; height: 200px; bottom: -50px; right: -50px; background: #9d50bb;"></div>
-
     <div class="card">
-      <img src="me.png" alt="Avatar" class="avatar">
+        <img src="me.png" alt="Avatar" class="avatar">
         <h1>Mazer Official</h1>
         <p>Future Web Developer & Creator</p>
-        
         <div class="links">
-            <a href="#" class="link-btn">Telegram</a>
-            <a href="#" class="link-btn">YouTube</a>
-            <a href="#" class="link-btn">VK</a>
-            <a href="#" class="link-btn">Discord</a>
+            <a href="https://t.me/Iwehejj" class="link-btn">Telegram</a>
+            <a href="https://www.youtube.com/@MazerOxide" class="link-btn">YouTube</a>
         </div>
     </div>
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.innerHTML = '❄';
+            snowflake.style.position = 'fixed';
+            snowflake.style.top = '-20px';
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            snowflake.style.color = 'white';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.zIndex = '1000';
+            snowflake.style.pointerEvents = 'none';
+            const duration = Math.random() * 3 + 2;
+            snowflake.style.transition = `transform ${duration}s linear, opacity ${duration}s linear`;
+            document.body.appendChild(snowflake);
+            setTimeout(() => {
+                snowflake.style.transform = `translateY(${window.innerHeight + 20}px) rotate(360deg)`;
+                snowflake.style.opacity = '0';
+            }, 100);
+            setTimeout(() => { snowflake.remove(); }, duration * 1000);
+        }
+        setInterval(createSnowflake, 100);
+    </script>
 </body>
 </html>
