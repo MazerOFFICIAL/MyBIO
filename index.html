@@ -1,4 +1,4 @@
-а<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,10 @@
     <style>
         * {
             cursor: none !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
         }
         body {
             margin: 0;
@@ -27,7 +31,7 @@
             transform: translate(-50%, -50%);
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.07) 0%, rgba(0, 0, 0, 0) 70%);
             z-index: -1;
             pointer-events: none;
         }
@@ -71,7 +75,6 @@
         }
         .card:hover {
             border: 1px solid rgba(0, 210, 255, 0.2);
-            background: rgba(255, 255, 255, 0.04);
         }
         .avatar {
             width: 160px;
@@ -80,11 +83,11 @@
             object-fit: cover;
             border: 2px solid rgba(0, 210, 255, 0.4);
             box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
-            transition: 0.5s;
             margin-bottom: 25px;
+            pointer-events: auto;
         }
         h1 {
-            font-size: 2.4rem;
+            font-size: 3rem;
             margin: 10px 0;
             background: linear-gradient(90deg, #00d2ff, #9d50bb, #00d2ff);
             background-size: 200% auto;
@@ -96,10 +99,11 @@
             to { background-position: 200% center; }
         }
         p {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.3);
             margin-bottom: 35px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
         .links {
             display: flex;
@@ -115,13 +119,12 @@
             transition: 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.05);
             font-weight: 500;
-            letter-spacing: 1px;
+            pointer-events: auto;
         }
         .link-btn:hover {
             background: rgba(0, 210, 255, 0.1);
             border: 1px solid rgba(0, 210, 255, 0.4);
             color: #00d2ff;
-            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -129,29 +132,25 @@
     <div id="stars-container"></div>
     <div class="main-glow"></div>
     <div id="cursor"></div>
-
     <div class="card">
         <img src="me.png" alt="Avatar" class="avatar">
-        <h1> Mazer </h1>
-        <p>DIGITAL CREATOR</p>
+        <h1>Mazer</h1>
+        <p>Digital Creator</p>
         <div class="links">
             <a href="https://t.me/Iwehejj" class="link-btn">TELEGRAM</a>
             <a href="https://www.youtube.com/@MazerOxide" class="link-btn">YOUTUBE</a>
         </div>
     </div>
-
     <script>
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
         document.querySelectorAll('a, img').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
-
         const starsContainer = document.getElementById('stars-container');
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
@@ -165,7 +164,6 @@
             star.style.animation = `fade ${Math.random() * 3 + 2}s infinite alternate`;
             starsContainer.appendChild(star);
         }
-
         const style = document.createElement('style');
         style.innerHTML = `@keyframes fade { from { opacity: 0.2; } to { opacity: 0.8; } }`;
         document.head.appendChild(style);
