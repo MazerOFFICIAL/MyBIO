@@ -854,6 +854,40 @@
         loadTrack(currentTrackIndex);
         updatePlayPauseIcon();
         updateVolumeIcon(audio.volume);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.code === 'Space') {
+                if (e.repeat) return;
+                e.preventDefault();
+                playPauseBtn.click();
+            } else if (e.ctrlKey) {
+                if (e.code === 'ArrowRight') {
+                    if (e.repeat) return;
+                    e.preventDefault();
+                    playNext(false);
+                } else if (e.code === 'ArrowLeft') {
+                    if (e.repeat) return;
+                    e.preventDefault();
+                    playPrev();
+                } else if (e.code === 'ArrowUp') {
+                    e.preventDefault();
+                    let newVol = Math.min(1, audio.volume + 0.05);
+                    audio.volume = newVol;
+                    volumeSlider.value = newVol;
+                    localStorage.setItem('musicVolume', newVol);
+                    updateVolumeIcon(newVol);
+                } else if (e.code === 'ArrowDown') {
+                    e.preventDefault();
+                    let newVol = Math.max(0, audio.volume - 0.05);
+                    audio.volume = newVol;
+                    volumeSlider.value = newVol;
+                    localStorage.setItem('musicVolume', newVol);
+                    updateVolumeIcon(newVol);
+                }
+            }
+        });
     </script>
 </body>
 </html>
