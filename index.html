@@ -758,9 +758,6 @@
             audio.src = tracks[index].src;
             audio.load();
             localStorage.setItem('musicTrackIndex', index);
-            if (!audio.paused) {
-                audio.play().catch(e => console.error("Audio play failed:", e));
-            }
         }
 
         function playNext() {
@@ -775,6 +772,7 @@
                 }
             }
             loadTrack(nextIndex);
+            audio.play().catch(e => console.error("Audio play failed:", e));
         }
         function playPrev() {
             clearTimeout(autoPlayTimer);
@@ -783,6 +781,7 @@
                 prevIndex = loopBtn.classList.contains('active') ? tracks.length - 1 : 0;
             }
             loadTrack(prevIndex);
+            audio.play().catch(e => console.error("Audio play failed:", e));
         }
 
         function updatePlayPauseIcon() {
