@@ -377,7 +377,6 @@
         }
         setInterval(createSnow, 400);
 
-        // Easter Egg Logic
         let clickCount = 0;
         let clickTimer;
         const soonTrigger = document.getElementById('soon-trigger');
@@ -393,11 +392,9 @@
         });
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
-        // Telegram Password Logic
         const tgModal = document.getElementById('password-modal');
         const tgPassInput = document.getElementById('tg-password');
         const tgSubmit = document.getElementById('submit-password');
-        // Encoded link to hide it in code (Base64)
         const secretLink = "aHR0cHM6Ly90Lm1lL0l3ZWhlamo="; 
 
         function openTgModal(e) {
