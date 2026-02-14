@@ -45,14 +45,12 @@
         }
         #cursor {
             position: fixed;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             pointer-events: none;
             z-index: 9999;
-            background-image: url('https://i.postimg.cc/9FmKzXm1/neon-pointer.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            filter: drop-shadow(0 0 8px #9d50bb);
+            transform: translate(-5px, -5px);
+            filter: drop-shadow(0 0 5px rgba(157, 80, 187, 0.8));
         }
         .menu-btn {
             position: absolute;
@@ -194,7 +192,12 @@
 <body>
     <div id="stars-container"></div>
     <div class="main-glow"></div>
-    <div id="cursor"></div>
+    
+    <div id="cursor">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+    </div>
 
     <div class="menu-btn" id="menu-toggle">
         <span></span><span></span><span></span>
