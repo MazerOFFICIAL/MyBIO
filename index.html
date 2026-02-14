@@ -741,16 +741,18 @@
             localStorage.setItem('musicTrackIndex', index);
         }
 
-        function playNext() {
+        function playNext(isAuto) {
             clearTimeout(autoPlayTimer);
+            
+            if (isAuto === true && loopBtn.classList.contains('active')) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.error("Audio play failed:", e));
+                return;
+            }
+
             let nextIndex = currentTrackIndex + 1;
             if (nextIndex >= tracks.length) {
-                if (loopBtn.classList.contains('active')) {
-                    nextIndex = 0;
-                } else {
-                    audio.pause();
-                    return;
-                }
+                nextIndex = 0;
             }
             loadTrack(nextIndex);
             audio.play().catch(e => console.error("Audio play failed:", e));
@@ -759,7 +761,7 @@
             clearTimeout(autoPlayTimer);
             let prevIndex = currentTrackIndex - 1;
             if (prevIndex < 0) {
-                prevIndex = loopBtn.classList.contains('active') ? tracks.length - 1 : 0;
+                prevIndex = tracks.length - 1;
             }
             loadTrack(prevIndex);
             audio.play().catch(e => console.error("Audio play failed:", e));
@@ -779,7 +781,7 @@
             }
         });
 
-        nextBtn.addEventListener('click', playNext);
+        nextBtn.addEventListener('click', () => playNext(false));
         prevBtn.addEventListener('click', playPrev);
 
         loopBtn.addEventListener('click', () => {
@@ -838,7 +840,7 @@
 
         audio.addEventListener('play', updatePlayPauseIcon);
         audio.addEventListener('pause', updatePlayPauseIcon);
-        audio.addEventListener('ended', () => { autoPlayTimer = setTimeout(playNext, 1000); });
+        audio.addEventListener('ended', () => { autoPlayTimer = setTimeout(() => playNext(true), 1000); });
         audio.addEventListener('timeupdate', () => {
             if (audio.duration && !isDraggingProgress) {
                 currentTimeEl.textContent = formatTime(audio.currentTime);
