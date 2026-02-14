@@ -369,6 +369,77 @@
         }
         .password-box button:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-primary); }
 
+        .info-box {
+            background: var(--player-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            padding-top: 50px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 0 40px var(--shadow-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            transform: scale(1.1);
+            pointer-events: auto;
+            position: relative;
+            width: 90%;
+            max-width: 320px;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 5px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover {
+            color: var(--accent-primary);
+            transform: rotate(90deg);
+        }
+        .info-id {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-main);
+            letter-spacing: 2px;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            background: var(--input-bg);
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            word-break: break-all;
+        }
+        .info-copy-btn {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            pointer-events: auto;
+        }
+        .info-copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent-primary);
+        }
+
         .skills-container { display: flex; flex-direction: column; gap: 25px; width: 100%; padding: 10px 0; }
         .skill-item { width: 100%; }
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
@@ -619,6 +690,7 @@
             <div class="status-text" id="typewriter"></div>
             <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
             <a href="https://www.youtube.com/@MazerOxide" target="_blank" rel="noopener noreferrer" class="link-btn">Youtube</a>
+            <a href="#" id="oxide-id-btn" class="link-btn">Oxide HH-ID</a>
         </div>
         <div id="projects" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Works</h1>
@@ -711,6 +783,14 @@
         </div>
     </div>
 
+    <div id="oxide-id-modal" class="modal">
+        <div class="info-box">
+            <button class="modal-close-btn">&times;</button>
+            <div class="info-id">W7-V29-NU</div>
+            <button id="copy-oxide-id" class="info-copy-btn">Copy</button>
+        </div>
+    </div>
+
     <div class="audio-player-toggle" id="audio-player-toggle">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
@@ -780,7 +860,9 @@
                 audioLoop: "Repeat track", audioVolume: "Volume",
                 passwordPlaceholder: "Password",
                 greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
-                copied: "Copied to clipboard"
+                copied: "Copied to clipboard",
+                oxideBtn: "Oxide HH-ID",
+                copyBtn: "Copy"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -796,7 +878,9 @@
                 audioLoop: "Зациклить трек", audioVolume: "Громкость",
                 passwordPlaceholder: "Пароль",
                 greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
-                copied: "Скопировано в буфер обмена"
+                copied: "Скопировано в буфер обмена",
+                oxideBtn: "Oxide HH-ID",
+                copyBtn: "Копировать"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -812,7 +896,9 @@
                 audioLoop: "Repetir pista", audioVolume: "Volumen",
                 passwordPlaceholder: "Contraseña",
                 greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
-                copied: "Copiado al portapapeles"
+                copied: "Copiado al portapapeles",
+                oxideBtn: "Oxide HH-ID",
+                copyBtn: "Copiar"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -828,7 +914,9 @@
                 audioLoop: "Répéter la piste", audioVolume: "Volume",
                 passwordPlaceholder: "Mot de passe",
                 greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
-                copied: "Copié dans le presse-papiers"
+                copied: "Copié dans le presse-papiers",
+                oxideBtn: "Oxide HH-ID",
+                copyBtn: "Copier"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -844,7 +932,9 @@
                 audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
                 passwordPlaceholder: "Passwort",
                 greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
-                copied: "In die Zwischenablage kopiert"
+                copied: "In die Zwischenablage kopiert",
+                oxideBtn: "Oxide HH-ID",
+                copyBtn: "Kopieren"
             }
         };
 
@@ -874,6 +964,8 @@
             document.getElementById('riddle-answer').placeholder = t.riddlePlaceholder;
             document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span id="copy-password" style="color: var(--accent-primary); cursor: pointer; text-decoration: underline; text-underline-offset: 4px;" title="${t.copied}">Telegram</span>`;
             document.getElementById('tg-password').placeholder = t.passwordPlaceholder;
+            document.getElementById('oxide-id-btn').textContent = t.oxideBtn;
+            document.getElementById('copy-oxide-id').textContent = t.copyBtn;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1147,6 +1239,36 @@
         });
         riddleModal.addEventListener('click', (e) => { if (e.target === riddleModal) riddleModal.classList.remove('active'); });
         successModal.addEventListener('click', (e) => { if (e.target === successModal) successModal.classList.remove('active'); });
+
+        const oxideIdBtn = document.getElementById('oxide-id-btn');
+        const oxideIdModal = document.getElementById('oxide-id-modal');
+        const copyOxideIdBtn = document.getElementById('copy-oxide-id');
+        const oxideIdCloseBtn = oxideIdModal.querySelector('.modal-close-btn');
+
+        oxideIdBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            oxideIdModal.classList.add('active');
+        });
+        oxideIdModal.addEventListener('click', (e) => {
+            if (e.target === oxideIdModal) {
+                oxideIdModal.classList.remove('active');
+            }
+        });
+        oxideIdCloseBtn.addEventListener('click', () => {
+            oxideIdModal.classList.remove('active');
+        });
+        copyOxideIdBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText('W7-V29-NU').then(() => {
+                const toast = document.getElementById('toast-notification');
+                toast.textContent = translations[currentLang].copied;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
 
         document.addEventListener('click', (e) => {
             if (e.target && e.target.id === 'copy-password') {
