@@ -531,6 +531,7 @@
         let charIndex = 0;
         let isDeleting = false;
         let typeSpeed = 100;
+        let typewriterTimeout;
 
         const translations = {
             en: {
@@ -626,6 +627,9 @@
             
             phrases = t.typewriter;
             phraseIndex = 0; charIndex = 0; isDeleting = false;
+            
+            clearTimeout(typewriterTimeout);
+            typeWriter();
             
             document.querySelectorAll('.lang-option').forEach(opt => {
                 opt.classList.toggle('selected', opt.getAttribute('data-lang') === lang);
@@ -1093,7 +1097,7 @@
             }
             if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; }
             else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
-            setTimeout(typeWriter, typeSpeed);
+            typewriterTimeout = setTimeout(typeWriter, typeSpeed);
         }
         typeWriter();
     </script>
