@@ -180,6 +180,14 @@
             text-transform: uppercase; letter-spacing: 2px; font-weight: 600; transition: 0.3s; pointer-events: auto;
         }
         .project-link-small:hover { background: rgba(0, 210, 255, 0.05); color: #00d2ff; border-color: rgba(0, 210, 255, 0.4); box-shadow: 0 0 15px rgba(0, 210, 255, 0.1); }
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 5000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal.active { display: flex; animation: fadeIn 0.3s; }
+        .modal img { max-width: 80%; max-height: 80%; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); pointer-events: auto; }
     </style>
 </head>
 <body>
@@ -216,7 +224,7 @@
             </div>
             -->
             <div style="padding: 50px; text-align: center; opacity: 0.5;">
-                <h3 style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem;">Soon...</h3>
+                <h3 id="soon-trigger" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
         </div>
     </div>
@@ -229,6 +237,9 @@
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
+    </div>
+    <div id="easter-egg-modal" class="modal">
+        <img src="troll.gif" alt="Troll">
     </div>
     <script>
         const cursor = document.getElementById('cursor');
@@ -318,6 +329,22 @@
             setTimeout(() => snowflake.remove(), parseFloat(duration) * 1000);
         }
         setInterval(createSnow, 400);
+
+        // Easter Egg Logic
+        let clickCount = 0;
+        let clickTimer;
+        const soonTrigger = document.getElementById('soon-trigger');
+        const modal = document.getElementById('easter-egg-modal');
+
+        soonTrigger.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 1) clickTimer = setTimeout(() => clickCount = 0, 5000);
+            if (clickCount >= 3) {
+                clearTimeout(clickTimer); clickCount = 0;
+                modal.classList.add('active');
+            }
+        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
     </script>
 </body>
 </html>
