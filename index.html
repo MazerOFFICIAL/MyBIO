@@ -328,6 +328,21 @@
             font-size: 0.9rem; pointer-events: auto;
         }
         .lang-btn:hover { background: rgba(0, 210, 255, 0.1); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        .lang-dropdown {
+            position: absolute; top: 75px; right: 25px;
+            background: rgba(15, 20, 35, 0.95); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 8px; display: flex; flex-direction: column; gap: 5px;
+            opacity: 0; pointer-events: none; transform: translateY(-10px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2100;
+            min-width: 140px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .lang-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .lang-option {
+            padding: 12px 15px; color: rgba(255, 255, 255, 0.7); cursor: pointer; border-radius: 8px; transition: 0.2s; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 10px;
+        }
+        .lang-option:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+        .lang-option.selected { background: rgba(0, 210, 255, 0.15); color: #00d2ff; }
         #transition-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #090a0f; z-index: 99999;
@@ -357,6 +372,13 @@
     <div id="particle-container"></div>
     <div id="transition-overlay"></div>
     <div class="lang-btn" id="lang-btn">EN</div>
+    <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-option" data-lang="en">English</div>
+        <div class="lang-option" data-lang="ru">Русский</div>
+        <div class="lang-option" data-lang="es">Español</div>
+        <div class="lang-option" data-lang="fr">Français</div>
+        <div class="lang-option" data-lang="de">Deutsch</div>
+    </div>
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
@@ -501,6 +523,7 @@
         let lastTouchTime = 0;
         
         const langBtn = document.getElementById('lang-btn');
+        const langDropdown = document.getElementById('lang-dropdown');
         let currentLang = localStorage.getItem('siteLang') || 'en';
         let phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
         const typeWriterElement = document.getElementById('typewriter');
@@ -535,6 +558,45 @@
                 typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец'],
                 audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек",
                 audioLoop: "Зациклить трек", audioVolume: "Громкость"
+            },
+            es: {
+                bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
+                worksTitle: "Trabajos", skillsTitle: "Habilidades", soon: "Pronto...",
+                telegram: "Telegram", youtube: "YouTube",
+                riddleTrigger: "Necesitas 80+ IQ para esto",
+                riddleTitle: "ACERTIJO",
+                riddleText: "Entras en una habitación oscura. Hay una vela, una lámpara de queroseno y una chimenea. Solo tienes una caja de cerillas en tu bolsillo. ¿Qué encenderás primero?",
+                riddlePlaceholder: "Respuesta",
+                passwordPrefix: "La contraseña es ",
+                typewriter: ['Jugador', 'Desarrollador', 'Soñador', 'Creador'],
+                audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente",
+                audioLoop: "Repetir pista", audioVolume: "Volumen"
+            },
+            fr: {
+                bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
+                worksTitle: "Travaux", skillsTitle: "Compétences", soon: "Bientôt...",
+                telegram: "Telegram", youtube: "YouTube",
+                riddleTrigger: "Il faut 80+ de QI pour ça",
+                riddleTitle: "ÉNIGME",
+                riddleText: "Vous entrez dans une pièce sombre. Il y a une bougie, une lampe à pétrole et une cheminée. Vous n'avez qu'une boîte d'allumettes dans votre poche. Qu'allumez-vous en premier ?",
+                riddlePlaceholder: "Réponse",
+                passwordPrefix: "Le mot de passe est ",
+                typewriter: ['Joueur', 'Développeur', 'Rêveur', 'Créateur'],
+                audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante",
+                audioLoop: "Répéter la piste", audioVolume: "Volume"
+            },
+            de: {
+                bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
+                worksTitle: "Arbeiten", skillsTitle: "Fähigkeiten", soon: "Bald...",
+                telegram: "Telegram", youtube: "YouTube",
+                riddleTrigger: "Du brauchst 80+ IQ dafür",
+                riddleTitle: "RÄTSEL",
+                riddleText: "Du betrittst einen dunklen Raum. Es gibt eine Kerze, eine Petroleumlampe und einen Kamin. Du hast nur eine Schachtel Streichhölzer in der Tasche. Was zündest du zuerst an?",
+                riddlePlaceholder: "Antwort",
+                passwordPrefix: "Passwort ist ",
+                typewriter: ['Gamer', 'Entwickler', 'Träumer', 'Schöpfer'],
+                audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel",
+                audioLoop: "Titel wiederholen", audioVolume: "Lautstärke"
             }
         };
 
@@ -564,6 +626,10 @@
             
             phrases = t.typewriter;
             phraseIndex = 0; charIndex = 0; isDeleting = false;
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('selected', opt.getAttribute('data-lang') === lang);
+            });
         }
 
         function setLanguage(lang, animate = true) {
@@ -581,7 +647,19 @@
                 applyLanguage(lang);
             }
         }
-        langBtn.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'ru' : 'en', true));
+        
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                setLanguage(opt.getAttribute('data-lang'), true);
+                langDropdown.classList.remove('active');
+            });
+        });
+        
         setLanguage(currentLang, false);
 
         const speed = 0.8;
@@ -648,6 +726,7 @@
             const audioToggle = document.getElementById('audio-player-toggle');
             const volumePopup = document.getElementById('volume-popup');
             const volumeBtn = document.getElementById('volume-btn');
+            if (!langDropdown.contains(e.target) && !langBtn.contains(e.target)) langDropdown.classList.remove('active');
             if (!volumePopup.contains(e.target) && !volumeBtn.contains(e.target)) volumePopup.classList.remove('active');
             if (!audioContainer.contains(e.target) && !audioToggle.contains(e.target) && audioContainer.classList.contains('active')) {
                 audioPlayerContainer.classList.remove('active');
@@ -764,7 +843,8 @@
         riddleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') riddleSubmit.click(); });
         riddleSubmit.addEventListener('click', () => {
             const val = riddleInput.value.toLowerCase().trim();
-            if(['match', 'a match', 'the match', 'спичку', 'спичка'].includes(val)) {
+            const validAnswers = ['match', 'a match', 'the match', 'спичку', 'спичка', 'cerilla', 'fosforo', 'allumette', 'streichholz'];
+            if(validAnswers.includes(val)) {
                 riddleModal.classList.remove('active');
                 successModal.classList.add('active');
             }
