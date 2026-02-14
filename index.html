@@ -31,15 +31,19 @@
             width: 100%;
             height: 100%;
             z-index: -2;
+            pointer-events: none;
         }
         #cursor {
             position: fixed;
             width: 32px;
             height: 32px;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10000;
             transform: translate(-5px, -5px);
             filter: drop-shadow(0 0 5px rgba(157, 80, 187, 0.8));
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            will-change: transform, left, top;
         }
         .menu-btn {
             position: absolute;
@@ -54,9 +58,6 @@
             z-index: 1001;
             opacity: 0.6;
             transition: 0.3s;
-        }
-        .menu-btn:hover {
-            opacity: 1;
         }
         .menu-btn span {
             display: block;
@@ -75,7 +76,7 @@
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 1000;
+            z-index: 2000;
             transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
             display: flex;
             flex-direction: column;
@@ -90,7 +91,6 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 50px 40px;
             border-radius: 40px;
             text-align: center;
@@ -98,18 +98,16 @@
             min-height: 500px;
             z-index: 1;
             position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.3s ease, box-shadow 0.4s ease;
+            border: 1px solid transparent;
+            background: linear-gradient(rgba(2, 2, 5, 0.95), rgba(2, 2, 5, 0.95)) padding-box,
+                        linear-gradient(45deg, rgba(0, 210, 255, 0.2), rgba(157, 80, 187, 0.2)) border-box;
         }
-        /* Тот самый эффект подсвечивающейся рамки */
         .card:hover {
-            border-color: transparent;
             transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4), 
-                        inset 0 0 15px rgba(157, 80, 187, 0.2);
             background: linear-gradient(rgba(2, 2, 5, 0.9), rgba(2, 2, 5, 0.9)) padding-box,
                         linear-gradient(45deg, #00d2ff, #9d50bb) border-box;
-            border: 1px solid transparent;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
         }
         .content-section {
             display: none;
@@ -122,19 +120,14 @@
             from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
         }
-        .avatar-wrapper {
-            position: relative;
+        .avatar {
             width: 160px;
             height: 160px;
-            margin: 0 auto 30px;
-        }
-        .avatar {
-            width: 100%;
-            height: 100%;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(0, 210, 255, 0.5);
             box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            margin-bottom: 30px;
             pointer-events: auto;
         }
         h1 {
@@ -150,7 +143,6 @@
             margin-bottom: 40px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            font-weight: 600;
         }
         .link-btn {
             text-decoration: none;
@@ -173,22 +165,22 @@
             color: white;
             border-color: rgba(255, 255, 255, 0.2);
         }
+        @keyframes starFade {
+            from { opacity: 0.2; }
+            to { opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
     <div id="stars-container"></div>
-    
     <div class="card">
         <div id="bio" class="content-section active">
-            <div class="avatar-wrapper">
-                <img src="me.png" alt="Avatar" class="avatar">
-            </div>
+            <img src="me.png" alt="Avatar" class="avatar">
             <h1>Mazer</h1>
             <div class="status-text">Gamer</div>
             <a href="https://t.me/Iwehejj" class="link-btn">Telegram</a>
             <a href="https://www.youtube.com/@MazerOxide" class="link-btn">Youtube</a>
         </div>
-
         <div id="projects" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Works</h1>
             <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px; text-align: left;">
@@ -197,30 +189,35 @@
             </div>
         </div>
     </div>
-
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
-
     <div class="menu-btn" id="menu-toggle">
         <span></span><span></span><span></span>
     </div>
-
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
     </div>
-
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
 
         document.addEventListener('mousemove', e => {
+            cursor.style.opacity = '1';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
         });
 
         menuToggle.addEventListener('click', () => {
@@ -237,17 +234,15 @@
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
             star.style.position = 'absolute';
-            star.style.width = '1px'; star.style.height = '1px';
+            star.style.width = '1px';
+            star.style.height = '1px';
             star.style.background = 'white';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
             star.style.opacity = Math.random();
-            star.style.animation = `fade ${Math.random() * 3 + 2}s infinite alternate`;
+            star.style.animation = `starFade ${Math.random() * 3 + 2}s infinite alternate`;
             starsContainer.appendChild(star);
         }
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes fade { from { opacity: 0.2; } to { opacity: 0.8; } }`;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
