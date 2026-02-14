@@ -400,12 +400,16 @@
         let clickTimer;
         const soonTrigger = document.getElementById('soon-trigger');
         const modal = document.getElementById('easter-egg-modal');
+        const trollGif = modal.querySelector('img');
 
         soonTrigger.addEventListener('click', () => {
             clickCount++;
             if (clickCount === 1) clickTimer = setTimeout(() => clickCount = 0, 5000);
             if (clickCount >= 3) {
                 clearTimeout(clickTimer); clickCount = 0;
+                // Перезагружаем GIF, добавляя уникальный параметр, чтобы он каждый раз начинался сначала
+                const baseSrc = trollGif.src.split('?')[0];
+                trollGif.src = `${baseSrc}?t=${new Date().getTime()}`;
                 modal.classList.add('active');
             }
         });
