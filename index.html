@@ -146,6 +146,27 @@
             from { transform: translate3d(0, -10vh, 0) rotate(0deg); }
             to { transform: translate3d(0, 110vh, 0) rotate(360deg); }
         }
+        .project-list { display: flex; flex-direction: column; gap: 15px; max-height: 320px; overflow-y: auto; padding-right: 5px; }
+        .project-list::-webkit-scrollbar { width: 4px; }
+        .project-list::-webkit-scrollbar-thumb { background: #00d2ff; border-radius: 2px; }
+        .project-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .project-item {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 210, 255, 0.1);
+            border-radius: 12px; padding: 15px; text-align: left; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .project-item:hover {
+            background: rgba(0, 210, 255, 0.05); border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.1); transform: translateX(5px);
+        }
+        .project-title { color: #00d2ff; font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; }
+        .project-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 10px; line-height: 1.4; }
+        .project-link-small {
+            display: inline-block; font-size: 0.75rem; color: #fff; text-decoration: none;
+            background: linear-gradient(45deg, #00d2ff, #9d50bb); padding: 5px 12px;
+            border-radius: 20px; opacity: 0.8; transition: 0.3s; pointer-events: auto;
+        }
+        .project-link-small:hover { opacity: 1; box-shadow: 0 0 10px rgba(157, 80, 187, 0.5); }
     </style>
 </head>
 <body>
@@ -161,9 +182,23 @@
             <a href="https://www.youtube.com/@MazerOxide" class="link-btn">Youtube</a>
         </div>
         <div id="projects" class="content-section">
-            <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Works</h1>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 40px; text-align: center;">
-                <h3 style="color: rgba(255,255,255,0.2); margin: 0; letter-spacing: 5px; text-transform: uppercase;">Soon...</h3>
+            <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Works</h1>
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-title">Project Alpha</div>
+                    <div class="project-desc">Описание вашего крутого проекта здесь.</div>
+                    <a href="#" class="project-link-small">View</a>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">Neon Script</div>
+                    <div class="project-desc">Скрипт с неоновым интерфейсом.</div>
+                    <a href="#" class="project-link-small">Download</a>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">Web Design</div>
+                    <div class="project-desc">Современный дизайн в стиле Glassmorphism.</div>
+                    <a href="#" class="project-link-small">Demo</a>
+                </div>
             </div>
         </div>
     </div>
