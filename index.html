@@ -595,6 +595,8 @@
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2101;
             min-width: 140px; box-shadow: 0 10px 30px var(--shadow-color);
             max-height: 240px; overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) transparent;
         }
         .theme-dropdown::-webkit-scrollbar { width: 4px; }
         .theme-dropdown::-webkit-scrollbar-track { background: transparent; }
@@ -992,6 +994,7 @@
         function setLanguage(lang, animate = true) {
             currentLang = lang;
             localStorage.setItem('siteLang', lang);
+            document.documentElement.lang = lang;
             
             if (animate) {
                 const overlay = document.getElementById('transition-overlay');
@@ -1065,12 +1068,12 @@
             if (e.type === 'touchstart') lastTouchTime = Date.now();
             if (e.type === 'mousedown' && Date.now() - lastTouchTime < 500) return;
 
-            if(e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT' && e.target.id !== 'menu-toggle' && 
+            if(!e.target.closest('a') && !e.target.closest('button') && !e.target.closest('input') && e.target.id !== 'menu-toggle' && 
                !e.target.closest('.menu-btn') && 
                !e.target.closest('.audio-player-container') && 
                !e.target.closest('.audio-player-toggle') && 
-               !e.target.closest('.lang-dropdown') && e.target.id !== 'lang-btn' &&
-               !e.target.closest('.theme-dropdown') && e.target.id !== 'theme-btn') {
+               !e.target.closest('.lang-dropdown') && !e.target.closest('#lang-btn') &&
+               !e.target.closest('.theme-dropdown') && !e.target.closest('#theme-btn')) {
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
