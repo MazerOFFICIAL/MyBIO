@@ -1093,11 +1093,11 @@
 
         function startStatusAnimation() {
             typeWriterElement.style.opacity = '0';
-            setTimeout(() => {
+            statusTimeout = setTimeout(() => {
                 typeWriterElement.textContent = phrases[phraseIndex];
                 typeWriterElement.style.opacity = '1';
                 statusTimeout = setTimeout(changeStatusText, 3000);
-            }, 50);
+            }, 500);
         }
         startStatusAnimation();
     </script>
