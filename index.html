@@ -1419,7 +1419,7 @@
             isGameRunning = true;
             createFood();
             clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, 150);
+            gameInterval = setInterval(gameLoop, 175);
         }
 
         function gameLoop() {
@@ -1442,7 +1442,7 @@
             if (head.x === food.x && head.y === food.y) {
                 snakeScore++;
                 snakeScoreDisplay.textContent = `Score: ${snakeScore}`;
-                if (snakeScore === 67) {
+                if (snakeScore === 21) {
                     winGame();
                     return;
                 }
@@ -1467,14 +1467,23 @@
         }
 
         function createFood() {
-            food = {
-                x: Math.floor(Math.random() * tileCount),
-                y: Math.floor(Math.random() * tileCount)
-            };
-            // Check if food spawns on snake
-            snake.forEach(part => {
-                if (part.x === food.x && part.y === food.y) createFood();
-            });
+            let valid = false;
+            while (!valid) {
+                // 15% chance to allow edges, otherwise spawn inside
+                let spawnPadding = (Math.random() > 0.15) ? 1 : 0;
+                let availableSize = tileCount - (spawnPadding * 2);
+                food = {
+                    x: Math.floor(Math.random() * availableSize) + spawnPadding,
+                    y: Math.floor(Math.random() * availableSize) + spawnPadding
+                };
+                valid = true;
+                for (let part of snake) {
+                    if (part.x === food.x && part.y === food.y) {
+                        valid = false;
+                        break;
+                    }
+                }
+            }
         }
 
         function gameOver() {
