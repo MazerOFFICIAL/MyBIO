@@ -288,6 +288,11 @@
             <button id="submit-riddle">✔</button>
         </div>
     </div>
+    <div id="success-modal" class="modal" style="z-index: 5002;">
+        <div class="password-box">
+            <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
+        </div>
+    </div>
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
@@ -433,6 +438,7 @@
         const riddleModal = document.getElementById('riddle-modal');
         const riddleInput = document.getElementById('riddle-answer');
         const riddleSubmit = document.getElementById('submit-riddle');
+        const successModal = document.getElementById('success-modal');
 
         riddleTrigger.addEventListener('click', () => {
             riddleClickCount++;
@@ -445,13 +451,17 @@
         riddleInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') riddleSubmit.click(); });
         riddleSubmit.addEventListener('click', () => {
             const val = riddleInput.value.toLowerCase().trim();
-            if(val === 'match' || val === 'a match' || val === 'the match') riddleModal.classList.remove('active');
+            if(val === 'match' || val === 'a match' || val === 'the match') {
+                riddleModal.classList.remove('active');
+                successModal.classList.add('active');
+            }
             else {
                 riddleInput.style.borderColor = '#ff0055'; riddleInput.style.boxShadow = '0 0 15px #ff0055';
                 setTimeout(() => { riddleInput.style.borderColor = 'rgba(255,255,255,0.1)'; riddleInput.style.boxShadow = 'none'; }, 500);
             }
         });
         riddleModal.addEventListener('click', (e) => { if (e.target === riddleModal) riddleModal.classList.remove('active'); });
+        successModal.addEventListener('click', (e) => { if (e.target === successModal) successModal.classList.remove('active'); });
     </script>
 </body>
 </html>
