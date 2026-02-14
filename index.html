@@ -500,6 +500,11 @@
         const langBtn = document.getElementById('lang-btn');
         let currentLang = localStorage.getItem('siteLang') || 'en';
         let phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
+        const typeWriterElement = document.getElementById('typewriter');
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
 
         const translations = {
             en: {
@@ -967,12 +972,6 @@
                 }
             }
         });
-
-        const typeWriterElement = document.getElementById('typewriter');
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typeSpeed = 100;
 
         function typeWriter() {
             const currentPhrase = phrases[phraseIndex];
