@@ -29,11 +29,11 @@
             --shadow-color: rgba(0, 0, 0, 0.5);
         }
         body.theme-light {
-            --bg-body: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --bg-body: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
             --text-main: #2c3e50;
-            --text-muted: rgba(0, 0, 0, 0.6);
-            --accent-primary: #2980b9;
-            --accent-secondary: #6dd5fa;
+            --text-muted: rgba(44, 62, 80, 0.7);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #60a5fa;
             --glass-bg: rgba(255, 255, 255, 0.6);
             --glass-border: rgba(0, 0, 0, 0.1);
             --sidebar-bg: rgba(255, 255, 255, 0.8);
@@ -45,13 +45,13 @@
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
         body.theme-midnight {
-            --bg-body: #000000;
+            --bg-body: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
             --text-main: #ffffff;
-            --text-muted: #888888;
+            --text-muted: rgba(255, 255, 255, 0.6);
             --accent-primary: #ffffff;
-            --accent-secondary: #333333;
-            --glass-bg: rgba(20, 20, 20, 0.9);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --accent-secondary: #808080;
+            --glass-bg: rgba(30, 30, 30, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --sidebar-bg: #000000;
             --card-bg: #000000;
             --player-bg: #111111;
@@ -60,11 +60,11 @@
             --particle-color: #ffffff;
         }
         body.theme-forest {
-            --bg-body: linear-gradient(to bottom, #134e5e, #71b280);
+            --bg-body: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
             --text-main: #f0fdf4;
             --text-muted: rgba(255, 255, 255, 0.7);
-            --accent-primary: #fbbf24;
-            --accent-secondary: #34d399;
+            --accent-primary: #4ade80;
+            --accent-secondary: #22c55e;
             --glass-bg: rgba(10, 40, 30, 0.5);
             --glass-border: rgba(255, 255, 255, 0.15);
             --sidebar-bg: rgba(5, 20, 15, 0.6);
@@ -72,13 +72,13 @@
             --player-bg: rgba(10, 40, 30, 0.9);
             --input-bg: rgba(255, 255, 255, 0.1);
             --btn-hover-bg: rgba(251, 191, 36, 0.1);
-            --particle-color: #fbbf24;
+            --particle-color: #4ade80;
         }
         body.theme-sunset {
-            --bg-body: linear-gradient(to bottom, #240b36, #c31432);
+            --bg-body: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --accent-primary: #ff00cc;
+            --text-muted: rgba(255, 255, 255, 0.8);
+            --accent-primary: #ff6b6b;
             --accent-secondary: #333399;
             --glass-bg: rgba(40, 10, 40, 0.5);
             --glass-border: rgba(255, 255, 255, 0.15);
@@ -86,8 +86,84 @@
             --card-bg: rgba(40, 10, 40, 0.5);
             --player-bg: rgba(40, 10, 40, 0.9);
             --input-bg: rgba(255, 255, 255, 0.1);
-            --btn-hover-bg: rgba(255, 0, 204, 0.1);
-            --particle-color: #ff99cc;
+            --btn-hover-bg: rgba(255, 107, 107, 0.2);
+            --particle-color: #ffffff;
+        }
+        body.theme-ocean {
+            --bg-body: linear-gradient(to top, #1c92d2, #f2fcfe);
+            --text-main: #004e92;
+            --text-muted: rgba(0, 78, 146, 0.7);
+            --accent-primary: #000428;
+            --accent-secondary: #004e92;
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --sidebar-bg: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(255, 255, 255, 0.4);
+            --player-bg: rgba(255, 255, 255, 0.8);
+            --input-bg: rgba(0, 0, 0, 0.05);
+            --btn-hover-bg: rgba(0, 78, 146, 0.1);
+            --particle-color: #004e92;
+            --shadow-color: rgba(0, 78, 146, 0.2);
+        }
+        body.theme-matrix {
+            --bg-body: #000000;
+            --text-main: #00ff00;
+            --text-muted: rgba(0, 255, 0, 0.6);
+            --accent-primary: #00ff00;
+            --accent-secondary: #003300;
+            --glass-bg: rgba(0, 20, 0, 0.8);
+            --glass-border: rgba(0, 255, 0, 0.3);
+            --sidebar-bg: #000000;
+            --card-bg: rgba(0, 10, 0, 0.8);
+            --player-bg: #001100;
+            --input-bg: rgba(0, 50, 0, 0.3);
+            --btn-hover-bg: rgba(0, 255, 0, 0.1);
+            --particle-color: #00ff00;
+        }
+        body.theme-nebula {
+            --bg-body: linear-gradient(to bottom, #2b1055, #7597de);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --accent-primary: #d961d6;
+            --accent-secondary: #7597de;
+            --glass-bg: rgba(43, 16, 85, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --sidebar-bg: rgba(30, 10, 60, 0.6);
+            --card-bg: rgba(43, 16, 85, 0.5);
+            --player-bg: rgba(43, 16, 85, 0.9);
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --btn-hover-bg: rgba(217, 97, 214, 0.15);
+            --particle-color: #ffffff;
+        }
+        body.theme-gold {
+            --bg-body: radial-gradient(circle, #333333, #000000);
+            --text-main: #ffd700;
+            --text-muted: rgba(255, 215, 0, 0.6);
+            --accent-primary: #ffd700;
+            --accent-secondary: #b8860b;
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: rgba(255, 215, 0, 0.3);
+            --sidebar-bg: #000000;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --player-bg: #111111;
+            --input-bg: rgba(255, 215, 0, 0.05);
+            --btn-hover-bg: rgba(255, 215, 0, 0.1);
+            --particle-color: #ffd700;
+        }
+        body.theme-dracula {
+            --bg-body: #282a36;
+            --text-main: #f8f8f2;
+            --text-muted: #6272a4;
+            --accent-primary: #ff79c6;
+            --accent-secondary: #bd93f9;
+            --glass-bg: rgba(40, 42, 54, 0.8);
+            --glass-border: rgba(189, 147, 249, 0.3);
+            --sidebar-bg: #282a36;
+            --card-bg: rgba(40, 42, 54, 0.8);
+            --player-bg: #282a36;
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --btn-hover-bg: rgba(255, 121, 198, 0.1);
+            --particle-color: #bd93f9;
         }
         input, textarea {
             user-select: text !important;
@@ -441,6 +517,12 @@
             opacity: 0; pointer-events: none; transform: translateY(-10px);
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2101;
             min-width: 140px; box-shadow: 0 10px 30px var(--shadow-color);
+            max-height: 240px; overflow-y: auto;
+        }
+        .theme-dropdown::-webkit-scrollbar { width: 4px; }
+        .theme-dropdown::-webkit-scrollbar-track { background: transparent; }
+        .theme-dropdown::-webkit-scrollbar-thumb {
+            background: var(--accent-primary); border-radius: 4px;
         }
         .theme-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .theme-option {
@@ -521,6 +603,11 @@
         <div class="theme-option" data-theme="midnight">Midnight</div>
         <div class="theme-option" data-theme="forest">Forest</div>
         <div class="theme-option" data-theme="sunset">Sunset</div>
+        <div class="theme-option" data-theme="ocean">Ocean</div>
+        <div class="theme-option" data-theme="matrix">Matrix</div>
+        <div class="theme-option" data-theme="nebula">Nebula</div>
+        <div class="theme-option" data-theme="gold">Gold</div>
+        <div class="theme-option" data-theme="dracula">Dracula</div>
     </div>
     <div class="card">
         <div id="bio" class="content-section active">
