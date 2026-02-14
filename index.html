@@ -12,101 +12,142 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: radial-gradient(circle at top left, #1a1a2e, #16213e, #0f3460);
+            background: #050505;
             font-family: 'Segoe UI', sans-serif;
             color: white;
             overflow: hidden;
+            cursor: none;
+        }
+        #cursor {
+            width: 20px;
+            height: 20px;
+            background: #00d2ff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px #00d2ff, 0 0 40px #00d2ff;
+            transition: transform 0.1s ease;
         }
         .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 30px;
+            padding: 50px 40px;
+            border-radius: 40px;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-            width: 320px;
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideUp 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            width: 340px;
+            position: relative;
+            z-index: 1;
+            transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        @keyframes slideUp {
-            to { transform: translateY(0); opacity: 1; }
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            box-shadow: 0 35px 70px rgba(0, 210, 255, 0.15);
         }
         .avatar {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #00d2ff;
-            box-shadow: 0 0 20px #00d2ff;
-            transition: 0.5s;
-            margin-bottom: 20px;
+            border: 4px solid #00d2ff;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            transition: 0.8s cubic-bezier(0.5, 1.5, 0.5, 1);
+            margin-bottom: 25px;
         }
         .avatar:hover {
-            transform: rotate(360s);
-            box-shadow: 0 0 40px #00d2ff, 0 0 60px #3a7bd5;
+            transform: scale(1.1) rotate(15deg);
         }
         h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin: 10px 0;
-            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            background: linear-gradient(90deg, #00d2ff, #9d50bb, #00d2ff);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
         p {
-            font-size: 1rem;
-            color: #ccc;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 35px;
+            letter-spacing: 1px;
         }
         .links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
         .link-btn {
             text-decoration: none;
             color: white;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            transition: 0.3s;
-            border: 1px solid transparent;
-            font-weight: 500;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
         }
         .link-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
+            background: rgba(0, 210, 255, 0.1);
+            transform: scale(1.02);
             border: 1px solid #00d2ff;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+            color: #00d2ff;
         }
-        .bg-circle {
-            position: absolute;
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-            filter: blur(80px);
-            animation: float 10s infinite alternate;
+            filter: blur(120px);
         }
-        @keyframes float {
-            from { transform: translate(0, 0); }
-            to { transform: translate(100px, 150px); }
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #3a7bd5;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(120%, 120%); }
         }
     </style>
 </head>
 <body>
-    <div class="bg-circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
-    <div class="bg-circle" style="width: 200px; height: 200px; bottom: -50px; right: -50px; background: #9d50bb;"></div>
+    <div id="cursor"></div>
+    <div class="bg-blobs">
+        <div class="blob" style="background: #00d2ff; top: -10%; left: -10%;"></div>
+        <div class="blob" style="background: #9d50bb; bottom: -10%; right: -10%; animation-delay: -5s;"></div>
+    </div>
     <div class="card">
         <img src="me.png" alt="Avatar" class="avatar">
         <h1>Mazer Official</h1>
-        <p>Future Web Developer & Creator</p>
+        <p>Digital Creator & Developer</p>
         <div class="links">
             <a href="https://t.me/Iwehejj" class="link-btn">Telegram</a>
             <a href="https://www.youtube.com/@MazerOxide" class="link-btn">YouTube</a>
         </div>
     </div>
     <script>
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.innerHTML = '❄';
@@ -118,7 +159,7 @@
             snowflake.style.opacity = Math.random();
             snowflake.style.zIndex = '1000';
             snowflake.style.pointerEvents = 'none';
-            const duration = Math.random() * 3 + 2;
+            const duration = Math.random() * 3 + 4;
             snowflake.style.transition = `transform ${duration}s linear, opacity ${duration}s linear`;
             document.body.appendChild(snowflake);
             setTimeout(() => {
@@ -127,7 +168,7 @@
             }, 100);
             setTimeout(() => { snowflake.remove(); }, duration * 1000);
         }
-        setInterval(createSnowflake, 100);
+        setInterval(createSnowflake, 150);
     </script>
 </body>
 </html>
