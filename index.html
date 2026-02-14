@@ -276,7 +276,7 @@
     <div id="password-modal" class="modal">
         <div class="password-box">
             <h3 id="riddle-trigger" style="cursor: pointer;">U need 80+ IQ to solve this</h3>
-            <input type="password" id="tg-password" placeholder="">
+            <input type="password" id="tg-password" placeholder="" autocomplete="off">
             <button id="submit-password">✔</button>
         </div>
     </div>
@@ -284,7 +284,7 @@
         <div class="password-box">
             <h3>RIDDLE</h3>
             <p style="margin: 0; color: rgba(255,255,255,0.7); font-size: 0.9rem; max-width: 300px; line-height: 1.5;">You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?</p>
-            <input type="text" id="riddle-answer" placeholder="Answer">
+            <input type="text" id="riddle-answer" placeholder="Answer" autocomplete="off">
             <button id="submit-riddle">✔</button>
         </div>
     </div>
@@ -445,7 +445,9 @@
             if (riddleClickCount === 1) riddleTimer = setTimeout(() => riddleClickCount = 0, 5000);
             if (riddleClickCount >= 3) {
                 clearTimeout(riddleTimer); riddleClickCount = 0;
+                tgModal.classList.remove('active');
                 riddleModal.classList.add('active');
+                riddleInput.value = '';
             }
         });
         riddleInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') riddleSubmit.click(); });
