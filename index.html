@@ -149,7 +149,9 @@
             -webkit-user-drag: none;
         }
         h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
-        .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.2); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; }
+        .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; min-height: 19px; }
+        .status-text::after { content: '|'; animation: blink 1s step-end infinite; color: #00d2ff; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .link-btn {
             text-decoration: none; color: rgba(255, 255, 255, 0.6); padding: 16px;
             background: rgba(255, 255, 255, 0.03); border-radius: 12px; transition: 0.3s;
@@ -338,7 +340,7 @@
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
             <h1>Mazer</h1>
-            <div class="status-text">Gamer</div>
+            <div class="status-text" id="typewriter"></div>
             <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
             <a href="https://www.youtube.com/@MazerOxide" target="_blank" rel="noopener noreferrer" class="link-btn">Youtube</a>
         </div>
@@ -891,6 +893,30 @@
                 }
             }
         });
+
+        const typeWriterElement = document.getElementById('typewriter');
+        const phrases = ['Gamer', 'Developer', 'Dreamer', 'Creator'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function typeWriter() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 150;
+            }
+            if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
+            setTimeout(typeWriter, typeSpeed);
+        }
+        typeWriter();
     </script>
 </body>
 </html>
