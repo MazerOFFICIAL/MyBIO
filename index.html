@@ -148,6 +148,7 @@
             margin-bottom: 30px; pointer-events: auto;
             -webkit-user-drag: none;
         }
+        .greeting { font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); margin-bottom: -5px; font-weight: 500; }
         h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
         .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; min-height: 19px; transition: opacity 0.5s ease; opacity: 1; }
         .link-btn {
@@ -384,6 +385,7 @@
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
+            <div class="greeting" id="greeting"></div>
             <h1>Mazer</h1>
             <div class="status-text" id="typewriter"></div>
             <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
@@ -545,7 +547,8 @@
                 typewriter: ['Gamer', 'Developer', 'Dreamer', 'Creator'],
                 audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track",
                 audioLoop: "Repeat track", audioVolume: "Volume",
-                passwordPlaceholder: "Password"
+                passwordPlaceholder: "Password",
+                greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" }
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -559,7 +562,8 @@
                 typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец'],
                 audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек",
                 audioLoop: "Зациклить трек", audioVolume: "Громкость",
-                passwordPlaceholder: "Пароль"
+                passwordPlaceholder: "Пароль",
+                greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" }
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -573,7 +577,8 @@
                 typewriter: ['Jugador', 'Desarrollador', 'Soñador', 'Creador'],
                 audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente",
                 audioLoop: "Repetir pista", audioVolume: "Volumen",
-                passwordPlaceholder: "Contraseña"
+                passwordPlaceholder: "Contraseña",
+                greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" }
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -587,7 +592,8 @@
                 typewriter: ['Joueur', 'Développeur', 'Rêveur', 'Créateur'],
                 audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante",
                 audioLoop: "Répéter la piste", audioVolume: "Volume",
-                passwordPlaceholder: "Mot de passe"
+                passwordPlaceholder: "Mot de passe",
+                greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" }
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -601,9 +607,18 @@
                 typewriter: ['Gamer', 'Entwickler', 'Träumer', 'Schöpfer'],
                 audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel",
                 audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
-                passwordPlaceholder: "Passwort"
+                passwordPlaceholder: "Passwort",
+                greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" }
             }
         };
+
+        function getGreetingTime() {
+            const h = new Date().getHours();
+            if (h < 6) return 'night';
+            if (h < 12) return 'morning';
+            if (h < 18) return 'afternoon';
+            return 'evening';
+        }
 
         function applyLanguage(lang) {
             const t = translations[lang];
@@ -631,6 +646,8 @@
             document.getElementById('volume-btn').title = t.audioVolume;
             
             phrases = t.typewriter;
+            
+            document.getElementById('greeting').textContent = t.greetings[getGreetingTime()];
             phraseIndex = 0;
             
             startStatusAnimation();
