@@ -215,6 +215,82 @@
         .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: translateX(-100%); animation: shimmer 2s infinite; }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
 
+        .audio-player-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 20, 35, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2100;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            pointer-events: auto;
+        }
+        .audio-player-toggle:hover {
+            transform: scale(1.1);
+            border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+        }
+        .audio-player-toggle svg { width: 24px; height: 24px; fill: #00d2ff; transition: 0.3s; }
+        .audio-player-container {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            width: 280px;
+            background: rgba(15, 20, 35, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            z-index: 2099;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .audio-player-container.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        .audio-controls { display: flex; align-items: center; gap: 15px; }
+        .audio-controls button { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; transition: 0.3s; pointer-events: auto; }
+        .audio-controls { justify-content: center; }
+        .audio-controls button:hover { background: rgba(0, 210, 255, 0.1); border-color: rgba(0, 210, 255, 0.4); }
+        .audio-controls button.active { background: rgba(0, 210, 255, 0.1); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
+        .audio-controls button svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.7); }
+        .audio-controls button:hover svg, .audio-controls button.active svg { fill: #00d2ff; }
+        .audio-settings { display: flex; align-items: center; gap: 15px; }
+        .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; outline: none; transition: 0.2s; pointer-events: auto; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: #00d2ff; border-radius: 50%; box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
+        .track-title {
+            font-size: 0.9rem; color: rgba(255,255,255,0.7); text-align: center;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .volume-slider::-moz-range-thumb { width: 16px; height: 16px; background: #00d2ff; border-radius: 50%; border: none; }
+        .equalizer { display: flex; gap: 4px; height: 20px; align-items: flex-end; }
+        .equalizer span { width: 4px; height: 100%; background: #00d2ff; border-radius: 2px; animation: quiet 1.5s infinite ease-in-out; }
+        .equalizer.playing span { animation-name: dance; }
+        .equalizer span:nth-child(2) { animation-delay: -1.2s; }
+        .equalizer span:nth-child(3) { animation-delay: -0.9s; }
+        .equalizer span:nth-child(4) { animation-delay: -0.6s; }
+        .equalizer span:nth-child(5) { animation-delay: -0.3s; }
+        @keyframes dance {
+            0%, 100% { transform: scaleY(0.1); }
+            50% { transform: scaleY(1.0); }
+        }
+        @keyframes quiet {
+            0%, 100% { transform: scaleY(0.1); }
+            50% { transform: scaleY(0.3); }
+        }
+
         @media (max-width: 768px) {
             #cursor { display: none; }
             body { overflow-y: auto; }
@@ -333,6 +409,33 @@
             <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
         </div>
     </div>
+
+    <div class="audio-player-toggle" id="audio-player-toggle">
+        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+    </div>
+    <div class="audio-player-container" id="audio-player-container">
+        <div class="track-title" id="track-title">Loading...</div>
+        <div class="audio-controls">
+            <button id="prev-btn">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+            </button>
+            <button id="play-pause-btn"></button>
+            <button id="next-btn">
+                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+        </div>
+        <div class="audio-settings">
+            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01">
+            <button id="loop-btn">
+                <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+            </button>
+        </div>
+        <div class="equalizer" id="equalizer">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <audio id="bg-music"></audio>
+
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
@@ -402,6 +505,10 @@
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active'); menuToggle.classList.remove('active');
+            }
+            const audioPlayerContainer = document.getElementById('audio-player-container');
+            if (!audioPlayerContainer.contains(e.target) && !document.getElementById('audio-player-toggle').contains(e.target) && audioPlayerContainer.classList.contains('active')) {
+                audioPlayerContainer.classList.remove('active');
             }
         });
         function showSection(sectionId) {
@@ -518,6 +625,109 @@
         });
         riddleModal.addEventListener('click', (e) => { if (e.target === riddleModal) riddleModal.classList.remove('active'); });
         successModal.addEventListener('click', (e) => { if (e.target === successModal) successModal.classList.remove('active'); });
+
+        const audioPlayerToggle = document.getElementById('audio-player-toggle');
+        const audioPlayerContainer = document.getElementById('audio-player-container');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const loopBtn = document.getElementById('loop-btn');
+        const audio = document.getElementById('bg-music');
+        const equalizer = document.getElementById('equalizer');
+        const trackTitle = document.getElementById('track-title');
+
+        const tracks = [
+            { src: 'background-music1.mp3', title: 'Phonk Mix 1' },
+            { src: 'background-music2.mp3', title: 'Phonk Mix 2' },
+            { src: 'background-music3.mp3', title: 'Phonk Mix 3' },
+            { src: 'background-music4.mp3', title: 'Phonk Mix 4' },
+            { src: 'background-music5.mp3', title: 'Phonk Mix 5' }
+        ];
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+        const pauseIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+
+        const savedTrackIndex = localStorage.getItem('musicTrackIndex');
+        const savedVolume = localStorage.getItem('musicVolume');
+        const isPlaylistLooping = localStorage.getItem('musicPlaylistLoop') === 'true';
+
+        if (savedTrackIndex !== null && tracks[savedTrackIndex]) {
+            currentTrackIndex = parseInt(savedTrackIndex, 10);
+        }
+        if (savedVolume !== null) {
+            audio.volume = savedVolume;
+            volumeSlider.value = savedVolume;
+        } else {
+            audio.volume = 0.3;
+            volumeSlider.value = 0.3;
+        }
+        if (isPlaylistLooping) {
+            loopBtn.classList.add('active');
+        }
+
+        function loadTrack(index) {
+            if (!tracks[index]) return;
+            currentTrackIndex = index;
+            trackTitle.textContent = tracks[index].title;
+            audio.src = tracks[index].src;
+            audio.load();
+            localStorage.setItem('musicTrackIndex', index);
+            if (isPlaying) {
+                audio.play().catch(e => console.error("Audio play failed:", e));
+            }
+        }
+
+        function playNext() {
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= tracks.length) {
+                if (loopBtn.classList.contains('active')) {
+                    nextIndex = 0;
+                } else {
+                    isPlaying = false;
+                    updatePlayPauseIcon();
+                    return;
+                }
+            }
+            loadTrack(nextIndex);
+        }
+        function playPrev() {
+            let prevIndex = currentTrackIndex - 1;
+            if (prevIndex < 0) {
+                prevIndex = loopBtn.classList.contains('active') ? tracks.length - 1 : 0;
+            }
+            loadTrack(prevIndex);
+        }
+
+        function updatePlayPauseIcon() {
+            playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
+            equalizer.classList.toggle('playing', isPlaying);
+        }
+
+        audioPlayerToggle.addEventListener('click', () => { audioPlayerContainer.classList.toggle('active'); });
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) { audio.play().catch(e => console.error("Audio play failed:", e)); } else { audio.pause(); }
+        });
+
+        nextBtn.addEventListener('click', playNext);
+        prevBtn.addEventListener('click', playPrev);
+
+        loopBtn.addEventListener('click', () => {
+            const isLooping = loopBtn.classList.toggle('active');
+            localStorage.setItem('musicPlaylistLoop', String(isLooping));
+        });
+
+        volumeSlider.addEventListener('input', e => { audio.volume = e.target.value; localStorage.setItem('musicVolume', e.target.value); });
+        audio.addEventListener('play', () => { isPlaying = true; updatePlayPauseIcon(); });
+        audio.addEventListener('pause', () => { isPlaying = false; updatePlayPauseIcon(); });
+        audio.addEventListener('ended', playNext);
+
+        loadTrack(currentTrackIndex);
+        updatePlayPauseIcon();
     </script>
 </body>
 </html>
