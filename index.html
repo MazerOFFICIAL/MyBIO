@@ -197,17 +197,21 @@
         #particle-container { z-index: 9999; }
         #cursor {
             position: fixed;
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             pointer-events: none;
             z-index: 10000;
             left: 0;
             top: 0;
             transform: translate3d(-5px, -5px, 0);
-            filter: drop-shadow(0 0 5px rgba(157, 80, 187, 0.8));
+            filter: drop-shadow(0 0 5px var(--accent-primary));
             opacity: 0;
             transition: opacity 0.2s ease;
             will-change: transform;
+        }
+        #cursor svg path {
+            fill: var(--accent-primary);
+            stroke: var(--text-main);
         }
         .menu-btn {
             position: absolute;
@@ -750,7 +754,7 @@
     </div>
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M10 2L28 16L16 18L10 28V2Z" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
     <div class="menu-btn" id="menu-toggle"><span></span><span></span><span></span></div>
@@ -1038,7 +1042,7 @@
             });
         });
 
-        const speed = 0.8;
+        const speed = 0.7;
 
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1';
@@ -1052,7 +1056,7 @@
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;
             cursorY += (mouseY - cursorY) * speed;
-            cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 2}px, 0)`;
+            cursor.style.transform = `translate3d(${cursorX - 7.5}px, ${cursorY - 1.5}px, 0)`;
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
@@ -1523,6 +1527,16 @@
         function startStatusAnimation() {
             clearTimeout(statusTimeout);
             typeWriterElement.style.opacity = '0';
+            statusTimeout = setTimeout(() => {
+                typeWriterElement.textContent = phrases[phraseIndex];
+                typeWriterElement.style.opacity = '1';
+                statusTimeout = setTimeout(changeStatusText, 3000);
+            }, 600);
+        }
+        startStatusAnimation();
+    </script>
+</body>
+</html>
             statusTimeout = setTimeout(() => {
                 typeWriterElement.textContent = phrases[phraseIndex];
                 typeWriterElement.style.opacity = '1';
