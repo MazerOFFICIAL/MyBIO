@@ -478,7 +478,6 @@
             <div class="volume-control">
                 <button id="volume-btn"></button>
                 <div class="volume-popup" id="volume-popup">
-                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01" orient="vertical">
                     <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01">
                 </div>
             </div>
@@ -710,6 +709,7 @@
         let currentTrackIndex = 0;
         let isPlaying = false;
         let isDraggingProgress = false;
+        let autoPlayTimer;
 
         const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
         const pauseIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
@@ -761,22 +761,18 @@
         }
 
         function playNext() {
+            clearTimeout(autoPlayTimer);
             let nextIndex = currentTrackIndex + 1;
             if (nextIndex >= tracks.length) {
-                if (loopBtn.classList.contains('active')) {
-                    nextIndex = 0;
-                } else {
-                    isPlaying = false;
-                    updatePlayPauseIcon();
-                    return;
-                }
+                nextIndex = 0;
             }
             loadTrack(nextIndex);
         }
         function playPrev() {
+            clearTimeout(autoPlayTimer);
             let prevIndex = currentTrackIndex - 1;
             if (prevIndex < 0) {
-                prevIndex = loopBtn.classList.contains('active') ? tracks.length - 1 : 0;
+                prevIndex = tracks.length - 1;
             }
             loadTrack(prevIndex);
         }
@@ -852,7 +848,7 @@
 
         audio.addEventListener('play', () => { isPlaying = true; updatePlayPauseIcon(); });
         audio.addEventListener('pause', () => { isPlaying = false; updatePlayPauseIcon(); });
-        audio.addEventListener('ended', playNext);
+        audio.addEventListener('ended', () => { autoPlayTimer = setTimeout(playNext, 1000); });
         audio.addEventListener('timeupdate', () => {
             if (audio.duration && !isDraggingProgress) {
                 currentTimeEl.textContent = formatTime(audio.currentTime);
