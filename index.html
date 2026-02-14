@@ -456,6 +456,30 @@
         }
         #transition-overlay.active { opacity: 1; pointer-events: auto; }
 
+        #toast-notification {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--player-bg);
+            border: 1px solid var(--accent-primary);
+            color: var(--text-main);
+            padding: 12px 25px;
+            border-radius: 12px;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            backdrop-filter: blur(15px);
+            font-weight: 600;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #toast-notification.show {
+            top: 30px;
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             #cursor { display: none; }
             body { overflow-y: auto; }
@@ -479,6 +503,7 @@
     <div id="snow-container"></div>
     <div id="particle-container"></div>
     <div id="transition-overlay"></div>
+    <div id="toast-notification"></div>
     <div class="lang-btn" id="lang-btn">EN</div>
     <div class="lang-dropdown" id="lang-dropdown">
         <div class="lang-option" data-lang="en">English</div>
@@ -665,7 +690,8 @@
                 audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track",
                 audioLoop: "Repeat track", audioVolume: "Volume",
                 passwordPlaceholder: "Password",
-                greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" }
+                greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
+                copied: "Copied to clipboard"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -680,7 +706,8 @@
                 audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек",
                 audioLoop: "Зациклить трек", audioVolume: "Громкость",
                 passwordPlaceholder: "Пароль",
-                greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" }
+                greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
+                copied: "Скопировано в буфер обмена"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -695,7 +722,8 @@
                 audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente",
                 audioLoop: "Repetir pista", audioVolume: "Volumen",
                 passwordPlaceholder: "Contraseña",
-                greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" }
+                greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
+                copied: "Copiado al portapapeles"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -710,7 +738,8 @@
                 audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante",
                 audioLoop: "Répéter la piste", audioVolume: "Volume",
                 passwordPlaceholder: "Mot de passe",
-                greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" }
+                greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
+                copied: "Copié dans le presse-papiers"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -725,7 +754,8 @@
                 audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel",
                 audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
                 passwordPlaceholder: "Passwort",
-                greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" }
+                greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
+                copied: "In die Zwischenablage kopiert"
             }
         };
 
@@ -753,7 +783,7 @@
             document.querySelector('#riddle-modal h3').textContent = t.riddleTitle;
             document.querySelector('#riddle-modal p').textContent = t.riddleText;
             document.getElementById('riddle-answer').placeholder = t.riddlePlaceholder;
-            document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span style="color: #00d2ff;">Telegram</span>`;
+            document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span id="copy-password" style="color: var(--accent-primary); cursor: pointer; text-decoration: underline; text-underline-offset: 4px;" title="${t.copied}">Telegram</span>`;
             document.getElementById('tg-password').placeholder = t.passwordPlaceholder;
             
             document.getElementById('prev-btn').title = t.audioPrev;
@@ -1032,6 +1062,22 @@
         });
         riddleModal.addEventListener('click', (e) => { if (e.target === riddleModal) riddleModal.classList.remove('active'); });
         successModal.addEventListener('click', (e) => { if (e.target === successModal) successModal.classList.remove('active'); });
+
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'copy-password') {
+                const textToCopy = e.target.textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const toast = document.getElementById('toast-notification');
+                    toast.textContent = translations[currentLang].copied;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        });
 
         const audioPlayerToggle = document.getElementById('audio-player-toggle');
         const audioPlayerContainer = document.getElementById('audio-player-container');
