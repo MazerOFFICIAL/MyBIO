@@ -11,6 +11,7 @@
             -webkit-user-select: none !important;
             -moz-user-select: none !important;
             -ms-user-select: none !important;
+            -webkit-user-drag: none !important;
         }
         body {
             margin: 0;
@@ -124,6 +125,7 @@
             width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
             border: 2px solid rgba(0, 210, 255, 0.5); box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
             margin-bottom: 30px; pointer-events: auto;
+            -webkit-user-drag: none;
         }
         h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
         .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.2); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; }
@@ -148,7 +150,7 @@
     <div id="particle-container"></div>
     <div class="card">
         <div id="bio" class="content-section active">
-            <img src="me.png" alt="Avatar" class="avatar">
+            <img src="me.png" alt="Avatar" class="avatar" draggable="false">
             <h1>Mazer</h1>
             <div class="status-text">Gamer</div>
             <a href="https://t.me/Iwehejj" class="link-btn">Telegram</a>
@@ -192,31 +194,30 @@
         animateCursor();
 
         document.addEventListener('mousedown', (e) => {
-            for(let i=0; i<4; i++) {
-                const p = document.createElement('div');
-                p.className = 'click-snow';
-                p.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-                p.style.left = e.clientX + 'px';
-                p.style.top = e.clientY + 'px';
-                p.style.fontSize = Math.random() * 8 + 8 + 'px';
-                pContainer.appendChild(p);
-                
-                const angle = (Math.random() * Math.PI) + Math.PI; // Только вверх
-                const force = Math.random() * 2 + 1;
-                let vx = Math.cos(angle) * force;
-                let vy = Math.sin(angle) * force;
-                let px = e.clientX, py = e.clientY;
-                let op = 1;
-                let grav = 0.05;
-
-                function moveP() {
-                    vy += grav; // Гравитация тянет вниз
-                    px += vx; py += vy; op -= 0.015;
-                    p.style.transform = `translate3d(${px - e.clientX}px, ${py - e.clientY}px, 0)`;
-                    p.style.opacity = op;
-                    if(op > 0) requestAnimationFrame(moveP); else p.remove();
+            if(e.target.tagName !== 'A' && e.target.id !== 'menu-toggle' && !e.target.closest('.menu-btn')) {
+                for(let i=0; i<4; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'click-snow';
+                    p.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
+                    p.style.left = e.clientX + 'px';
+                    p.style.top = e.clientY + 'px';
+                    p.style.fontSize = Math.random() * 8 + 8 + 'px';
+                    pContainer.appendChild(p);
+                    const angle = (Math.random() * Math.PI) + Math.PI;
+                    const force = Math.random() * 2 + 1;
+                    let vx = Math.cos(angle) * force;
+                    let vy = Math.sin(angle) * force;
+                    let px = e.clientX, py = e.clientY;
+                    let op = 1;
+                    let grav = 0.05;
+                    function moveP() {
+                        vy += grav; px += vx; py += vy; op -= 0.015;
+                        p.style.transform = `translate3d(${px - e.clientX}px, ${py - e.clientY}px, 0)`;
+                        p.style.opacity = op;
+                        if(op > 0) requestAnimationFrame(moveP); else p.remove();
+                    }
+                    moveP();
                 }
-                moveP();
             }
         });
 
@@ -248,7 +249,7 @@
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
             snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-            const duration = Math.random() * 5 + 10 + 's'; // Медленнее
+            const duration = Math.random() * 5 + 10 + 's';
             snowflake.style.animation = `fall ${duration} linear forwards`;
             document.getElementById('snow-container').appendChild(snowflake);
             setTimeout(() => snowflake.remove(), parseFloat(duration) * 1000);
