@@ -11,6 +11,7 @@
             -moz-user-select: none !important;
             -ms-user-select: none !important;
             -webkit-user-drag: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
         :root {
             --bg-body: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -182,6 +183,7 @@
             font-family: 'Segoe UI', sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
+            overscroll-behavior: none;
         }
         #stars-container, #snow-container, #particle-container {
             position: fixed;
@@ -548,7 +550,7 @@
             color: var(--text-main);
             padding: 12px 25px;
             border-radius: 12px;
-            z-index: 10000;
+            z-index: 10001;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             box-shadow: 0 10px 30px var(--shadow-color);
@@ -930,10 +932,6 @@
             document.querySelectorAll('.theme-option').forEach(opt => {
                 opt.classList.toggle('selected', opt.getAttribute('data-theme') === theme);
             });
-            
-            // Update particles color
-            const particleColor = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
-            document.querySelectorAll('.snow').forEach(s => s.style.color = particleColor);
         }
         setTheme(currentTheme);
 
@@ -984,7 +982,7 @@
                     const p = document.createElement('div');
                     p.className = 'click-snow';
                     p.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-                    p.style.color = getComputedStyle(document.body).getPropertyValue('--particle-color');
+                    p.style.color = 'var(--particle-color)';
                     p.style.left = clientX + 'px';
                     p.style.top = clientY + 'px';
                     p.style.fontSize = Math.random() * 8 + 8 + 'px';
@@ -1060,7 +1058,7 @@
             const snowflake = document.createElement('div');
             snowflake.className = 'snow';
             snowflake.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-            snowflake.style.color = getComputedStyle(document.body).getPropertyValue('--particle-color');
+            snowflake.style.color = 'var(--particle-color)';
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
             snowflake.style.opacity = Math.random() * 0.5 + 0.3;
