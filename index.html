@@ -153,26 +153,25 @@
             from { transform: translate3d(0, -10vh, 0) rotate(0deg); }
             to { transform: translate3d(0, 110vh, 0) rotate(360deg); }
         }
-        .project-list { display: flex; flex-direction: column; gap: 10px; max-height: 450px; overflow-y: auto; padding-right: 5px; cursor: none; }
-        .project-list::-webkit-scrollbar { width: 6px; cursor: none; }
-        .project-list::-webkit-scrollbar-thumb { background: #00d2ff; border-radius: 2px; cursor: none; }
-        .project-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); cursor: none; }
+        .project-list { display: flex; flex-direction: column; gap: 25px; width: 100%; }
         .project-item {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px; padding: 15px; text-align: left; transition: 0.3s;
-            position: relative; overflow: hidden;
+            background: linear-gradient(rgba(2, 2, 5, 0.95), rgba(2, 2, 5, 0.95)) padding-box, linear-gradient(45deg, rgba(0, 210, 255, 0.15), rgba(157, 80, 187, 0.15)) border-box;
+            border: 1px solid transparent;
+            border-radius: 30px; padding: 30px; text-align: center; transition: 0.3s;
+            position: relative; min-height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .project-item:hover {
-            background: rgba(255, 255, 255, 0.04); border-color: rgba(0, 210, 255, 0.3);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.1); transform: translateX(5px);
+            transform: translateY(-5px);
+            background: linear-gradient(rgba(2, 2, 5, 0.92), rgba(2, 2, 5, 0.92)) padding-box, linear-gradient(45deg, rgba(0, 210, 255, 0.4), rgba(157, 80, 187, 0.4)) border-box;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
         }
-        .project-title { color: #00d2ff; font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .project-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 10px; line-height: 1.4; }
+        .project-title { color: #00d2ff; font-weight: 800; font-size: 1.8rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .project-desc { font-size: 0.95rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; line-height: 1.5; max-width: 90%; }
         .project-link-small {
-            display: block; font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); text-decoration: none;
-            background: rgba(255, 255, 255, 0.05); padding: 8px; text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
-            text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; transition: 0.3s; pointer-events: auto;
+            display: inline-block; font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); text-decoration: none;
+            background: rgba(255, 255, 255, 0.05); padding: 12px 30px; text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 600; transition: 0.3s; pointer-events: auto;
         }
         .project-link-small:hover { background: rgba(0, 210, 255, 0.05); color: #00d2ff; border-color: rgba(0, 210, 255, 0.4); box-shadow: 0 0 15px rgba(0, 210, 255, 0.1); }
     </style>
@@ -193,58 +192,18 @@
             <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Works</h1>
             <div class="project-list">
                 <div class="project-item">
-                    <div class="project-title">Project Alpha</div>
-                    <div class="project-desc">Описание вашего крутого проекта здесь.</div>
+                    <div class="project-title">PROJECT 1</div>
+                    <div class="project-desc">Краткое описание первого проекта.</div>
                     <a href="#" class="project-link-small">Visit</a>
                 </div>
                 <div class="project-item">
-                    <div class="project-title">Neon Script</div>
-                    <div class="project-desc">Скрипт с неоновым интерфейсом.</div>
+                    <div class="project-title">PROJECT 2</div>
+                    <div class="project-desc">Краткое описание второго проекта.</div>
                     <a href="#" class="project-link-small">Visit</a>
                 </div>
                 <div class="project-item">
-                    <div class="project-title">Web Design</div>
-                    <div class="project-desc">Современный дизайн в стиле Glassmorphism.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Cheat Menu UI</div>
-                    <div class="project-desc">Стильное меню для игровых модификаций.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Discord Bot</div>
-                    <div class="project-desc">Многофункциональный бот для модерации.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Config Loader</div>
-                    <div class="project-desc">Система сохранения и загрузки конфигов.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Particle FX</div>
-                    <div class="project-desc">Библиотека частиц на Canvas API.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Auth System</div>
-                    <div class="project-desc">Безопасная система авторизации пользователей.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Admin Panel</div>
-                    <div class="project-desc">Удобная панель управления для администраторов.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">API Wrapper</div>
-                    <div class="project-desc">Легкая библиотека для работы с API.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">Game Mod</div>
-                    <div class="project-desc">Модификация, добавляющая новые механики.</div>
+                    <div class="project-title">PROJECT 3</div>
+                    <div class="project-desc">Краткое описание третьего проекта.</div>
                     <a href="#" class="project-link-small">Visit</a>
                 </div>
             </div>
