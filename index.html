@@ -508,24 +508,28 @@
             en: {
                 bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills",
                 worksTitle: "Works", skillsTitle: "Skills", soon: "Soon...",
-                telegram: "Telegram", youtube: "Youtube",
+                telegram: "Telegram", youtube: "YouTube",
                 riddleTrigger: "U need 80+ IQ to solve this",
                 riddleTitle: "RIDDLE",
                 riddleText: "You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?",
                 riddlePlaceholder: "Answer",
                 passwordPrefix: "Password is ",
-                typewriter: ['Gamer', 'Developer', 'Dreamer', 'Creator']
+                typewriter: ['Gamer', 'Developer', 'Dreamer', 'Creator'],
+                audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track",
+                audioLoop: "Loop playlist", audioVolume: "Volume"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
                 worksTitle: "Работы", skillsTitle: "Навыки", soon: "Скоро...",
-                telegram: "Telegram", youtube: "Youtube",
+                telegram: "Телеграм", youtube: "Ютуб",
                 riddleTrigger: "Нужен IQ 80+ чтобы решить",
                 riddleTitle: "ЗАГАДКА",
                 riddleText: "Вы входите в темную комнату. В ней есть свеча, керосиновая лампа и камин. У вас в кармане только один коробок спичек. Что вы зажжете первым?",
                 riddlePlaceholder: "Ответ",
                 passwordPrefix: "Пароль: ",
-                typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец']
+                typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец'],
+                audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек",
+                audioLoop: "Зациклить плейлист", audioVolume: "Громкость"
             }
         };
 
@@ -548,6 +552,12 @@
             document.querySelector('#riddle-modal p').textContent = t.riddleText;
             document.getElementById('riddle-answer').placeholder = t.riddlePlaceholder;
             document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span style="color: #00d2ff;">Telegram</span>`;
+            
+            document.getElementById('prev-btn').title = t.audioPrev;
+            document.getElementById('play-pause-btn').title = t.audioPlay;
+            document.getElementById('next-btn').title = t.audioNext;
+            document.getElementById('loop-btn').title = t.audioLoop;
+            document.getElementById('volume-btn').title = t.audioVolume;
             
             phrases = t.typewriter;
             phraseIndex = 0; charIndex = 0; isDeleting = false;
