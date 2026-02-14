@@ -41,11 +41,12 @@
             z-index: 10000;
             left: 0;
             top: 0;
-            transform: translate(-5px, -5px);
+            transform: translate3d(-5px, -5px, 0);
             filter: drop-shadow(0 0 5px rgba(157, 80, 187, 0.8));
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.2s ease;
             will-change: transform;
+            backface-visibility: hidden;
         }
         .menu-btn {
             position: absolute;
@@ -224,7 +225,9 @@
 
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        const speed = 0.15;
+        
+        // Повышенная скорость для резкости (DPI эффект)
+        const speed = 0.3; 
 
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX;
@@ -237,12 +240,12 @@
         });
 
         function animateCursor() {
-            let distX = mouseX - cursorX;
-            let distY = mouseY - cursorY;
-            cursorX += distX * speed;
-            cursorY += distY * speed;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
+            // Прямая интерполяция для максимальной плавности без лагов
+            cursorX += (mouseX - cursorX) * speed;
+            cursorY += (mouseY - cursorY) * speed;
+            
+            cursor.style.transform = `translate3d(${cursorX - 5}px, ${cursorY - 5}px, 0)`;
+            
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
