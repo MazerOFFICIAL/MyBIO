@@ -150,8 +150,6 @@
         }
         h1 { font-size: 3.5rem; margin: 10px 0; color: #00d2ff; font-weight: 800; letter-spacing: -1px; }
         .status-text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; letter-spacing: 4px; text-transform: uppercase; min-height: 19px; }
-        .status-text::after { content: '|'; animation: blink 1s step-end infinite; color: #00d2ff; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .link-btn {
             text-decoration: none; color: rgba(255, 255, 255, 0.6); padding: 16px;
             background: rgba(255, 255, 255, 0.03); border-radius: 12px; transition: 0.3s;
@@ -330,6 +328,12 @@
             font-size: 0.9rem; pointer-events: auto;
         }
         .lang-btn:hover { background: rgba(0, 210, 255, 0.1); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        #transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #090a0f; z-index: 99999;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+        }
+        #transition-overlay.active { opacity: 1; pointer-events: auto; }
 
         @media (max-width: 768px) {
             #cursor { display: none; }
@@ -351,6 +355,7 @@
     <div id="stars-container"></div>
     <div id="snow-container"></div>
     <div id="particle-container"></div>
+    <div id="transition-overlay"></div>
     <div class="lang-btn" id="lang-btn">EN</div>
     <div class="card">
         <div id="bio" class="content-section active">
@@ -533,12 +538,10 @@
             }
         };
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('siteLang', lang);
-            langBtn.textContent = lang.toUpperCase();
+        function applyLanguage(lang) {
             const t = translations[lang];
-
+            langBtn.textContent = lang.toUpperCase();
+            
             document.querySelector('[data-section="bio"]').textContent = t.bioBtn;
             document.querySelector('[data-section="projects"]').textContent = t.projectsBtn;
             document.querySelector('[data-section="skills"]').textContent = t.skillsBtn;
@@ -562,8 +565,24 @@
             phrases = t.typewriter;
             phraseIndex = 0; charIndex = 0; isDeleting = false;
         }
-        langBtn.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'ru' : 'en'));
-        setLanguage(currentLang);
+
+        function setLanguage(lang, animate = true) {
+            currentLang = lang;
+            localStorage.setItem('siteLang', lang);
+            
+            if (animate) {
+                const overlay = document.getElementById('transition-overlay');
+                overlay.classList.add('active');
+                setTimeout(() => {
+                    applyLanguage(lang);
+                    setTimeout(() => overlay.classList.remove('active'), 300);
+                }, 500);
+            } else {
+                applyLanguage(lang);
+            }
+        }
+        langBtn.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'ru' : 'en', true));
+        setLanguage(currentLang, false);
 
         const speed = 0.8;
 
@@ -986,11 +1005,11 @@
             if (isDeleting) {
                 typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
-                typeSpeed = 50;
+                typeSpeed = 30;
             } else {
                 typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
-                typeSpeed = 150;
+                typeSpeed = 80;
             }
             if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; }
             else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
