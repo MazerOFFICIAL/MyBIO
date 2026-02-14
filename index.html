@@ -69,8 +69,8 @@
         .sidebar {
             position: fixed;
             top: 0;
-            left: -350px;
-            width: 350px;
+            left: -233px;
+            width: 233px;
             height: 100%;
             background: rgba(255, 255, 255, 0.01);
             backdrop-filter: blur(40px);
@@ -80,9 +80,9 @@
             transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
             display: flex;
             flex-direction: column;
-            padding: 100px 30px;
+            padding: 100px 20px;
             box-sizing: border-box;
-            gap: 20px;
+            gap: 15px;
         }
         .sidebar.active {
             left: 0;
@@ -173,7 +173,6 @@
 </head>
 <body>
     <div id="stars-container"></div>
-
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar">
@@ -190,56 +189,44 @@
             </div>
         </div>
     </div>
-
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
-
     <div class="menu-btn" id="menu-toggle">
         <span></span><span></span><span></span>
     </div>
-
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
     </div>
-
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
-
         document.addEventListener('mousemove', e => {
             cursor.style.opacity = '1';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
         document.addEventListener('mouseleave', () => {
             cursor.style.opacity = '0';
         });
-
-        // Открытие/Закрытие по клику на бургер
         menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             sidebar.classList.toggle('active');
         });
-
-        // Закрытие при клике в любое место, кроме меню
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
             }
         });
-
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             sidebar.classList.remove('active');
         }
-
         const starsContainer = document.getElementById('stars-container');
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
