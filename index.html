@@ -12,6 +12,12 @@
             -ms-user-select: none !important;
             -webkit-user-drag: none !important;
         }
+        input, textarea {
+            user-select: text !important;
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+        }
         body {
             margin: 0;
             padding: 0;
@@ -271,8 +277,6 @@
         #play-pause-btn svg { width: 22px; height: 22px; }
         .progress-wrapper { width: 100%; display: flex; align-items: center; gap: 10px; }
         .time-display { font-size: 0.75rem; color: rgba(255,255,255,0.5); min-width: 35px; text-align: center; }
-        .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; position: relative; }
-        .progress-bar-fill { height: 100%; background: #00d2ff; border-radius: 2px; width: 0%; position: relative; }
         .progress-bar-container { width: 100%; height: 15px; background: transparent; cursor: pointer; position: relative; display: flex; align-items: center; }
         .progress-bar-container::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
         .progress-bar-fill { height: 4px; background: #00d2ff; border-radius: 2px; width: 0%; position: relative; z-index: 1; pointer-events: none; }
@@ -281,18 +285,15 @@
         .volume-control { position: relative; }
         .volume-popup {
             position: absolute;
-            bottom: 55px;
-            bottom: 50px;
+            bottom: 60px;
             left: 50%;
-            transform: translateX(-50%);
             background: rgba(30, 40, 60, 0.7);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            padding: 15px 10px;
-            padding: 10px;
-            width: 40px;
-            height: 130px;
+            padding: 10px 0;
+            width: 30px;
+            height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -300,15 +301,10 @@
             transition: all 0.3s;
             pointer-events: none;
             transform-origin: bottom center;
-            transform: translateX(-50%) scale(0.8);
+            transform: translateX(-50%) scale(0.9);
         }
         .volume-popup.active { opacity: 1; transform: translateX(-50%) scale(1); pointer-events: auto; }
-        .volume-slider { -webkit-appearance: none; background: transparent; width: 100px; writing-mode: bt-lr; }
-        .volume-slider::-webkit-slider-runnable-track { width: 4px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; background: #00d2ff; border-radius: 50%; margin-top: -6px; }
-        .volume-slider::-moz-range-track { width: 4px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .volume-slider::-moz-range-thumb { height: 16px; width: 16px; background: #00d2ff; border-radius: 50%; border: none; }
-        .volume-slider { -webkit-appearance: none; background: transparent; width: 100px; height: 20px; transform: rotate(-90deg); cursor: pointer; }
+        .volume-slider { -webkit-appearance: none; background: transparent; width: 100px; height: 30px; transform: rotate(-90deg); cursor: pointer; }
         .volume-slider::-webkit-slider-runnable-track { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
         .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; background: #00d2ff; border-radius: 50%; margin-top: -5px; box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
         .volume-slider::-moz-range-track { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
@@ -358,8 +354,8 @@
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
             <h1>Mazer</h1>
             <div class="status-text">Gamer</div>
-            <a href="#" class="link-btn" onclick="openTgModal(event)">Telegram</a>
-            <a href="https://www.youtube.com/@MazerOxide" class="link-btn">Youtube</a>
+            <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
+            <a href="https://www.youtube.com/@MazerOxide" target="_blank" rel="noopener noreferrer" class="link-btn">Youtube</a>
         </div>
         <div id="projects" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Works</h1>
@@ -424,9 +420,9 @@
     </div>
     <div class="menu-btn" id="menu-toggle"><span></span><span></span><span></span></div>
     <div class="sidebar" id="sidebar">
-        <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
-        <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
-        <a href="#" class="link-btn" onclick="showSection('skills')">My Skills</a>
+        <a href="#" class="link-btn" data-section="bio">My Bio</a>
+        <a href="#" class="link-btn" data-section="projects">My Projects</a>
+        <a href="#" class="link-btn" data-section="skills">My Skills</a>
     </div>
     <div id="easter-egg-modal" class="modal">
         <img src="troll.gif" alt="Troll" draggable="false">
@@ -502,7 +498,7 @@
 
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX; mouseY = e.clientY; cursor.style.opacity = '1';
-            if (e.clientX < 20 && !sidebar.classList.contains('active')) {
+            if (window.innerWidth > 768 && e.clientX < 20 && !sidebar.classList.contains('active')) {
                 sidebar.classList.add('active');
                 menuToggle.classList.add('active');
             }
@@ -579,6 +575,13 @@
                 fills.forEach(f => f.style.width = '0');
             }
         }
+        document.querySelectorAll('.sidebar .link-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = btn.getAttribute('data-section');
+                if (sectionId) showSection(sectionId);
+            });
+        });
 
         const starFragment = document.createDocumentFragment();
         for (let i = 0; i < 100; i++) {
@@ -626,14 +629,15 @@
         const tgModal = document.getElementById('password-modal');
         const tgPassInput = document.getElementById('tg-password');
         const tgSubmit = document.getElementById('submit-password');
+        const tgBtn = document.getElementById('telegram-btn');
         const secretLink = "aHR0cHM6Ly90Lm1lL0l3ZWhlamo="; 
 
-        function openTgModal(e) {
+        tgBtn.addEventListener('click', (e) => {
             e.preventDefault();
             tgModal.classList.add('active');
             tgPassInput.value = '';
             tgPassInput.focus();
-        }
+        });
         tgPassInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') tgSubmit.click();
         });
@@ -707,7 +711,6 @@
             { src: 'background-music5.mp3', title: 'LO-FI #5' }
         ];
         let currentTrackIndex = 0;
-        let isPlaying = false;
         let isDraggingProgress = false;
         let autoPlayTimer;
 
@@ -755,7 +758,7 @@
             audio.src = tracks[index].src;
             audio.load();
             localStorage.setItem('musicTrackIndex', index);
-            if (isPlaying) {
+            if (!audio.paused) {
                 audio.play().catch(e => console.error("Audio play failed:", e));
             }
         }
@@ -764,7 +767,12 @@
             clearTimeout(autoPlayTimer);
             let nextIndex = currentTrackIndex + 1;
             if (nextIndex >= tracks.length) {
-                nextIndex = 0;
+                if (loopBtn.classList.contains('active')) {
+                    nextIndex = 0;
+                } else {
+                    audio.pause();
+                    return;
+                }
             }
             loadTrack(nextIndex);
         }
@@ -772,21 +780,24 @@
             clearTimeout(autoPlayTimer);
             let prevIndex = currentTrackIndex - 1;
             if (prevIndex < 0) {
-                prevIndex = tracks.length - 1;
+                prevIndex = loopBtn.classList.contains('active') ? tracks.length - 1 : 0;
             }
             loadTrack(prevIndex);
         }
 
         function updatePlayPauseIcon() {
-            playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
-            equalizer.classList.toggle('playing', isPlaying);
+            playPauseBtn.innerHTML = audio.paused ? playIcon : pauseIcon;
+            equalizer.classList.toggle('playing', !audio.paused);
         }
 
         audioPlayerToggle.addEventListener('click', () => { audioPlayerContainer.classList.toggle('active'); });
 
         playPauseBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) { audio.play().catch(e => console.error("Audio play failed:", e)); } else { audio.pause(); }
+            if (audio.paused) { 
+                audio.play().catch(e => console.error("Audio play failed:", e)); 
+            } else { 
+                audio.pause(); 
+            }
         });
 
         nextBtn.addEventListener('click', playNext);
@@ -846,8 +857,8 @@
         document.addEventListener('mouseup', upHandler);
         document.addEventListener('touchend', upHandler);
 
-        audio.addEventListener('play', () => { isPlaying = true; updatePlayPauseIcon(); });
-        audio.addEventListener('pause', () => { isPlaying = false; updatePlayPauseIcon(); });
+        audio.addEventListener('play', updatePlayPauseIcon);
+        audio.addEventListener('pause', updatePlayPauseIcon);
         audio.addEventListener('ended', () => { autoPlayTimer = setTimeout(playNext, 1000); });
         audio.addEventListener('timeupdate', () => {
             if (audio.duration && !isDraggingProgress) {
