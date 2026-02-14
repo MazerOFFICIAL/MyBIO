@@ -811,11 +811,8 @@
 
         function updateProgressFromEvent(e) {
             const rect = progressBarContainer.getBoundingClientRect();
-            // Определяем X координату для мыши или пальца
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let pos = (clientX - rect.left) / rect.width;
-            
-            // Ограничиваем позицию от 0 до 1
             pos = Math.max(0, Math.min(1, pos));
             
             progressBarFill.style.width = `${pos * 100}%`;
@@ -826,22 +823,19 @@
             }
         }
 
-        // События для мыши (ПК)
         progressBarContainer.addEventListener('mousedown', (e) => {
             isDraggingProgress = true;
             updateProgressFromEvent(e);
         });
 
-        // События для тачскрина (Мобильные)
         progressBarContainer.addEventListener('touchstart', (e) => {
             isDraggingProgress = true;
             updateProgressFromEvent(e);
         }, { passive: false });
 
-        // Общие обработчики движения и отпускания
         const moveHandler = (e) => {
             if (isDraggingProgress) {
-                e.preventDefault(); // Блокируем скролл страницы пока тянем ползунок
+                e.preventDefault();
                 updateProgressFromEvent(e);
             }
         };
