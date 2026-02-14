@@ -45,6 +45,23 @@
             transition: opacity 0.2s ease;
             will-change: transform, left, top;
         }
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s;
+        }
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
         .menu-btn {
             position: absolute;
             top: 25px;
@@ -173,6 +190,8 @@
 </head>
 <body>
     <div id="stars-container"></div>
+    <div class="menu-overlay" id="overlay"></div>
+
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar">
@@ -189,22 +208,27 @@
             </div>
         </div>
     </div>
+
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
+
     <div class="menu-btn" id="menu-toggle">
         <span></span><span></span><span></span>
     </div>
+
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
     </div>
+
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
         document.addEventListener('mousemove', e => {
             cursor.style.opacity = '1';
@@ -216,18 +240,18 @@
             cursor.style.opacity = '0';
         });
 
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = '1';
-        });
-
-        menuToggle.addEventListener('click', () => {
+        const toggleMenu = () => {
             sidebar.classList.toggle('active');
-        });
+            overlay.classList.toggle('active');
+        };
+
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
 
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            sidebar.classList.remove('active');
+            toggleMenu();
         }
 
         const starsContainer = document.getElementById('stars-container');
