@@ -891,6 +891,7 @@
         const typeWriterElement = document.getElementById('typewriter');
         let phraseIndex = 0;
         let statusTimeout;
+        let isGameOver = false;
 
         const translations = {
             en: {
@@ -911,7 +912,8 @@
                 oxideBtn: "Oxide HH-ID",
                 copyBtn: "Copy",
                 snakeBtn: "Snake Game",
-                snakeStart: "START"
+                snakeStart: "START",
+                snakeAgain: "Play Again"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -931,7 +933,8 @@
                 oxideBtn: "Oxide HH-ID",
                 copyBtn: "Копировать",
                 snakeBtn: "Змейка",
-                snakeStart: "СТАРТ"
+                snakeStart: "СТАРТ",
+                snakeAgain: "Играть снова"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -951,7 +954,8 @@
                 oxideBtn: "Oxide HH-ID",
                 copyBtn: "Copiar",
                 snakeBtn: "Juego Snake",
-                snakeStart: "EMPEZAR"
+                snakeStart: "EMPEZAR",
+                snakeAgain: "Jugar de nuevo"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -971,7 +975,8 @@
                 oxideBtn: "Oxide HH-ID",
                 copyBtn: "Copier",
                 snakeBtn: "Jeu Snake",
-                snakeStart: "DÉMARRER"
+                snakeStart: "DÉMARRER",
+                snakeAgain: "Rejouer"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -991,7 +996,8 @@
                 oxideBtn: "Oxide HH-ID",
                 copyBtn: "Kopieren",
                 snakeBtn: "Snake Spiel",
-                snakeStart: "START"
+                snakeStart: "START",
+                snakeAgain: "Nochmal spielen"
             }
         };
 
@@ -1024,7 +1030,7 @@
             document.getElementById('oxide-id-btn').textContent = t.oxideBtn;
             document.getElementById('copy-oxide-id').textContent = t.copyBtn;
             document.getElementById('snake-game-btn').textContent = t.snakeBtn;
-            document.getElementById('start-snake-btn').textContent = t.snakeStart;
+            document.getElementById('start-snake-btn').textContent = isGameOver ? t.snakeAgain : t.snakeStart;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1392,11 +1398,13 @@
             snakeScore = 0;
             dx = 1; dy = 0;
             lastDx = 1; lastDy = 0;
+            isGameOver = false;
+            startSnakeBtn.textContent = translations[currentLang].snakeStart;
             snakeScoreDisplay.textContent = `Score: ${snakeScore}`;
             isGameRunning = true;
             createFood();
             clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, 100);
+            gameInterval = setInterval(gameLoop, 150);
         }
 
         function gameLoop() {
@@ -1457,7 +1465,9 @@
         function gameOver() {
             clearInterval(gameInterval);
             isGameRunning = false;
+            isGameOver = true;
             snakeScoreDisplay.textContent = `Game Over! Score: ${snakeScore}`;
+            startSnakeBtn.textContent = translations[currentLang].snakeAgain;
         }
 
         function winGame() {
