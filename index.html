@@ -45,23 +45,6 @@
             transition: opacity 0.2s ease;
             will-change: transform, left, top;
         }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(2px);
-            z-index: 1500;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.4s;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
         .menu-btn {
             position: absolute;
             top: 25px;
@@ -190,7 +173,6 @@
 </head>
 <body>
     <div id="stars-container"></div>
-    <div class="menu-overlay" id="overlay"></div>
 
     <div class="card">
         <div id="bio" class="content-section active">
@@ -228,7 +210,6 @@
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
 
         document.addEventListener('mousemove', e => {
             cursor.style.opacity = '1';
@@ -240,18 +221,23 @@
             cursor.style.opacity = '0';
         });
 
-        const toggleMenu = () => {
+        // Открытие/Закрытие по клику на бургер
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        };
+        });
 
-        menuToggle.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+        // Закрытие при клике в любое место, кроме меню
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
 
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            toggleMenu();
+            sidebar.classList.remove('active');
         }
 
         const starsContainer = document.getElementById('stars-container');
