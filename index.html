@@ -274,8 +274,8 @@
     </div>
     <div id="password-modal" class="modal">
         <div class="password-box">
-            <h3>SECURITY CHECK</h3>
-            <input type="password" id="tg-password" placeholder="Enter Password">
+            <h3>U need 80+ IQ to solve this</h3>
+            <input type="password" id="tg-password" placeholder="">
             <button id="submit-password">✔</button>
         </div>
     </div>
@@ -406,6 +406,9 @@
             tgPassInput.value = '';
             tgPassInput.focus();
         }
+        tgPassInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') tgSubmit.click();
+        });
         tgSubmit.addEventListener('click', () => {
             if(tgPassInput.value === 'Telegram') {
                 window.open(atob(secretLink), '_blank');
