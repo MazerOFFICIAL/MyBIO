@@ -24,22 +24,6 @@
             color: white;
             overflow: hidden;
         }
-        .main-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, rgba(157, 80, 187, 0.05) 30%, rgba(0, 0, 0, 0) 70%);
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        .card:hover ~ .main-glow {
-            opacity: 1;
-        }
         #stars-container {
             position: fixed;
             top: 0;
@@ -115,11 +99,17 @@
             z-index: 1;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
+        /* Тот самый эффект подсвечивающейся рамки */
         .card:hover {
-            border-color: rgba(0, 210, 255, 0.3);
+            border-color: transparent;
             transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4), 
+                        inset 0 0 15px rgba(157, 80, 187, 0.2);
+            background: linear-gradient(rgba(2, 2, 5, 0.9), rgba(2, 2, 5, 0.9)) padding-box,
+                        linear-gradient(45deg, #00d2ff, #9d50bb) border-box;
+            border: 1px solid transparent;
         }
         .content-section {
             display: none;
@@ -183,20 +173,6 @@
             color: white;
             border-color: rgba(255, 255, 255, 0.2);
         }
-        .project-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            text-align: left;
-            pointer-events: auto;
-            transition: 0.3s;
-        }
-        .project-item:hover {
-            border-color: #00d2ff;
-            background: rgba(0, 210, 255, 0.05);
-        }
     </style>
 </head>
 <body>
@@ -215,14 +191,12 @@
 
         <div id="projects" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Works</h1>
-            <div class="project-item">
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px; text-align: left;">
                 <h3 style="color: #00d2ff; margin: 0;">Project #1</h3>
-                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3); margin: 5px 0 0;">Next-gen projects.</p>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3); margin: 5px 0 0;">Description...</p>
             </div>
         </div>
     </div>
-
-    <div class="main-glow"></div>
 
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
