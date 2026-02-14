@@ -115,16 +115,16 @@
             min-height: 500px;
             z-index: 1;
             position: relative;
-            transition: transform 0.3s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             border: 1px solid transparent;
             background: linear-gradient(rgba(2, 2, 5, 0.95), rgba(2, 2, 5, 0.95)) padding-box,
-                        linear-gradient(45deg, rgba(0, 210, 255, 0.2), rgba(157, 80, 187, 0.2)) border-box;
+                        linear-gradient(45deg, rgba(0, 210, 255, 0.15), rgba(157, 80, 187, 0.15)) border-box;
         }
         .card:hover {
             transform: translateY(-5px);
-            background: linear-gradient(rgba(2, 2, 5, 0.9), rgba(2, 2, 5, 0.9)) padding-box,
-                        linear-gradient(45deg, #00d2ff, #9d50bb) border-box;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
+            background: linear-gradient(rgba(2, 2, 5, 0.92), rgba(2, 2, 5, 0.92)) padding-box,
+                        linear-gradient(45deg, rgba(0, 210, 255, 0.4), rgba(157, 80, 187, 0.4)) border-box;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
         }
         .content-section {
             display: none;
@@ -206,7 +206,6 @@
 <body>
     <div id="stars-container"></div>
     <div id="snow-container"></div>
-
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar">
@@ -222,37 +221,29 @@
             </div>
         </div>
     </div>
-
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2L28 16L16 18L10 28V2Z" fill="#9d50bb" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
-
     <div class="menu-btn" id="menu-toggle">
         <span></span><span></span><span></span>
     </div>
-
     <div class="sidebar" id="sidebar">
         <a href="#" class="link-btn" onclick="showSection('bio')">My Bio</a>
         <a href="#" class="link-btn" onclick="showSection('projects')">My Projects</a>
     </div>
-
     <script>
         const cursor = document.getElementById('cursor');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
-
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
         const speed = 0.3;
-
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX; mouseY = e.clientY;
             cursor.style.opacity = '1';
         });
-
         document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
-
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;
             cursorY += (mouseY - cursorY) * speed;
@@ -260,27 +251,23 @@
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
-
         menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             menuToggle.classList.toggle('active');
             sidebar.classList.toggle('active');
         });
-
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 menuToggle.classList.remove('active');
             }
         });
-
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             sidebar.classList.remove('active');
             menuToggle.classList.remove('active');
         }
-
         const starsContainer = document.getElementById('stars-container');
         for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
@@ -293,7 +280,6 @@
             star.style.animation = `starFade ${Math.random() * 3 + 2}s infinite alternate`;
             starsContainer.appendChild(star);
         }
-
         const snowContainer = document.getElementById('snow-container');
         function createSnow() {
             const snowflake = document.createElement('div');
@@ -304,10 +290,8 @@
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.top = '-10px';
             snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-            
             const duration = Math.random() * 5 + 5 + 's';
             snowflake.style.animation = `fall ${duration} linear infinite, drift ${Math.random() * 2 + 2}s ease-in-out infinite alternate`;
-            
             snowContainer.appendChild(snowflake);
             setTimeout(() => snowflake.remove(), parseFloat(duration) * 1000);
         }
