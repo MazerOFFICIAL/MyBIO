@@ -24,26 +24,6 @@
             color: white;
             overflow: hidden;
         }
-        .bg-blobs {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -3;
-            filter: blur(80px);
-            opacity: 0.4;
-        }
-        .blob {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: #00d2ff;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(110%, 110%); }
-        }
         .main-glow {
             position: fixed;
             top: 50%;
@@ -232,7 +212,6 @@
     </style>
 </head>
 <body>
-    <div class="bg-blobs"><div class="blob"></div></div>
     <div id="stars-container"></div>
     <div class="main-glow"></div>
     <div id="cursor"></div>
