@@ -625,7 +625,6 @@
             phrases = t.typewriter;
             phraseIndex = 0;
             
-            clearTimeout(statusTimeout);
             startStatusAnimation();
             
             document.querySelectorAll('.lang-option').forEach(opt => {
@@ -1088,16 +1087,17 @@
                 typeWriterElement.textContent = phrases[phraseIndex];
                 typeWriterElement.style.opacity = '1';
                 statusTimeout = setTimeout(changeStatusText, 3000);
-            }, 500);
+            }, 600);
         }
 
         function startStatusAnimation() {
+            clearTimeout(statusTimeout);
             typeWriterElement.style.opacity = '0';
             statusTimeout = setTimeout(() => {
                 typeWriterElement.textContent = phrases[phraseIndex];
                 typeWriterElement.style.opacity = '1';
                 statusTimeout = setTimeout(changeStatusText, 3000);
-            }, 500);
+            }, 600);
         }
         startStatusAnimation();
     </script>
