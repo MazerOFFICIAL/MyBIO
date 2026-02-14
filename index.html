@@ -249,14 +249,14 @@
             position: fixed;
             bottom: 90px;
             right: 25px;
-            width: 280px;
-            background: rgba(15, 20, 35, 0.5);
+            width: 320px;
+            background: rgba(15, 20, 35, 0.85);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
             z-index: 2099;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -277,9 +277,9 @@
         #play-pause-btn svg { width: 22px; height: 22px; }
         .progress-wrapper { width: 100%; display: flex; align-items: center; gap: 10px; }
         .time-display { font-size: 0.75rem; color: rgba(255,255,255,0.5); min-width: 35px; text-align: center; }
-        .progress-bar-container { width: 100%; height: 15px; background: transparent; cursor: pointer; position: relative; display: flex; align-items: center; }
-        .progress-bar-container::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .progress-bar-fill { height: 4px; background: #00d2ff; border-radius: 2px; width: 0%; position: relative; z-index: 1; pointer-events: none; }
+        .progress-bar-container { width: 100%; height: 20px; background: transparent; cursor: pointer; position: relative; display: flex; align-items: center; }
+        .progress-bar-container::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .progress-bar-fill { height: 6px; background: linear-gradient(90deg, #00d2ff, #9d50bb); border-radius: 3px; width: 0%; position: relative; z-index: 1; pointer-events: none; box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
         .progress-bar-fill::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: white; border-radius: 50%; opacity: 0; transition: opacity 0.2s; }
         .progress-bar-container:hover .progress-bar-fill::after { opacity: 1; }
         .volume-control { position: relative; }
@@ -310,23 +310,8 @@
         .volume-slider::-moz-range-track { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
         .volume-slider::-moz-range-thumb { height: 14px; width: 14px; background: #00d2ff; border-radius: 50%; border: none; box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
         .track-title {
-            font-size: 0.9rem; color: rgba(255,255,255,0.7); text-align: center;
+            font-size: 1.2rem; font-weight: 700; color: #fff; text-align: center; margin-bottom: 5px; text-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .equalizer { display: flex; gap: 4px; height: 20px; align-items: flex-end; }
-        .equalizer span { width: 4px; height: 100%; background: #00d2ff; border-radius: 2px; animation: quiet 1.5s infinite ease-in-out; }
-        .equalizer.playing span { animation-name: dance; }
-        .equalizer span:nth-child(2) { animation-delay: -1.2s; }
-        .equalizer span:nth-child(3) { animation-delay: -0.9s; }
-        .equalizer span:nth-child(4) { animation-delay: -0.6s; }
-        .equalizer span:nth-child(5) { animation-delay: -0.3s; }
-        @keyframes dance {
-            0%, 100% { transform: scaleY(0.1); }
-            50% { transform: scaleY(1.0); }
-        }
-        @keyframes quiet {
-            0%, 100% { transform: scaleY(0.1); }
-            50% { transform: scaleY(0.3); }
         }
 
         @media (max-width: 768px) {
@@ -477,9 +462,6 @@
                     <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01">
                 </div>
             </div>
-        </div>
-        <div class="equalizer" id="equalizer">
-            <span></span><span></span><span></span><span></span><span></span>
         </div>
     </div>
     <audio id="bg-music"></audio>
@@ -696,7 +678,6 @@
         const volumePopup = document.getElementById('volume-popup');
         const volumeSlider = document.getElementById('volume-slider');
         const audio = document.getElementById('bg-music');
-        const equalizer = document.getElementById('equalizer');
         const trackTitle = document.getElementById('track-title');
         const currentTimeEl = document.getElementById('current-time');
         const totalDurationEl = document.getElementById('total-duration');
@@ -786,7 +767,6 @@
 
         function updatePlayPauseIcon() {
             playPauseBtn.innerHTML = audio.paused ? playIcon : pauseIcon;
-            equalizer.classList.toggle('playing', !audio.paused);
         }
 
         audioPlayerToggle.addEventListener('click', () => { audioPlayerContainer.classList.toggle('active'); });
