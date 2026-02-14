@@ -360,6 +360,8 @@
             .sidebar.active { left: 0; }
             .modal img { transform: scale(1.2); }
             .password-box { transform: scale(1); width: 85%; padding: 25px; }
+            .audio-player-container { width: auto; left: 20px; right: 20px; bottom: 85px; }
+            .card { margin-bottom: 100px; }
         }
         @media (min-width: 769px) {
             * { cursor: none !important; }
@@ -542,7 +544,8 @@
                 passwordPrefix: "Password is ",
                 typewriter: ['Gamer', 'Developer', 'Dreamer', 'Creator'],
                 audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track",
-                audioLoop: "Loop playlist", audioVolume: "Volume"
+                audioLoop: "Repeat track", audioVolume: "Volume",
+                passwordPlaceholder: "Password"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -555,7 +558,8 @@
                 passwordPrefix: "Пароль: ",
                 typewriter: ['Геймер', 'Разработчик', 'Мечтатель', 'Творец'],
                 audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек",
-                audioLoop: "Зациклить трек", audioVolume: "Громкость"
+                audioLoop: "Зациклить трек", audioVolume: "Громкость",
+                passwordPlaceholder: "Пароль"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -568,7 +572,8 @@
                 passwordPrefix: "La contraseña es ",
                 typewriter: ['Jugador', 'Desarrollador', 'Soñador', 'Creador'],
                 audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente",
-                audioLoop: "Repetir pista", audioVolume: "Volumen"
+                audioLoop: "Repetir pista", audioVolume: "Volumen",
+                passwordPlaceholder: "Contraseña"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -581,7 +586,8 @@
                 passwordPrefix: "Le mot de passe est ",
                 typewriter: ['Joueur', 'Développeur', 'Rêveur', 'Créateur'],
                 audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante",
-                audioLoop: "Répéter la piste", audioVolume: "Volume"
+                audioLoop: "Répéter la piste", audioVolume: "Volume",
+                passwordPlaceholder: "Mot de passe"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -594,7 +600,8 @@
                 passwordPrefix: "Passwort ist ",
                 typewriter: ['Gamer', 'Entwickler', 'Träumer', 'Schöpfer'],
                 audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel",
-                audioLoop: "Titel wiederholen", audioVolume: "Lautstärke"
+                audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
+                passwordPlaceholder: "Passwort"
             }
         };
 
@@ -615,6 +622,7 @@
             document.querySelector('#riddle-modal p').textContent = t.riddleText;
             document.getElementById('riddle-answer').placeholder = t.riddlePlaceholder;
             document.querySelector('#success-modal h3').innerHTML = `${t.passwordPrefix}<span style="color: #00d2ff;">Telegram</span>`;
+            document.getElementById('tg-password').placeholder = t.passwordPlaceholder;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -685,7 +693,11 @@
             if (e.type === 'touchstart') lastTouchTime = Date.now();
             if (e.type === 'mousedown' && Date.now() - lastTouchTime < 500) return;
 
-            if(e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT' && e.target.id !== 'menu-toggle' && !e.target.closest('.menu-btn')) {
+            if(e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT' && e.target.id !== 'menu-toggle' && 
+               !e.target.closest('.menu-btn') && 
+               !e.target.closest('.audio-player-container') && 
+               !e.target.closest('.audio-player-toggle') && 
+               !e.target.closest('.lang-dropdown') && e.target.id !== 'lang-btn') {
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -811,7 +823,7 @@
             if (e.key === 'Enter') tgSubmit.click();
         });
         tgSubmit.addEventListener('click', () => {
-            if(tgPassInput.value === 'Telegram') {
+            if(tgPassInput.value.trim().toLowerCase() === 'telegram') {
                 window.open(atob(secretLink), '_blank');
                 tgModal.classList.remove('active');
             } else {
