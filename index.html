@@ -201,7 +201,7 @@
             width: 24px;
             height: 24px;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 20000;
             left: 0;
             top: 0;
             transform: translate3d(-5px, -5px, 0);
@@ -224,7 +224,7 @@
             flex-direction: column;
             justify-content: space-between;
             pointer-events: auto;
-            z-index: 9001;
+            z-index: 15001;
             transition: 0.3s;
         }
         @keyframes burgerPulse {
@@ -259,7 +259,7 @@
             background: var(--sidebar-bg);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
-            z-index: 9000;
+            z-index: 15000;
             transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
             display: flex;
             flex-direction: column;
@@ -518,6 +518,47 @@
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); width: 0; border-radius: 10px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px var(--accent-primary); position: relative; }
         .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: translateX(-100%); animation: shimmer 2s infinite; }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+        .game-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s ease;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .game-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px var(--shadow-color), 0 0 20px var(--accent-primary);
+        }
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .game-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        .download-btn {
+            display: inline-block; padding: 12px 30px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff; text-decoration: none; border-radius: 50px;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s; pointer-events: auto;
+        }
+        .download-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-primary); }
 
         .audio-player-toggle {
             position: fixed;
@@ -828,6 +869,14 @@
                 <h3 class="soon-text" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
         </div>
+        <div id="hobbies" class="content-section">
+            <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Hobbies</h1>
+            <div class="game-card">
+                <div class="game-title">Oxide: Survival Island</div>
+                <div class="game-desc" id="oxide-desc">Hardcore survival game where I spend most of my time. Raid, build, dominate.</div>
+                <a href="https://play.google.com/store/apps/details?id=com.catsbit.oxide" target="_blank" rel="noopener noreferrer" class="download-btn" id="oxide-download">Download</a>
+            </div>
+        </div>
     </div>
     <div id="cursor">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -839,6 +888,7 @@
         <a href="#" class="link-btn" data-section="bio">My Bio</a>
         <a href="#" class="link-btn" data-section="projects">My Projects</a>
         <a href="#" class="link-btn" data-section="skills">My Skills</a>
+        <a href="#" class="link-btn" data-section="hobbies">My Hobbies</a>
     </div>
     <div id="easter-egg-modal" class="modal">
         <img src="troll.gif" alt="Troll" draggable="false">
@@ -958,8 +1008,9 @@
 
         const translations = {
             en: {
-                bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills",
-                worksTitle: "Works", skillsTitle: "Skills", soon: "Soon...",
+                bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
+                worksTitle: "Works", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
+                oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
                 telegram: "Telegram", youtube: "YouTube",
                 riddleTrigger: "U need 80+ IQ to solve this",
                 riddleTitle: "RIDDLE",
@@ -981,8 +1032,9 @@
                 paintClear: "Clear"
             },
             ru: {
-                bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
-                worksTitle: "Работы", skillsTitle: "Навыки", soon: "Скоро...",
+                bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Мои занятия",
+                worksTitle: "Работы", skillsTitle: "Навыки", hobbiesTitle: "Занятия", soon: "Скоро...",
+                oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
                 telegram: "Телеграм", youtube: "Ютуб",
                 riddleTrigger: "Нужен IQ 80+ чтобы решить",
                 riddleTitle: "ЗАГАДКА",
@@ -1004,8 +1056,9 @@
                 paintClear: "Очистить"
             },
             es: {
-                bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
-                worksTitle: "Trabajos", skillsTitle: "Habilidades", soon: "Pronto...",
+                bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Mis Pasatiempos",
+                worksTitle: "Trabajos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
+                oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
                 telegram: "Telegram", youtube: "YouTube",
                 riddleTrigger: "Necesitas 80+ IQ para esto",
                 riddleTitle: "ACERTIJO",
@@ -1027,8 +1080,9 @@
                 paintClear: "Borrar"
             },
             fr: {
-                bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
-                worksTitle: "Travaux", skillsTitle: "Compétences", soon: "Bientôt...",
+                bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Mes Loisirs",
+                worksTitle: "Travaux", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
+                oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
                 telegram: "Telegram", youtube: "YouTube",
                 riddleTrigger: "Il faut 80+ de QI pour ça",
                 riddleTitle: "ÉNIGME",
@@ -1050,8 +1104,9 @@
                 paintClear: "Effacer"
             },
             de: {
-                bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
-                worksTitle: "Arbeiten", skillsTitle: "Fähigkeiten", soon: "Bald...",
+                bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills", hobbiesBtn: "Meine Hobbys",
+                worksTitle: "Arbeiten", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
+                oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
                 telegram: "Telegram", youtube: "YouTube",
                 riddleTrigger: "Du brauchst 80+ IQ dafür",
                 riddleTitle: "RÄTSEL",
@@ -1089,8 +1144,12 @@
             document.querySelector('[data-section="bio"]').textContent = t.bioBtn;
             document.querySelector('[data-section="projects"]').textContent = t.projectsBtn;
             document.querySelector('[data-section="skills"]').textContent = t.skillsBtn;
+            document.querySelector('[data-section="hobbies"]').textContent = t.hobbiesBtn;
             document.querySelector('#projects h1').textContent = t.worksTitle;
             document.querySelector('#skills h1').textContent = t.skillsTitle;
+            document.querySelector('#hobbies h1').textContent = t.hobbiesTitle;
+            document.getElementById('oxide-desc').textContent = t.oxideDesc;
+            document.getElementById('oxide-download').textContent = t.oxideDownload;
             document.querySelectorAll('.soon-text').forEach(el => el.textContent = t.soon);
             document.getElementById('telegram-btn').textContent = t.telegram;
             document.querySelector('a[href*="youtube"]').textContent = t.youtube;
