@@ -479,6 +479,47 @@
             max-width: 100%; height: auto;
         }
 
+        #cyber-pet {
+            position: fixed;
+            bottom: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 9998;
+            pointer-events: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 0 5px #00f3ff);
+            transition: transform 0.3s;
+        }
+        #cyber-pet svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: #00f3ff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .pet-bubble {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 20, 35, 0.9);
+            border: 1px solid #00f3ff;
+            color: #00f3ff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+            z-index: 9999;
+        }
+
         .skills-container { display: flex; flex-direction: column; gap: 25px; width: 100%; padding: 10px 0; }
         .skill-item { width: 100%; }
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
@@ -725,6 +766,17 @@
     </div>
     <div class="snake-btn" id="snake-game-btn">
         <svg viewBox="0 0 24 24"><path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M13.2,15.5C13.2,16.3 12.5,17 11.7,17H9.7C8.9,17 8.2,16.3 8.2,15.5V14C8.2,13.2 8.9,12.5 9.7,12.5H10.2V11H9.7C8.9,11 8.2,10.3 8.2,9.5V8C8.2,7.2 8.9,6.5 9.7,6.5H11.7C12.5,6.5 13.2,7.2 13.2,8V9.5C13.2,10.3 12.5,11 11.7,11H11.2V12.5H11.7C12.5,12.5 13.2,13.2 13.2,14V15.5Z"/></svg>
+    </div>
+    <div id="cyber-pet">
+        <div class="pet-bubble" id="pet-bubble"></div>
+        <svg viewBox="0 0 100 100">
+            <path d="M20 40 L20 80 L30 80 L30 90 L40 90 L40 80 L60 80 L60 90 L70 90 L70 80 L80 80 L80 40 Z" />
+            <path d="M20 40 L25 20 L40 35 L60 35 L75 20 L80 40" />
+            <circle cx="35" cy="55" r="3" fill="#00f3ff" stroke="none"/>
+            <circle cx="65" cy="55" r="3" fill="#00f3ff" stroke="none"/>
+            <path d="M45 65 L50 70 L55 65" />
+            <path d="M80 70 Q95 70 90 50" />
+        </svg>
     </div>
     <div class="card">
         <div id="bio" class="content-section active">
