@@ -479,49 +479,34 @@
             max-width: 100%; height: auto;
             cursor: pointer;
         }
-
-        #cyber-pet {
-            position: fixed;
-            bottom: 0;
-            left: -100px;
-            width: 60px;
-            height: 60px;
-            z-index: 9998;
-            pointer-events: auto;
+        .paint-btn {
+            position: fixed; bottom: 25px; left: 80px;
+            width: 40px; height: 40px;
+            background: var(--input-bg); border: 1px solid var(--glass-border);
+            border-radius: 10px; color: var(--text-main);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 2100; transition: 0.3s; pointer-events: auto;
+        }
+        .paint-btn:hover { background: var(--btn-hover-bg); border-color: var(--accent-primary); box-shadow: 0 0 15px var(--accent-primary); }
+        .paint-btn svg { width: 24px; height: 24px; fill: var(--text-main); transition: 0.3s; }
+        .paint-btn:hover svg { fill: var(--accent-primary); }
+        
+        .paint-box {
+            background: var(--player-bg); backdrop-filter: blur(20px); padding: 20px;
+            border-radius: 20px; border: 1px solid var(--accent-primary);
+            box-shadow: 0 0 40px var(--shadow-color); text-align: center;
+            display: flex; flex-direction: column; gap: 15px; transform: scale(1.1);
+            pointer-events: auto; position: relative; max-width: 95vw;
+        }
+        .paint-controls {
+            display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;
+        }
+        #paint-canvas {
+            background: var(--input-bg); border: 1px solid var(--glass-border);
+            border-radius: 10px; box-shadow: 0 0 15px var(--shadow-color);
+            touch-action: none; cursor: crosshair;
             cursor: pointer;
-            filter: drop-shadow(0 0 5px #00f3ff);
-            transition: transform 0.3s;
         }
-        #cyber-pet svg {
-            width: 100%;
-            height: 100%;
-            fill: none;
-            stroke: #00f3ff;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        .pet-bubble {
-            position: absolute;
-            bottom: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 20, 35, 0.9);
-            border: 1px solid #00f3ff;
-            color: #00f3ff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-            z-index: 9999;
-            pointer-events: auto;
-        }
-        .pet-bubble.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 
         .skills-container { display: flex; flex-direction: column; gap: 25px; width: 100%; padding: 10px 0; }
         .skill-item { width: 100%; }
@@ -770,16 +755,8 @@
     <div class="snake-btn" id="snake-game-btn">
         <svg viewBox="0 0 24 24"><path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M13.2,15.5C13.2,16.3 12.5,17 11.7,17H9.7C8.9,17 8.2,16.3 8.2,15.5V14C8.2,13.2 8.9,12.5 9.7,12.5H10.2V11H9.7C8.9,11 8.2,10.3 8.2,9.5V8C8.2,7.2 8.9,6.5 9.7,6.5H11.7C12.5,6.5 13.2,7.2 13.2,8V9.5C13.2,10.3 12.5,11 11.7,11H11.2V12.5H11.7C12.5,12.5 13.2,13.2 13.2,14V15.5Z"/></svg>
     </div>
-    <div id="cyber-pet">
-        <div class="pet-bubble" id="pet-bubble"></div>
-        <svg viewBox="0 0 100 100">
-            <path d="M20 40 L20 80 L30 80 L30 90 L40 90 L40 80 L60 80 L60 90 L70 90 L70 80 L80 80 L80 40 Z" />
-            <path d="M20 40 L25 20 L40 35 L60 35 L75 20 L80 40" />
-            <circle cx="35" cy="55" r="3" fill="#00f3ff" stroke="none"/>
-            <circle cx="65" cy="55" r="3" fill="#00f3ff" stroke="none"/>
-            <path d="M45 65 L50 70 L55 65" />
-            <path d="M80 70 Q95 70 90 50" />
-        </svg>
+    <div class="paint-btn" id="paint-btn">
+        <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
     </div>
     <div class="card">
         <div id="bio" class="content-section active">
@@ -901,6 +878,18 @@
         </div>
     </div>
 
+    <div id="paint-modal" class="modal">
+        <div class="paint-box">
+            <button class="modal-close-btn">&times;</button>
+            <div class="paint-controls">
+                <input type="color" id="paint-color" value="#00d2ff" style="border: none; width: 40px; height: 40px; padding: 0; background: none; cursor: pointer;">
+                <input type="range" id="paint-size" min="1" max="20" value="5" style="width: 100px;">
+                <button id="paint-clear" class="info-copy-btn" style="padding: 8px 15px; font-size: 0.8rem;">Clear</button>
+            </div>
+            <canvas id="paint-canvas"></canvas>
+        </div>
+    </div>
+
     <div class="audio-player-toggle" id="audio-player-toggle">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
@@ -982,7 +971,9 @@
                 copyBtn: "Copy",
                 snakeBtn: "Snake Game",
                 snakeStart: "START",
-                snakeAgain: "Play Again"
+                snakeAgain: "Play Again",
+                paintBtn: "Paint",
+                paintClear: "Clear"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -1003,7 +994,9 @@
                 copyBtn: "Копировать",
                 snakeBtn: "Змейка",
                 snakeStart: "СТАРТ",
-                snakeAgain: "Играть снова"
+                snakeAgain: "Играть снова",
+                paintBtn: "Рисование",
+                paintClear: "Очистить"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -1024,7 +1017,9 @@
                 copyBtn: "Copiar",
                 snakeBtn: "Juego Snake",
                 snakeStart: "EMPEZAR",
-                snakeAgain: "Jugar de nuevo"
+                snakeAgain: "Jugar de nuevo",
+                paintBtn: "Pintar",
+                paintClear: "Borrar"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -1045,7 +1040,9 @@
                 copyBtn: "Copier",
                 snakeBtn: "Jeu Snake",
                 snakeStart: "DÉMARRER",
-                snakeAgain: "Rejouer"
+                snakeAgain: "Rejouer",
+                paintBtn: "Peinture",
+                paintClear: "Effacer"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -1066,7 +1063,9 @@
                 copyBtn: "Kopieren",
                 snakeBtn: "Snake Spiel",
                 snakeStart: "START",
-                snakeAgain: "Nochmal spielen"
+                snakeAgain: "Nochmal spielen",
+                paintBtn: "Malen",
+                paintClear: "Löschen"
             }
         };
 
@@ -1100,6 +1099,8 @@
             document.getElementById('copy-oxide-id').textContent = t.copyBtn;
             document.getElementById('snake-game-btn').title = t.snakeBtn;
             document.getElementById('start-snake-btn').textContent = isGameOver ? t.snakeAgain : t.snakeStart;
+            document.getElementById('paint-btn').title = t.paintBtn;
+            document.getElementById('paint-clear').textContent = t.paintClear;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1202,7 +1203,9 @@
                !e.target.closest('.audio-player-toggle') && 
                !e.target.closest('.lang-dropdown') && !e.target.closest('#lang-btn') &&
                !e.target.closest('.theme-dropdown') && !e.target.closest('#theme-btn') &&
-               !e.target.closest('.snake-btn')) {
+               !e.target.closest('.snake-btn') &&
+               !e.target.closest('.paint-btn') &&
+               !e.target.closest('.paint-box')) {
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -1422,7 +1425,6 @@
             }
         });
 
-        // Snake Game Logic
         const snakeBtn = document.getElementById('snake-game-btn');
         const snakeModal = document.getElementById('snake-modal');
         const snakeCanvas = document.getElementById('snake-canvas');
@@ -1439,7 +1441,7 @@
         let snakeScore = 0;
         let isGameRunning = false;
         const gridSize = 15;
-        const tileCount = 20; // 300px / 15px = 20
+        const tileCount = 20;
 
         snakeBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1582,7 +1584,6 @@
         function createFood() {
             let valid = false;
             while (!valid) {
-                // 15% chance to allow edges, otherwise spawn inside
                 let spawnPadding = (Math.random() > 0.15) ? 1 : 0;
                 let availableSize = tileCount - (spawnPadding * 2);
                 food = {
@@ -1633,7 +1634,6 @@
             else if (e.key === 'ArrowRight' && lastMove.dx === 0) inputQueue.push({dx: 1, dy: 0});
         });
 
-        // Touch controls for snake
         let touchStartX = 0;
         let touchStartY = 0;
         snakeCanvas.addEventListener('touchstart', (e) => {
@@ -1658,6 +1658,79 @@
                 else if (diffY < 0 && lastMove.dy === 0) inputQueue.push({dx: 0, dy: -1});
             }
         });
+
+        // Paint Logic
+        const paintBtn = document.getElementById('paint-btn');
+        const paintModal = document.getElementById('paint-modal');
+        const paintCanvas = document.getElementById('paint-canvas');
+        const paintCtx = paintCanvas.getContext('2d');
+        const paintColor = document.getElementById('paint-color');
+        const paintSize = document.getElementById('paint-size');
+        const paintClear = document.getElementById('paint-clear');
+        const paintCloseBtn = paintModal.querySelector('.modal-close-btn');
+        let isPainting = false;
+
+        function resizePaintCanvas() {
+            const maxWidth = Math.min(window.innerWidth * 0.9, 500);
+            const maxHeight = Math.min(window.innerHeight * 0.6, 500);
+            paintCanvas.width = maxWidth;
+            paintCanvas.height = maxHeight;
+            paintCtx.lineCap = 'round';
+            paintCtx.lineJoin = 'round';
+        }
+
+        paintBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Close other modals
+            snakeModal.classList.remove('active');
+            oxideIdModal.classList.remove('active');
+            
+            paintModal.classList.add('active');
+            resizePaintCanvas();
+        });
+
+        paintCloseBtn.addEventListener('click', () => paintModal.classList.remove('active'));
+        paintModal.addEventListener('click', (e) => {
+            if (e.target === paintModal) paintModal.classList.remove('active');
+        });
+
+        paintClear.addEventListener('click', () => {
+            paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+        });
+
+        function startPaint(e) {
+            isPainting = true;
+            draw(e);
+        }
+        function endPaint() {
+            isPainting = false;
+            paintCtx.beginPath();
+        }
+        function draw(e) {
+            if (!isPainting) return;
+            e.preventDefault();
+            
+            const rect = paintCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const x = (clientX - rect.left) * (paintCanvas.width / rect.width);
+            const y = (clientY - rect.top) * (paintCanvas.height / rect.height);
+
+            paintCtx.lineWidth = paintSize.value;
+            paintCtx.strokeStyle = paintColor.value;
+
+            paintCtx.lineTo(x, y);
+            paintCtx.stroke();
+            paintCtx.beginPath();
+            paintCtx.moveTo(x, y);
+        }
+
+        paintCanvas.addEventListener('mousedown', startPaint);
+        paintCanvas.addEventListener('mouseup', endPaint);
+        paintCanvas.addEventListener('mousemove', draw);
+        paintCanvas.addEventListener('touchstart', startPaint, {passive: false});
+        paintCanvas.addEventListener('touchend', endPaint);
+        paintCanvas.addEventListener('touchmove', draw, {passive: false});
 
         const audioPlayerToggle = document.getElementById('audio-player-toggle');
         const audioPlayerContainer = document.getElementById('audio-player-container');
@@ -1774,6 +1847,138 @@
             }
         });
 
+        nextBtn.addEventListener('click', () => playNext(false));
+        prevBtn.addEventListener('click', playPrev);
+
+        loopBtn.addEventListener('click', () => {
+            const isLooping = loopBtn.classList.toggle('active');
+            safeStorage.setItem('musicPlaylistLoop', String(isLooping));
+        });
+
+        volumeBtn.addEventListener('click', (e) => { e.stopPropagation(); volumePopup.classList.toggle('active'); });
+
+        volumeSlider.addEventListener('input', e => { 
+            audio.volume = e.target.value; 
+            safeStorage.setItem('musicVolume', e.target.value);
+            updateVolumeIcon(audio.volume);
+        });
+
+        function updateProgressFromEvent(e) {
+            const rect = progressBarContainer.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let pos = (clientX - rect.left) / rect.width;
+            pos = Math.max(0, Math.min(1, pos));
+            
+            progressBarFill.style.width = `${pos * 100}%`;
+            if (audio.duration) {
+                const newTime = pos * audio.duration;
+                audio.currentTime = newTime;
+                currentTimeEl.textContent = formatTime(newTime);
+            }
+        }
+
+        progressBarContainer.addEventListener('mousedown', (e) => {
+            isDraggingProgress = true;
+            updateProgressFromEvent(e);
+        });
+
+        progressBarContainer.addEventListener('touchstart', (e) => {
+            isDraggingProgress = true;
+            updateProgressFromEvent(e);
+        }, { passive: false });
+
+        const moveHandler = (e) => {
+            if (isDraggingProgress) {
+                e.preventDefault();
+                updateProgressFromEvent(e);
+            }
+        };
+
+        const upHandler = () => {
+            isDraggingProgress = false; 
+        };
+
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('touchmove', moveHandler, { passive: false });
+        
+        document.addEventListener('mouseup', upHandler);
+        document.addEventListener('touchend', upHandler);
+
+        audio.addEventListener('play', updatePlayPauseIcon);
+        audio.addEventListener('pause', updatePlayPauseIcon);
+        audio.addEventListener('ended', () => { autoPlayTimer = setTimeout(() => playNext(true), 1000); });
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration && !isDraggingProgress) {
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                progressBarFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+            }
+        });
+        audio.addEventListener('loadedmetadata', () => {
+            totalDurationEl.textContent = formatTime(audio.duration);
+        });
+
+        loadTrack(currentTrackIndex);
+        updatePlayPauseIcon();
+        updateVolumeIcon(audio.volume);
+
+        document.addEventListener('keydown', (e) => {
+            if (!bindsEnabled) return;
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.code === 'Space') {
+                if (e.repeat) return;
+                e.preventDefault();
+                playPauseBtn.click();
+            } else if (e.ctrlKey) {
+                if (e.code === 'ArrowRight') {
+                    if (e.repeat) return;
+                    e.preventDefault();
+                    playNext(false);
+                } else if (e.code === 'ArrowLeft') {
+                    if (e.repeat) return;
+                    e.preventDefault();
+                    playPrev();
+                } else if (e.code === 'ArrowUp') {
+                    e.preventDefault();
+                    let newVol = Math.min(1, audio.volume + 0.05);
+                    audio.volume = newVol;
+                    volumeSlider.value = newVol;
+                    safeStorage.setItem('musicVolume', newVol);
+                    updateVolumeIcon(newVol);
+                } else if (e.code === 'ArrowDown') {
+                    e.preventDefault();
+                    let newVol = Math.max(0, audio.volume - 0.05);
+                    audio.volume = newVol;
+                    volumeSlider.value = newVol;
+                    safeStorage.setItem('musicVolume', newVol);
+                    updateVolumeIcon(newVol);
+                }
+            }
+        });
+
+        function changeStatusText() {
+            typeWriterElement.style.opacity = '0';
+            statusTimeout = setTimeout(() => {
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeWriterElement.textContent = phrases[phraseIndex];
+                typeWriterElement.style.opacity = '1';
+                statusTimeout = setTimeout(changeStatusText, 3000);
+            }, 600);
+        }
+
+        function startStatusAnimation() {
+            clearTimeout(statusTimeout);
+            typeWriterElement.style.opacity = '0';
+            statusTimeout = setTimeout(() => {
+                typeWriterElement.textContent = phrases[phraseIndex];
+                typeWriterElement.style.opacity = '1';
+                statusTimeout = setTimeout(changeStatusText, 3000);
+            }, 600);
+        }
+        startStatusAnimation();
+    </script>
+</body>
+</html>
         nextBtn.addEventListener('click', () => playNext(false));
         prevBtn.addEventListener('click', playPrev);
 
