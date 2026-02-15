@@ -873,15 +873,6 @@
         </div>
     </div>
 
-            <button class="modal-close-btn">&times;</button>
-            <div class="paint-controls">
-                <input type="color" id="paint-color" value="#00d2ff" style="border: none; width: 40px; height: 40px; padding: 0; background: none; cursor: pointer;">
-                <input type="range" id="paint-size" min="1" max="20" value="5" style="width: 100px;">
-                <button id="paint-clear" class="info-copy-btn" style="padding: 8px 15px; font-size: 0.8rem;">Clear</button>
-            </div>
-            <canvas id="paint-canvas"></canvas>
-        </div>
-    </div>
     <div class="audio-player-toggle" id="audio-player-toggle">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
@@ -965,7 +956,6 @@
                 snakeStart: "START",
                 snakeAgain: "Play Again",
                 paintBtn: "Paint",
-                paintClear: "Clear"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки",
@@ -988,7 +978,6 @@
                 snakeStart: "СТАРТ",
                 snakeAgain: "Играть снова",
                 paintBtn: "Рисование",
-                paintClear: "Очистить"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades",
@@ -1011,7 +1000,6 @@
                 snakeStart: "EMPEZAR",
                 snakeAgain: "Jugar de nuevo",
                 paintBtn: "Pintar",
-                paintClear: "Borrar"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences",
@@ -1034,7 +1022,6 @@
                 snakeStart: "DÉMARRER",
                 snakeAgain: "Rejouer",
                 paintBtn: "Peinture",
-                paintClear: "Effacer"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills",
@@ -1057,7 +1044,6 @@
                 snakeStart: "START",
                 snakeAgain: "Nochmal spielen",
                 paintBtn: "Malen",
-                paintClear: "Löschen"
             }
         };
 
@@ -1092,7 +1078,6 @@
             document.getElementById('snake-game-btn').title = t.snakeBtn;
             document.getElementById('start-snake-btn').textContent = isGameOver ? t.snakeAgain : t.snakeStart;
             document.getElementById('paint-btn').title = t.paintBtn;
-            document.getElementById('paint-clear').textContent = t.paintClear;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1196,7 +1181,6 @@
                !e.target.closest('.lang-dropdown') && !e.target.closest('#lang-btn') &&
                !e.target.closest('.theme-dropdown') && !e.target.closest('#theme-btn') &&
                !e.target.closest('.snake-btn') &&
-               !e.target.closest('.paint-btn') &&
                !e.target.closest('.paint-box')) {
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -1650,66 +1634,6 @@
                 else if (diffY < 0 && lastMove.dy === 0) inputQueue.push({dx: 0, dy: -1});
             }
         });
-
-        const paintCtx = paintCanvas.getContext('2d');
-        const paintColor = document.getElementById('paint-color');
-        const paintSize = document.getElementById('paint-size');
-        const paintClear = document.getElementById('paint-clear');
-        const paintCloseBtn = paintModal.querySelector('.modal-close-btn');
-        let isPainting = false;
-
-        function resizePaintCanvas() {
-            const maxWidth = Math.min(window.innerWidth * 0.9, 500);
-            const maxHeight = Math.min(window.innerHeight * 0.6, 500);
-            paintCanvas.width = maxWidth;
-            paintCanvas.height = maxHeight;
-            paintCtx.lineCap = 'round';
-            paintCtx.lineJoin = 'round';
-        }
-
-
-        paintCloseBtn.addEventListener('click', () => paintModal.classList.remove('active'));
-        paintModal.addEventListener('click', (e) => {
-            if (e.target === paintModal) paintModal.classList.remove('active');
-        });
-
-        paintClear.addEventListener('click', () => {
-            paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
-        });
-
-        function startPaint(e) {
-            isPainting = true;
-            draw(e);
-        }
-        function endPaint() {
-            isPainting = false;
-            paintCtx.beginPath();
-        }
-        function draw(e) {
-            if (!isPainting) return;
-            e.preventDefault();
-            
-            const rect = paintCanvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const x = (clientX - rect.left) * (paintCanvas.width / rect.width);
-            const y = (clientY - rect.top) * (paintCanvas.height / rect.height);
-
-            paintCtx.lineWidth = paintSize.value;
-            paintCtx.strokeStyle = paintColor.value;
-
-            paintCtx.lineTo(x, y);
-            paintCtx.stroke();
-            paintCtx.beginPath();
-            paintCtx.moveTo(x, y);
-        }
-
-        paintCanvas.addEventListener('mousedown', startPaint);
-        paintCanvas.addEventListener('mouseup', endPaint);
-        paintCanvas.addEventListener('mousemove', draw);
-        paintCanvas.addEventListener('touchstart', startPaint, {passive: false});
-        paintCanvas.addEventListener('touchend', endPaint);
-        paintCanvas.addEventListener('touchmove', draw, {passive: false});
 
         const audioPlayerToggle = document.getElementById('audio-player-toggle');
         const audioPlayerContainer = document.getElementById('audio-player-container');
