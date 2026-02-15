@@ -1739,7 +1739,7 @@
         const playPauseBtn = document.getElementById('play-pause-btn');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
-        const loopBtn = document.getElementById('loop-btn');
+         const loopBtn = document.getElementById('loop-btn');
         const volumeBtn = document.getElementById('volume-btn');
         const volumePopup = document.getElementById('volume-popup');
         const volumeSlider = document.getElementById('volume-slider');
@@ -1799,7 +1799,7 @@
             else volumeBtn.innerHTML = volumeHighIcon;
         }
 
-        function loadTrack(index) {
+         function loadTrack(index) {
             if (!tracks[index]) return;
             currentTrackIndex = index;
             trackTitle.textContent = tracks[index].title;
@@ -1979,9 +1979,9 @@
         }
         startStatusAnimation();
     </script>
-</html>
         nextBtn.addEventListener('click', () => playNext(false));
-        prevBtn.addEventListener('click', playPrev);
+         prevBtn.addEventListener('click', playPrev);
+
 
         loopBtn.addEventListener('click', () => {
             const isLooping = loopBtn.classList.toggle('active');
@@ -2110,5 +2110,7 @@
         }
         startStatusAnimation();
     </script>
+</body>
+</html>
 </body>
 </html>
