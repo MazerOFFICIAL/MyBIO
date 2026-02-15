@@ -477,6 +477,7 @@
             box-shadow: 0 0 15px var(--shadow-color);
             touch-action: none;
             max-width: 100%; height: auto;
+            cursor: pointer;
         }
 
         #cyber-pet {
@@ -518,7 +519,9 @@
             font-family: 'Courier New', monospace;
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
             z-index: 9999;
+            pointer-events: auto;
         }
+        .pet-bubble.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 
         .skills-container { display: flex; flex-direction: column; gap: 25px; width: 100%; padding: 10px 0; }
         .skill-item { width: 100%; }
