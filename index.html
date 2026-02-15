@@ -453,9 +453,6 @@
             cursor: pointer; z-index: 2100; transition: 0.3s; pointer-events: auto;
         }
         .snake-btn:hover { background: var(--btn-hover-bg); border-color: var(--accent-primary); box-shadow: 0 0 15px var(--accent-primary); }
-        .snake-btn svg { width: 24px; height: 24px; fill: var(--text-main); transition: 0.3s; }
-        .snake-btn:hover svg { fill: var(--accent-primary); }
-
         .game-box {
             background: var(--player-bg);
             backdrop-filter: blur(20px);
@@ -481,11 +478,6 @@
             touch-action: none;
             max-width: 100%; height: auto;
             cursor: pointer;
-        }
-        .paint-btn {
-            position: fixed; bottom: 25px; left: 80px;
-            width: 40px; height: 40px;
-            background: var(--input-bg); border: 1px solid var(--glass-border);
             border-radius: 10px; color: var(--text-main);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 2100; transition: 0.3s; pointer-events: auto;
@@ -499,6 +491,7 @@
             border-radius: 20px; border: 1px solid var(--accent-primary);
             box-shadow: 0 0 40px var(--shadow-color); text-align: center;
             display: flex; flex-direction: column; gap: 15px; transform: scale(1.1);
+
             pointer-events: auto; position: relative; max-width: 95vw;
         }
         .paint-controls {
@@ -760,9 +753,6 @@
     <div class="snake-btn" id="snake-game-btn">
         <svg viewBox="0 0 24 24"><path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M13.2,15.5C13.2,16.3 12.5,17 11.7,17H9.7C8.9,17 8.2,16.3 8.2,15.5V14C8.2,13.2 8.9,12.5 9.7,12.5H10.2V11H9.7C8.9,11 8.2,10.3 8.2,9.5V8C8.2,7.2 8.9,6.5 9.7,6.5H11.7C12.5,6.5 13.2,7.2 13.2,8V9.5C13.2,10.3 12.5,11 11.7,11H11.2V12.5H11.7C12.5,12.5 13.2,13.2 13.2,14V15.5Z"/></svg>
     </div>
-    <div class="paint-btn" id="paint-btn">
-        <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
-    </div>
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
@@ -883,8 +873,6 @@
         </div>
     </div>
 
-    <div id="paint-modal" class="modal">
-        <div class="paint-box">
             <button class="modal-close-btn">&times;</button>
             <div class="paint-controls">
                 <input type="color" id="paint-color" value="#00d2ff" style="border: none; width: 40px; height: 40px; padding: 0; background: none; cursor: pointer;">
@@ -894,7 +882,6 @@
             <canvas id="paint-canvas"></canvas>
         </div>
     </div>
-
     <div class="audio-player-toggle" id="audio-player-toggle">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
@@ -1664,10 +1651,6 @@
             }
         });
 
-        // Paint Logic
-        const paintBtn = document.getElementById('paint-btn');
-        const paintModal = document.getElementById('paint-modal');
-        const paintCanvas = document.getElementById('paint-canvas');
         const paintCtx = paintCanvas.getContext('2d');
         const paintColor = document.getElementById('paint-color');
         const paintSize = document.getElementById('paint-size');
@@ -1684,15 +1667,6 @@
             paintCtx.lineJoin = 'round';
         }
 
-        paintBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Close other modals
-            snakeModal.classList.remove('active');
-            oxideIdModal.classList.remove('active');
-            
-            paintModal.classList.add('active');
-            resizePaintCanvas();
-        });
 
         paintCloseBtn.addEventListener('click', () => paintModal.classList.remove('active'));
         paintModal.addEventListener('click', (e) => {
@@ -2113,7 +2087,7 @@
         }
         startStatusAnimation();
     </script>
-</body>
+
 </html>
 
 </body>
