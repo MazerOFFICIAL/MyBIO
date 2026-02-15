@@ -810,6 +810,7 @@
             <h1>Mazer</h1>
             <div class="status-text" id="typewriter"></div>
             <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
+            <a href="https://t.me/MazerOxideSurvivalIsland" target="_blank" rel="noopener noreferrer" id="tg-channel-btn" class="link-btn">My Telegram Channel</a>
             <!-- <a href="https://www.youtube.com/@MazerOxide" target="_blank" rel="noopener noreferrer" class="link-btn">Youtube</a> -->
             <a href="#" id="oxide-id-btn" class="link-btn">Oxide HH-ID</a>
         </div>
@@ -1027,7 +1028,7 @@
                 bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
                 worksTitle: "Works", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
                 oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
-                telegram: "Telegram", youtube: "YouTube",
+                telegram: "Telegram", tgChannel: "My Telegram Channel", youtube: "YouTube",
                 riddleTrigger: "U need 80+ IQ to solve this",
                 riddleTitle: "RIDDLE",
                 riddleText: "You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?",
@@ -1057,7 +1058,7 @@
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Мои занятия",
                 worksTitle: "Работы", skillsTitle: "Навыки", hobbiesTitle: "Занятия", soon: "Скоро...",
                 oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
-                telegram: "Телеграм", youtube: "Ютуб",
+                telegram: "Телеграм", tgChannel: "Мой ТГ канал", youtube: "Ютуб",
                 riddleTrigger: "Нужен IQ 80+ чтобы решить",
                 riddleTitle: "ЗАГАДКА",
                 riddleText: "Вы входите в темную комнату. В ней есть свеча, керосиновая лампа и камин. У вас в кармане только один коробок спичек. Что вы зажжете первым?",
@@ -1087,7 +1088,7 @@
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Mis Pasatiempos",
                 worksTitle: "Trabajos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
                 oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
-                telegram: "Telegram", youtube: "YouTube",
+                telegram: "Telegram", tgChannel: "Mi canal de TG", youtube: "YouTube",
                 riddleTrigger: "Necesitas 80+ IQ para esto",
                 riddleTitle: "ACERTIJO",
                 riddleText: "Entras en una habitación oscura. Hay una vela, una lámpara de queroseno y una chimenea. Solo tienes una caja de cerillas en tu bolsillo. ¿Qué encenderás primero?",
@@ -1117,7 +1118,7 @@
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Mes Loisirs",
                 worksTitle: "Travaux", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
                 oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
-                telegram: "Telegram", youtube: "YouTube",
+                telegram: "Telegram", tgChannel: "Mon canal TG", youtube: "YouTube",
                 riddleTrigger: "Il faut 80+ de QI pour ça",
                 riddleTitle: "ÉNIGME",
                 riddleText: "Vous entrez dans une pièce sombre. Il y a une bougie, une lampe à pétrole et une cheminée. Vous n'avez qu'une boîte d'allumettes dans votre poche. Qu'allumez-vous en premier ?",
@@ -1147,7 +1148,7 @@
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills", hobbiesBtn: "Meine Hobbys",
                 worksTitle: "Arbeiten", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
                 oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
-                telegram: "Telegram", youtube: "YouTube",
+                telegram: "Telegram", tgChannel: "Mein TG-Kanal", youtube: "YouTube",
                 riddleTrigger: "Du brauchst 80+ IQ dafür",
                 riddleTitle: "RÄTSEL",
                 riddleText: "Du betrittst einen dunklen Raum. Es gibt eine Kerze, eine Petroleumlampe und einen Kamin. Du hast nur eine Schachtel Streichhölzer in der Tasche. Was zündest du zuerst an?",
@@ -1198,6 +1199,7 @@
             document.getElementById('oxide-download').textContent = t.oxideDownload;
             document.querySelectorAll('.soon-text').forEach(el => el.textContent = t.soon);
             document.getElementById('telegram-btn').textContent = t.telegram;
+            document.getElementById('tg-channel-btn').textContent = t.tgChannel;
             // document.querySelector('a[href*="youtube"]').textContent = t.youtube;
             document.getElementById('riddle-trigger').textContent = t.riddleTrigger;
             document.querySelector('#riddle-modal h3').textContent = t.riddleTitle;
