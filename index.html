@@ -912,6 +912,18 @@
             <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
         </div>
     </div>
+    <div id="nohello-modal" class="modal" style="z-index: 5003;">
+        <div class="password-box" style="max-width: 400px;">
+            <h3 id="nohello-title">Communication Etiquette</h3>
+            <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
+            <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
+            <label style="display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; color: var(--text-main); margin-bottom: 20px; user-select: none;">
+                <input type="checkbox" id="nohello-checkbox" style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-primary);">
+                <span id="nohello-label">I have read and understood</span>
+            </label>
+            <button id="nohello-submit" disabled style="opacity: 0.5; cursor: not-allowed;">Continue</button>
+        </div>
+    </div>
 
     <div id="oxide-id-modal" class="modal">
         <div class="info-box">
@@ -1028,7 +1040,11 @@
                 snakeStart: "START",
                 snakeAgain: "Play Again",
                 paintBtn: "Paint",
-                paintClear: "Clear"
+                paintClear: "Clear",
+                noHelloTitle: "Communication Etiquette",
+                noHelloText: "Please read this before messaging:",
+                noHelloCheckbox: "I have read and understood",
+                noHelloBtn: "Continue"
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Мои занятия",
@@ -1052,7 +1068,11 @@
                 snakeStart: "СТАРТ",
                 snakeAgain: "Играть снова",
                 paintBtn: "Рисование",
-                paintClear: "Очистить"
+                paintClear: "Очистить",
+                noHelloTitle: "Культура общения",
+                noHelloText: "Пожалуйста, прочтите это перед тем как писать:",
+                noHelloCheckbox: "Я ознакомился и понял",
+                noHelloBtn: "Продолжить"
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Mis Pasatiempos",
@@ -1076,7 +1096,11 @@
                 snakeStart: "EMPEZAR",
                 snakeAgain: "Jugar de nuevo",
                 paintBtn: "Pintar",
-                paintClear: "Borrar"
+                paintClear: "Borrar",
+                noHelloTitle: "Etiqueta de comunicación",
+                noHelloText: "Por favor lea esto antes de enviar mensajes:",
+                noHelloCheckbox: "He leído y entendido",
+                noHelloBtn: "Continuar"
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Mes Loisirs",
@@ -1100,7 +1124,11 @@
                 snakeStart: "DÉMARRER",
                 snakeAgain: "Rejouer",
                 paintBtn: "Peinture",
-                paintClear: "Effacer"
+                paintClear: "Effacer",
+                noHelloTitle: "Étiquette de communication",
+                noHelloText: "Veuillez lire ceci avant d'envoyer un message :",
+                noHelloCheckbox: "J'ai lu et compris",
+                noHelloBtn: "Continuer"
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills", hobbiesBtn: "Meine Hobbys",
@@ -1124,7 +1152,11 @@
                 snakeStart: "START",
                 snakeAgain: "Nochmal spielen",
                 paintBtn: "Malen",
-                paintClear: "Löschen"
+                paintClear: "Löschen",
+                noHelloTitle: "Kommunikationsetikette",
+                noHelloText: "Bitte lesen Sie dies, bevor Sie eine Nachricht senden:",
+                noHelloCheckbox: "Ich habe gelesen und verstanden",
+                noHelloBtn: "Weiter"
             }
         };
 
@@ -1164,6 +1196,11 @@
             document.getElementById('start-snake-btn').textContent = isGameOver ? t.snakeAgain : t.snakeStart;
             document.getElementById('paint-btn').title = t.paintBtn;
             document.getElementById('paint-clear').textContent = t.paintClear;
+            document.getElementById('nohello-title').textContent = t.noHelloTitle;
+            document.getElementById('nohello-text').textContent = t.noHelloText;
+            document.getElementById('nohello-label').textContent = t.noHelloCheckbox;
+            document.getElementById('nohello-submit').textContent = t.noHelloBtn;
+            document.getElementById('nohello-link').href = `https://nohello.net/${lang}/`;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1398,8 +1435,12 @@
         });
         tgSubmit.addEventListener('click', () => {
             if(tgPassInput.value.trim().toLowerCase() === 'telegram') {
-                window.open(atob(secretLink), '_blank');
                 tgModal.classList.remove('active');
+                noHelloModal.classList.add('active');
+                noHelloCheckbox.checked = false;
+                noHelloBtn.disabled = true;
+                noHelloBtn.style.opacity = '0.5';
+                noHelloBtn.style.cursor = 'not-allowed';
             } else {
                 tgPassInput.style.borderColor = '#ff0055';
                 tgPassInput.style.boxShadow = '0 0 15px #ff0055';
@@ -1407,6 +1448,24 @@
             }
         });
         tgModal.addEventListener('click', (e) => { if (e.target === tgModal) tgModal.classList.remove('active'); });
+
+        const noHelloModal = document.getElementById('nohello-modal');
+        const noHelloCheckbox = document.getElementById('nohello-checkbox');
+        const noHelloBtn = document.getElementById('nohello-submit');
+
+        noHelloCheckbox.addEventListener('change', () => {
+            noHelloBtn.disabled = !noHelloCheckbox.checked;
+            noHelloBtn.style.opacity = noHelloCheckbox.checked ? '1' : '0.5';
+            noHelloBtn.style.cursor = noHelloCheckbox.checked ? 'pointer' : 'not-allowed';
+        });
+
+        noHelloBtn.addEventListener('click', () => {
+            if (!noHelloBtn.disabled) {
+                window.open(atob(secretLink), '_blank');
+                noHelloModal.classList.remove('active');
+            }
+        });
+        noHelloModal.addEventListener('click', (e) => { if (e.target === noHelloModal) noHelloModal.classList.remove('active'); });
 
         let riddleClickCount = 0;
         let riddleTimer;
