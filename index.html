@@ -1382,7 +1382,6 @@
         let dy = 0;
         let inputQueue = [];
         let snakeScore = 0;
-        let gameInterval;
         let isGameRunning = false;
         const gridSize = 15;
         const tileCount = 20; // 300px / 15px = 20
@@ -1393,19 +1392,61 @@
         });
         snakeCloseBtn.addEventListener('click', () => {
             snakeModal.classList.remove('active');
-            clearInterval(gameInterval);
             isGameRunning = false;
         });
         snakeModal.addEventListener('click', (e) => {
             if (e.target === snakeModal) {
                 snakeModal.classList.remove('active');
-                clearInterval(gameInterval);
                 isGameRunning = false;
             }
         });
 
         startSnakeBtn.addEventListener('click', startGame);
 
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+            
+            if (type === 'eat') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'win') {
+                const notes = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50];
+                const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5];
+                notes.forEach((freq, i) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.type = 'triangle';
+                    o.frequency.value = freq;
+                    g.gain.setValueAtTime(0.05, now + times[i]);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + times[i] + 0.2);
+                    o.start(now + times[i]);
+                    o.stop(now + times[i] + 0.2);
+                });
+            } else if (type === 'over') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.linearRampToValueAtTime(50, now + 0.3);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+        }
+
+        let lastTime = 0;
         function startGame() {
             if (isGameRunning) return;
             snake = [{x: 10, y: 10}, {x: 9, y: 10}, {x: 8, y: 10}];
@@ -1417,11 +1458,18 @@
             snakeScoreDisplay.textContent = `Score: ${snakeScore}`;
             isGameRunning = true;
             createFood();
-            clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, 100);
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            lastTime = performance.now();
+            window.requestAnimationFrame(gameLoop);
         }
 
-        function gameLoop() {
+        function gameLoop(currentTime) {
+            if (!isGameRunning) return;
+            window.requestAnimationFrame(gameLoop);
+            
+            if ((currentTime - lastTime) < 90) return;
+            lastTime = currentTime;
+
             if (inputQueue.length > 0) {
                 const nextMove = inputQueue.shift();
                 dx = nextMove.dx;
@@ -1445,8 +1493,10 @@
             snake.unshift(head);
             if (head.x === food.x && head.y === food.y) {
                 snakeScore++;
+                playSound('eat');
                 snakeScoreDisplay.textContent = `Score: ${snakeScore}`;
                 if (snakeScore === 21) {
+                    playSound('win');
                     winGame();
                     return;
                 }
@@ -1495,7 +1545,7 @@
         }
 
         function gameOver() {
-            clearInterval(gameInterval);
+            playSound('over');
             isGameRunning = false;
             isGameOver = true;
             snakeScoreDisplay.textContent = `Game Over! Score: ${snakeScore}`;
@@ -1503,7 +1553,6 @@
         }
 
         function winGame() {
-            clearInterval(gameInterval);
             isGameRunning = false;
             snakeModal.classList.remove('active');
             successModal.classList.add('active');
