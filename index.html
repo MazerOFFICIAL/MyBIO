@@ -917,10 +917,11 @@
             <h3 id="nohello-title">Communication Etiquette</h3>
             <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
             <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
-            <label style="display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; color: var(--text-main); margin-bottom: 20px; user-select: none;">
-                <input type="checkbox" id="nohello-checkbox" style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-primary);">
+            <label id="nohello-label-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; color: var(--text-main); margin-bottom: 20px; user-select: none;">
+                <input type="checkbox" id="nohello-checkbox" disabled style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-primary); opacity: 0.5; cursor: not-allowed;">
                 <span id="nohello-label">I have read and understood</span>
             </label>
+            <div id="nohello-warning" style="color: #ff4444; font-size: 0.9rem; margin-bottom: 15px; display: none; animation: fadeIn 0.3s;">First read "nohello.net"</div>
             <button id="nohello-submit" disabled style="opacity: 0.5; cursor: not-allowed;">Continue</button>
         </div>
     </div>
@@ -1044,7 +1045,8 @@
                 noHelloTitle: "Communication Etiquette",
                 noHelloText: "Please read this before messaging:",
                 noHelloCheckbox: "I have read and understood",
-                noHelloBtn: "Continue"
+                noHelloBtn: "Continue",
+                noHelloWarning: "First read \"nohello.net\""
             },
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Мои занятия",
@@ -1072,7 +1074,8 @@
                 noHelloTitle: "Культура общения",
                 noHelloText: "Пожалуйста, прочтите это перед тем как писать:",
                 noHelloCheckbox: "Я ознакомился и понял",
-                noHelloBtn: "Продолжить"
+                noHelloBtn: "Продолжить",
+                noHelloWarning: "Сначала прочитай \"nohello.net\""
             },
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Mis Pasatiempos",
@@ -1100,7 +1103,8 @@
                 noHelloTitle: "Etiqueta de comunicación",
                 noHelloText: "Por favor lea esto antes de enviar mensajes:",
                 noHelloCheckbox: "He leído y entendido",
-                noHelloBtn: "Continuar"
+                noHelloBtn: "Continuar",
+                noHelloWarning: "Primero lee \"nohello.net\""
             },
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Mes Loisirs",
@@ -1128,7 +1132,8 @@
                 noHelloTitle: "Étiquette de communication",
                 noHelloText: "Veuillez lire ceci avant d'envoyer un message :",
                 noHelloCheckbox: "J'ai lu et compris",
-                noHelloBtn: "Continuer"
+                noHelloBtn: "Continuer",
+                noHelloWarning: "Lisez d'abord \"nohello.net\""
             },
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Skills", hobbiesBtn: "Meine Hobbys",
@@ -1156,7 +1161,8 @@
                 noHelloTitle: "Kommunikationsetikette",
                 noHelloText: "Bitte lesen Sie dies, bevor Sie eine Nachricht senden:",
                 noHelloCheckbox: "Ich habe gelesen und verstanden",
-                noHelloBtn: "Weiter"
+                noHelloBtn: "Weiter",
+                noHelloWarning: "Lies zuerst \"nohello.net\""
             }
         };
 
@@ -1201,6 +1207,7 @@
             document.getElementById('nohello-label').textContent = t.noHelloCheckbox;
             document.getElementById('nohello-submit').textContent = t.noHelloBtn;
             document.getElementById('nohello-link').href = `https://nohello.net/${lang}/`;
+            document.getElementById('nohello-warning').textContent = t.noHelloWarning;
             
             document.getElementById('prev-btn').title = t.audioPrev;
             document.getElementById('play-pause-btn').title = t.audioPlay;
@@ -1438,9 +1445,14 @@
                 tgModal.classList.remove('active');
                 noHelloModal.classList.add('active');
                 noHelloCheckbox.checked = false;
+                noHelloCheckbox.disabled = true;
+                noHelloCheckbox.style.opacity = '0.5';
+                noHelloCheckbox.style.cursor = 'not-allowed';
                 noHelloBtn.disabled = true;
                 noHelloBtn.style.opacity = '0.5';
                 noHelloBtn.style.cursor = 'not-allowed';
+                noHelloWarning.style.display = 'none';
+                isLinkRead = false;
             } else {
                 tgPassInput.style.borderColor = '#ff0055';
                 tgPassInput.style.boxShadow = '0 0 15px #ff0055';
@@ -1451,7 +1463,26 @@
 
         const noHelloModal = document.getElementById('nohello-modal');
         const noHelloCheckbox = document.getElementById('nohello-checkbox');
+        const noHelloLabelContainer = document.getElementById('nohello-label-container');
         const noHelloBtn = document.getElementById('nohello-submit');
+        const noHelloLink = document.getElementById('nohello-link');
+        const noHelloWarning = document.getElementById('nohello-warning');
+        let isLinkRead = false;
+
+        noHelloLink.addEventListener('click', () => {
+            isLinkRead = true;
+            noHelloCheckbox.disabled = false;
+            noHelloCheckbox.style.opacity = '1';
+            noHelloCheckbox.style.cursor = 'pointer';
+            noHelloWarning.style.display = 'none';
+        });
+
+        noHelloLabelContainer.addEventListener('click', (e) => {
+            if (!isLinkRead) {
+                e.preventDefault();
+                noHelloWarning.style.display = 'block';
+            }
+        });
 
         noHelloCheckbox.addEventListener('change', () => {
             noHelloBtn.disabled = !noHelloCheckbox.checked;
