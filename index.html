@@ -1560,6 +1560,14 @@
 
         document.addEventListener('keydown', (e) => {
             if (!snakeModal.classList.contains('active')) return;
+            
+            if (isGameOver && e.code === 'Space') {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                startGame();
+                return;
+            }
+
             if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
             
             const lastMove = inputQueue.length > 0 ? inputQueue[inputQueue.length - 1] : { dx: dx, dy: dy };
