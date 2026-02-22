@@ -109,10 +109,11 @@ class Utils {
     }
     
     static qs(selector, parent = document) {
-        return parent.querySelector(selector);
+        return parent ? parent.querySelector(selector) : null;
     }
     
     static qsa(selector, parent = document) {
+        if (!parent) return [];
         return [...parent.querySelectorAll(selector)];
     }
 }
