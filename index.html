@@ -633,117 +633,6 @@
             transform: scale(1.08);
             box-shadow: 0 0 30px var(--accent-primary), 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        .snake-btn {
-            position: fixed; bottom: 25px; left: 25px;
-            width: 50px; height: 50px;
-            background: linear-gradient(135deg, var(--input-bg), rgba(255, 255, 255, 0.08)); 
-            border: 2px solid var(--glass-border);
-            border-radius: 12px; color: var(--text-main);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 2100; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            pointer-events: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        .snake-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .snake-btn svg { 
-            width: 24px; height: 24px; fill: var(--text-main); transition: all 0.3s; 
-            position: relative; z-index: 1; filter: drop-shadow(0 0 2px rgba(var(--accent-primary-rgb), 0.3));
-        }
-        .snake-btn:hover::before { opacity: 1; }
-        .snake-btn:hover { 
-            background: linear-gradient(135deg, var(--btn-hover-bg), rgba(var(--accent-primary-rgb), 0.2)); 
-            border-color: var(--accent-primary); 
-            box-shadow: 0 0 30px var(--accent-primary), 0 8px 24px rgba(0, 0, 0, 0.4);
-            transform: translateY(-3px) scale(1.05);
-        }
-        .snake-btn:hover svg { fill: var(--accent-primary); filter: drop-shadow(0 0 8px var(--accent-primary)); }
-        .game-box {
-            background: var(--player-bg);
-            backdrop-filter: blur(20px);
-            padding: 15px;
-            padding-top: 45px;
-            border-radius: 20px;
-            border: 1px solid var(--accent-primary);
-            box-shadow: 0 0 40px var(--shadow-color);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transform: scale(1);
-            pointer-events: auto;
-            position: relative;
-            max-width: 420px;
-        }
-
-        #snake-canvas {
-            background: var(--input-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            box-shadow: 0 0 15px var(--shadow-color);
-            touch-action: none;
-            max-width: 100%; height: auto;
-            color: var(--text-main);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s; pointer-events: auto;
-        }
-        .paint-btn {
-            position: fixed; bottom: 25px; left: 90px;
-            width: 50px; height: 50px;
-            background: linear-gradient(135deg, var(--input-bg), rgba(255, 255, 255, 0.08));
-            border: 2px solid var(--glass-border);
-            border-radius: 12px; color: var(--text-main);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 2100; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            pointer-events: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        .paint-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .paint-btn:hover::before { opacity: 1; }
-        .paint-btn:hover { 
-            background: linear-gradient(135deg, var(--btn-hover-bg), rgba(var(--accent-primary-rgb), 0.2)); 
-            border-color: var(--accent-primary); 
-            box-shadow: 0 0 30px var(--accent-primary), 0 8px 24px rgba(0, 0, 0, 0.4);
-            transform: translateY(-3px) scale(1.05);
-        }
-        .paint-btn svg { 
-            width: 24px; height: 24px; fill: var(--text-main); transition: all 0.3s; 
-            position: relative; z-index: 1; filter: drop-shadow(0 0 2px rgba(var(--accent-primary-rgb), 0.3));
-        }
-        .paint-btn:hover svg { fill: var(--accent-primary); filter: drop-shadow(0 0 8px var(--accent-primary)); }
-        
-        .paint-box {
-            background: var(--player-bg); backdrop-filter: blur(20px); 
-            padding: 20px;
-            padding-top: 45px;
-            border-radius: 20px; border: 1px solid var(--accent-primary);
-            box-shadow: 0 0 40px var(--shadow-color); text-align: center;
-            display: flex; flex-direction: column; gap: 15px; transform: scale(1.1);
-
-            pointer-events: auto; position: relative; max-width: 95vw;
-        }
-        .paint-controls {
-            display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;
-        }
-        #paint-canvas {
-            background: var(--input-bg); border: 1px solid var(--glass-border);
-            border-radius: 10px; box-shadow: 0 0 15px var(--shadow-color);
-            touch-action: none; cursor: crosshair;
-            cursor: pointer;
-        }
 
         .skills-container { display: flex; flex-direction: column; gap: 25px; width: 100%; padding: 10px 0; }
         .skill-item { width: 100%; }
@@ -1000,6 +889,7 @@
         .track-title {
             font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 5px; text-shadow: 0 0 15px var(--accent-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            cursor: move; user-select: none;
         }
         .lang-btn {
             position: absolute;
@@ -1139,12 +1029,6 @@
         <div class="theme-option" data-theme="dracula">Dracula</div>
         <div class="theme-option" data-theme="retro">Retro</div>
     </div>
-    <div class="snake-btn" id="snake-game-btn">
-        <svg viewBox="0 0 24 24"><path d="M13,6V5C13,3.31 14.31,2 16,2C17.69,2 19,3.31 19,5V6C19,7.69 17.69,9 16,9H14C12.89,9 12,9.89 12,11V12C12,13.11 12.89,14 14,14H16C17.69,14 19,15.31 19,17V18C19,19.69 17.69,21 16,21H13V19H16C16.55,19 17,18.55 17,18V17C17,16.45 16.55,16 16,16H14C12.89,16 12,15.11 12,14V13C12,11.89 12.89,11 14,11H16C16.55,11 17,10.55 17,10V9C17,8.45 16.55,8 16,8C15.45,8 15,8.45 15,9V10H13V9C13,7.31 14.31,6 16,6H13Z"/></svg>
-    </div>
-    <div class="paint-btn" id="paint-btn">
-        <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
-    </div>
     <div class="card">
         <div id="bio" class="content-section active">
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
@@ -1223,29 +1107,6 @@
         </div>
     </div>
 
-    <div id="snake-modal" class="modal">
-        <div class="game-box">
-            <button class="modal-close-btn">&times;</button>
-            <div style="color: var(--accent-primary); font-weight: bold; font-size: 1.2rem; margin-bottom: 5px;">
-                <span id="snake-score-display">Score: 0</span>
-            </div>
-            <canvas id="snake-canvas" width="300" height="300"></canvas>
-            <button id="start-snake-btn" class="info-copy-btn">START</button>
-        </div>
-    </div>
-
-    <div id="paint-modal" class="modal">
-        <div class="paint-box">
-            <button class="modal-close-btn">&times;</button>
-            <div class="paint-controls">
-                <input type="color" id="paint-color" value="#00d2ff" style="border: none; width: 40px; height: 40px; padding: 0; background: none; cursor: pointer;">
-                <input type="range" id="paint-size" min="1" max="20" value="5" style="width: 100px;">
-                <button id="paint-clear" class="info-copy-btn" style="padding: 8px 15px; font-size: 0.8rem;">Clear</button>
-            </div>
-            <canvas id="paint-canvas"></canvas>
-        </div>
-    </div>
-
     <div class="audio-player-toggle" id="audio-player-toggle">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
@@ -1310,7 +1171,6 @@
                         audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track", audioLoop: "Repeat track", audioVolume: "Volume",
                         passwordPlaceholder: "Password", greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
                         copied: "Copied to clipboard", oxideBtn: "Oxide HH-ID", oxideDonate: "I would be grateful for your support", copyBtn: "Copy",
-                        snakeBtn: "Snake Game", snakeStart: "START", snakeAgain: "Play Again", paintBtn: "Paint", paintClear: "Clear",
                         noHelloTitle: "Communication Etiquette", noHelloText: "Please read this before messaging:", noHelloCheckbox: "I have read and understood", noHelloBtn: "Continue", noHelloWarning: "First read \"nohello.net\""
                     },
                     ru: {
@@ -1324,7 +1184,6 @@
                         audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек", audioLoop: "Зациклить трек", audioVolume: "Громкость",
                         passwordPlaceholder: "Пароль", greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
                         copied: "Скопировано в буфер обмена", oxideBtn: "Oxide HH-ID", oxideDonate: "Буду благодарен за поддержку", copyBtn: "Копировать",
-                        snakeBtn: "Змейка", snakeStart: "СТАРТ", snakeAgain: "Сыграть снова", paintBtn: "Рисовалка", paintClear: "Очистить",
                         noHelloTitle: "Этикет общения", noHelloText: "Пожалуйста, прочтите это перед тем как писать:", noHelloCheckbox: "Прочитал(а) и понимаю", noHelloBtn: "Продолжить", noHelloWarning: "Сначала прочитайте \"nohello.net\""
                     },
                     es: {
@@ -1338,7 +1197,6 @@
                         audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente", audioLoop: "Repetir pista", audioVolume: "Volumen",
                         passwordPlaceholder: "Contraseña", greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
                         copied: "Copiado al portapapeles", oxideBtn: "Oxide HH-ID", oxideDonate: "Agradecería tu apoyo", copyBtn: "Copiar",
-                        snakeBtn: "Juego Snake", snakeStart: "EMPEZAR", snakeAgain: "Jugar de nuevo", paintBtn: "Pintar", paintClear: "Borrar",
                         noHelloTitle: "Etiqueta de comunicación", noHelloText: "Por favor lea esto antes de enviar mensajes:", noHelloCheckbox: "He leído y entendido", noHelloBtn: "Continuar", noHelloWarning: "Primero lee \"nohello.net\""
                     },
                     fr: {
@@ -1352,7 +1210,6 @@
                         audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante", audioLoop: "Répéter la piste", audioVolume: "Volume",
                         passwordPlaceholder: "Mot de passe", greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
                         copied: "Copié dans le presse-papiers", oxideBtn: "Oxide HH-ID", oxideDonate: "Je vous serais reconnaissant de votre soutien", copyBtn: "Copier",
-                        snakeBtn: "Jeu Snake", snakeStart: "DÉMARRER", snakeAgain: "Rejouer", paintBtn: "Peinture", paintClear: "Effacer",
                         noHelloTitle: "Étiquette de communication", noHelloText: "Veuillez lire ceci avant d'envoyer un message :", noHelloCheckbox: "J'ai lu et compris", noHelloBtn: "Continuer", noHelloWarning: "Lisez d'abord \"nohello.net\""
                     },
                     de: {
@@ -1366,7 +1223,6 @@
                         audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel", audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
                         passwordPlaceholder: "Passwort", greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
                         copied: "In die Zwischenablage kopiert", oxideBtn: "Oxide HH-ID", oxideDonate: "Ich wäre für Ihre Unterstützung dankbar", copyBtn: "Kopieren",
-                        snakeBtn: "Snake Spiel", snakeStart: "START", snakeAgain: "Nochmal spielen", paintBtn: "Malen", paintClear: "Löschen",
                         noHelloTitle: "Kommunikationsetikette", noHelloText: "Bitte lesen Sie dies, bevor Sie eine Nachricht senden:", noHelloCheckbox: "Ich habe gelesen und verstanden", noHelloBtn: "Weiter", noHelloWarning: "Lies zuerst \"nohello.net\""
                     }
                 }
@@ -1399,22 +1255,6 @@
                 oxideIdBtn: document.getElementById('oxide-id-btn'),
                 telegramBtn: document.getElementById('telegram-btn'),
                 copyOxideIdBtn: document.getElementById('copy-oxide-id'),
-                snake: {
-                    btn: document.getElementById('snake-game-btn'),
-                    canvas: document.getElementById('snake-canvas'),
-                    startBtn: document.getElementById('start-snake-btn'),
-                    scoreDisplay: document.getElementById('snake-score-display'),
-                    closeBtn: document.querySelector('#snake-modal .modal-close-btn')
-                },
-                paint: {
-                    modal: document.getElementById('paint-modal'),
-                    btn: document.getElementById('paint-btn'),
-                    canvas: document.getElementById('paint-canvas'),
-                    colorInput: document.getElementById('paint-color'),
-                    sizeInput: document.getElementById('paint-size'),
-                    clearBtn: document.getElementById('paint-clear'),
-                    closeBtn: document.querySelector('#paint-modal .modal-close-btn')
-                },
                 audio: {
                     player: document.getElementById('bg-music'),
                     toggleBtn: document.getElementById('audio-player-toggle'),
@@ -1499,9 +1339,6 @@
                         oxideBtn: { selector: '#oxide-id-btn', type: 'text' },
                         oxideDonate: { selector: '#oxide-donate-text', type: 'text' },
                         copyBtn: { selector: '#copy-oxide-id', type: 'text' },
-                        snakeBtn: { selector: '#snake-game-btn', type: 'title' },
-                        paintBtn: { selector: '#paint-btn', type: 'title' },
-                        paintClear: { selector: '#paint-clear', type: 'text' },
                         noHelloTitle: { selector: '#nohello-title', type: 'text' },
                         noHelloText: { selector: '#nohello-text', type: 'text' },
                         noHelloCheckbox: { selector: '#nohello-label', type: 'text' },
@@ -1558,256 +1395,6 @@
                 }
             };
 
-            class SnakeGame {
-                constructor(canvas, scoreDisplay, startBtn) {
-                    this.canvas = canvas;
-                    this.scoreDisplay = scoreDisplay;
-                    this.startBtn = startBtn;
-                    this.ctx = canvas.getContext('2d');
-
-                    this.config = { gridSize: 15, tileCount: 20, gameSpeed: 90 };
-                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    this.reset();
-                }
-
-                reset() {
-                    this.snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
-                    this.food = {};
-                    this.direction = { x: 1, y: 0 };
-                    this.inputQueue = [];
-                    this.score = 0;
-                    this.isRunning = false;
-                    this.isGameOver = false;
-                    this.lastTime = 0;
-                    this.updateScoreDisplay();
-                    this.createFood();
-                }
-
-                start() {
-                    if (this.isRunning) return;
-                    this.reset();
-                    this.isGameOver = false;
-                    this.isRunning = true;
-                    this.startBtn.textContent = CONFIG.translations[State.currentLang].snakeStart;
-                    if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
-                    this.lastTime = performance.now();
-                    requestAnimationFrame((time) => this.gameLoop(time));
-                }
-
-                stop() {
-                    this.isRunning = false;
-                }
-
-                gameLoop(currentTime) {
-                    if (!this.isRunning) return;
-                    requestAnimationFrame((time) => this.gameLoop(time));
-
-                    if ((currentTime - this.lastTime) < this.config.gameSpeed) return;
-                    this.lastTime = currentTime;
-
-                    this.processInput();
-                    this.moveSnake();
-                    this.checkCollision();
-                    if (!this.isRunning) return; // checkCollision might stop the game
-                    this.checkFood();
-                    this.draw();
-                }
-
-                processInput() {
-                    if (this.inputQueue.length > 0) {
-                        const nextMove = this.inputQueue.shift();
-                        if (this.snake.length === 1 || (nextMove.x !== -this.direction.x && nextMove.y !== -this.direction.y)) {
-                            this.direction = nextMove;
-                        }
-                    }
-                }
-
-                moveSnake() {
-                    const head = { x: this.snake[0].x + this.direction.x, y: this.snake[0].y + this.direction.y };
-                    this.snake.unshift(head);
-                    if (head.x !== this.food.x || head.y !== this.food.y) {
-                        this.snake.pop();
-                    }
-                }
-
-                checkCollision() {
-                    const head = this.snake[0];
-                    if (head.x < 0 || head.x >= this.config.tileCount || head.y < 0 || head.y >= this.config.tileCount) {
-                        this.gameOver();
-                    }
-                    for (let i = 1; i < this.snake.length; i++) {
-                        if (head.x === this.snake[i].x && head.y === this.snake[i].y) {
-                            this.gameOver();
-                            break;
-                        }
-                    }
-                }
-
-                checkFood() {
-                    if (this.snake[0].x === this.food.x && this.snake[0].y === this.food.y) {
-                        this.score++;
-                        this.playSound('eat');
-                        this.updateScoreDisplay();
-                        this.createFood();
-                    }
-                }
-
-                createFood() {
-                    let valid = false;
-                    while (!valid) {
-                        this.food = {
-                            x: Math.floor(Math.random() * this.config.tileCount),
-                            y: Math.floor(Math.random() * this.config.tileCount)
-                        };
-                        valid = !this.snake.some(part => part.x === this.food.x && part.y === this.food.y);
-                    }
-                }
-
-                gameOver() {
-                    this.playSound('over');
-                    this.isRunning = false;
-                    this.isGameOver = true;
-                    this.scoreDisplay.textContent = `Game Over! Score: ${this.score}`;
-                    this.startBtn.textContent = CONFIG.translations[State.currentLang].snakeAgain;
-                }
-
-                draw() {
-                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                    const snakeColor = getComputedStyle(DOM.body).getPropertyValue('--accent-primary').trim();
-                    const foodColor = getComputedStyle(DOM.body).getPropertyValue('--accent-secondary').trim();
-                    const s = this.config.gridSize;
-
-                    this.ctx.fillStyle = foodColor;
-                    this.ctx.fillRect(this.food.x * s, this.food.y * s, s, s);
-
-                    this.ctx.fillStyle = snakeColor;
-                    this.snake.forEach(part => this.ctx.fillRect(part.x * s, part.y * s, s, s));
-                }
-
-                updateScoreDisplay() {
-                    this.scoreDisplay.textContent = `Score: ${this.score}`;
-                }
-
-                handleInput(e) {
-                    if (!this.isRunning && e.code === 'Space' && this.isGameOver) {
-                        e.preventDefault();
-                        this.start();
-                        return;
-                    }
-                    if (!this.isRunning) return;
-
-                    const keyMap = {
-                        'ArrowUp': { x: 0, y: -1 }, 'ArrowDown': { x: 0, y: 1 },
-                        'ArrowLeft': { x: -1, y: 0 }, 'ArrowRight': { x: 1, y: 0 }
-                    };
-                    if (keyMap[e.key]) {
-                        e.preventDefault();
-                        this.inputQueue.push(keyMap[e.key]);
-                    }
-                }
-
-                playSound(type) {
-                    if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
-                    const osc = this.audioCtx.createOscillator();
-                    const gain = this.audioCtx.createGain();
-                    osc.connect(gain);
-                    gain.connect(this.audioCtx.destination);
-                    const now = this.audioCtx.currentTime;
-                    gain.gain.setValueAtTime(0.05, now);
-
-                    if (type === 'eat') {
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(600, now);
-                        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-                        osc.start(now);
-                        osc.stop(now + 0.1);
-                    } else if (type === 'over') {
-                        osc.type = 'sawtooth';
-                        osc.frequency.setValueAtTime(150, now);
-                        osc.frequency.linearRampToValueAtTime(50, now + 0.3);
-                        gain.gain.linearRampToValueAtTime(0.001, now + 0.3);
-                        osc.start(now);
-                        osc.stop(now + 0.3);
-                    }
-                }
-            }
-
-            const snakeGame = new SnakeGame(DOM.snake.canvas, DOM.snake.scoreDisplay, DOM.snake.startBtn);
-
-            class Paint {
-                constructor(domElements) {
-                    this.dom = domElements;
-                    this.ctx = this.dom.canvas.getContext('2d');
-                    this.isPainting = false;
-                    this.bind();
-                }
-
-                open() {
-                    this.dom.modal.classList.add('active');
-                    this.resizeCanvas();
-                }
-
-                close() {
-                    this.dom.modal.classList.remove('active');
-                }
-
-                clear() {
-                    this.ctx.clearRect(0, 0, this.dom.canvas.width, this.dom.canvas.height);
-                }
-
-                resizeCanvas() {
-                    const maxWidth = Math.min(window.innerWidth * 0.9, 500);
-                    const maxHeight = Math.min(window.innerHeight * 0.6, 500);
-                    this.dom.canvas.width = maxWidth;
-                    this.dom.canvas.height = maxHeight;
-                    this.ctx.lineCap = 'round';
-                    this.ctx.lineJoin = 'round';
-                }
-
-                startPaint(e) {
-                    this.isPainting = true;
-                    this.draw(e);
-                }
-
-                endPaint() {
-                    this.isPainting = false;
-                    this.ctx.beginPath();
-                }
-
-                draw(e) {
-                    if (!this.isPainting) return;
-                    e.preventDefault();
-                    const rect = this.dom.canvas.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                    const x = (clientX - rect.left) * (this.dom.canvas.width / rect.width);
-                    const y = (clientY - rect.top) * (this.dom.canvas.height / rect.height);
-
-                    this.ctx.lineWidth = this.dom.sizeInput.value;
-                    this.ctx.strokeStyle = this.dom.colorInput.value;
-
-                    this.ctx.lineTo(x, y);
-                    this.ctx.stroke();
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(x, y);
-                }
-
-                bind() {
-                    this.dom.btn.addEventListener('click', (e) => { e.preventDefault(); this.open(); });
-                    this.dom.closeBtn.addEventListener('click', () => this.close());
-                    this.dom.clearBtn.addEventListener('click', () => this.clear());
-                    this.dom.modal.addEventListener('click', (e) => { if (e.target === this.dom.modal) this.close(); });
-
-                    ['mousedown', 'touchstart'].forEach(evt => this.dom.canvas.addEventListener(evt, (e) => this.startPaint(e), { passive: false }));
-                    ['mouseup', 'touchend', 'mouseleave'].forEach(evt => this.dom.canvas.addEventListener(evt, () => this.endPaint()));
-                    ['mousemove', 'touchmove'].forEach(evt => this.dom.canvas.addEventListener(evt, (e) => this.draw(e), { passive: false }));
-                    window.addEventListener('resize', () => { if (this.dom.modal.classList.contains('active')) this.resizeCanvas(); });
-                }
-            }
-
-            const paintApp = new Paint(DOM.paint);
-
             const AudioPlayer = {
                 init() {
                     this.tracks = CONFIG.musicTracks;
@@ -1821,6 +1408,7 @@
 
                     this.loadTrack(this.currentTrackIndex);
                     this.bindEvents();
+                    this.initDraggable();
                 },
 
                 loadTrack(index) {
@@ -1915,6 +1503,70 @@
                     this.audio.addEventListener('timeupdate', () => this.updateProgress());
                     this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
                     DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
+                },
+
+                initDraggable() {
+                    const container = DOM.audio.container;
+                    const handle = DOM.audio.trackTitle;
+                    
+                    const savedPos = safeStorage.getItem('audioPlayerPos');
+                    if (savedPos) {
+                        try {
+                            const { left, top } = JSON.parse(savedPos);
+                            container.style.left = left;
+                            container.style.top = top;
+                            container.style.bottom = 'auto';
+                            container.style.right = 'auto';
+                        } catch (e) {}
+                    }
+
+                    let isDragging = false;
+                    let startX, startY, initialLeft, initialTop;
+
+                    const startDrag = (e) => {
+                        if (e.target !== handle) return;
+                        isDragging = true;
+                        container.style.transition = 'none';
+                        
+                        const clientX = e.clientX || e.touches[0].clientX;
+                        const clientY = e.clientY || e.touches[0].clientY;
+                        
+                        const rect = container.getBoundingClientRect();
+                        startX = clientX;
+                        startY = clientY;
+                        initialLeft = rect.left;
+                        initialTop = rect.top;
+                        
+                        container.style.bottom = 'auto';
+                        container.style.right = 'auto';
+                        container.style.left = `${initialLeft}px`;
+                        container.style.top = `${initialTop}px`;
+                    };
+
+                    const doDrag = (e) => {
+                        if (!isDragging) return;
+                        e.preventDefault();
+                        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+                        const dx = clientX - startX;
+                        const dy = clientY - startY;
+                        container.style.left = `${initialLeft + dx}px`;
+                        container.style.top = `${initialTop + dy}px`;
+                    };
+
+                    const stopDrag = () => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        container.style.transition = '';
+                        safeStorage.setItem('audioPlayerPos', JSON.stringify({ left: container.style.left, top: container.style.top }));
+                    };
+
+                    handle.addEventListener('mousedown', startDrag);
+                    handle.addEventListener('touchstart', startDrag, {passive: false});
+                    document.addEventListener('mousemove', doDrag);
+                    document.addEventListener('touchmove', doDrag, {passive: false});
+                    document.addEventListener('mouseup', stopDrag);
+                    document.addEventListener('touchend', stopDrag);
                 }
             };
 
@@ -2081,15 +1733,6 @@
                 DOM.oxideIdModal.querySelector('.modal-close-btn').addEventListener('click', () => DOM.oxideIdModal.classList.remove('active'));
                 DOM.copyOxideIdBtn.addEventListener('click', () => {
                     navigator.clipboard.writeText('W7-V29-NU').then(() => UI.showToast(CONFIG.translations[State.currentLang].copied));
-                });
-
-                DOM.snake.btn.addEventListener('click', (e) => { e.preventDefault(); DOM.snakeModal.classList.add('active'); });
-                DOM.snake.closeBtn.addEventListener('click', () => { DOM.snakeModal.classList.remove('active'); snakeGame.stop(); });
-                DOM.snake.startBtn.addEventListener('click', () => snakeGame.start());
-                document.addEventListener('keydown', (e) => {
-                    if (DOM.snakeModal.classList.contains('active')) {
-                        snakeGame.handleInput(e);
-                    }
                 });
 
             }
