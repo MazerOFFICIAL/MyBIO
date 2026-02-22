@@ -558,16 +558,15 @@
             line-height: 1;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 5px;
+            padding: 0;
             width: 40px;
             height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-grid;
+            place-items: center;
             border-radius: 10px;
             z-index: 2;
-            position: relative;
             overflow: hidden;
+            box-sizing: border-box;
         }
         .modal-close-btn::before {
             content: '';
