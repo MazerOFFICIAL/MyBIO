@@ -767,11 +767,48 @@
             position: relative; z-index: 1;
             filter: drop-shadow(0 0 5px var(--accent-primary));
         }
+        #dynamic-island {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            width: auto;
+            min-width: 220px;
+            height: 44px;
+            background: #000000;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0 15px;
+            z-index: 2090;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #dynamic-island.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) scale(1);
+            top: 15px;
+        }
+        .island-content { display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer; overflow: hidden; }
+        .island-controls { display: flex; align-items: center; gap: 5px; }
+        .island-controls button {
+            background: transparent; border: none; color: white; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center;
+        }
+        .island-controls button svg { width: 20px; height: 20px; fill: white; }
+        .island-controls button:hover svg { fill: var(--accent-primary); }
+
         .audio-player-container {
             position: fixed;
             bottom: 95px;
             right: 25px;
             width: 340px;
+            height: auto;
             background: linear-gradient(135deg, rgba(var(--card-bg-rgb), 0.95) 0%, rgba(0, 0, 0, 0.9) 100%);
             backdrop-filter: blur(30px);
             border-radius: 20px;
@@ -891,6 +928,19 @@
             font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 5px; text-shadow: 0 0 15px var(--accent-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             user-select: none;
+        }
+        .island-visualizer {
+            display: flex; gap: 2px; align-items: flex-end; height: 15px; width: 15px; margin-right: 5px;
+        }
+        .island-visualizer span {
+            width: 3px; background: var(--accent-primary); border-radius: 2px; animation: island-bounce 1s infinite ease-in-out;
+        }
+        .island-visualizer span:nth-child(1) { height: 60%; animation-delay: 0s; }
+        .island-visualizer span:nth-child(2) { height: 100%; animation-delay: 0.1s; }
+        .island-visualizer span:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+        @keyframes island-bounce {
+            0%, 100% { height: 30%; }
+            50% { height: 100%; }
         }
         .lang-btn {
             position: absolute;
@@ -1112,14 +1162,8 @@
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
     <div class="audio-player-container" id="audio-player-container">
+        <div class="island-visualizer"><span></span><span></span><span></span></div>
         <div class="track-title" id="track-title">Loading...</div>
-        <div class="progress-wrapper">
-            <span class="time-display" id="current-time">0:00</span>
-            <div class="progress-bar-container" id="progress-bar-container">
-                <div class="progress-bar-fill" id="progress-bar-fill"></div>
-            </div>
-            <span class="time-display" id="total-duration">0:00</span>
-        </div>
         <div class="audio-controls">
             <button id="prev-btn">
                 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
@@ -1128,15 +1172,15 @@
             <button id="next-btn">
                 <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
             </button>
-            <button id="loop-btn">
-                <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
-            </button>
-            <div class="volume-control">
-                <button id="volume-btn"></button>
-                <div class="volume-popup" id="volume-popup">
-                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01">
-                </div>
-            </div>
+        </div>
+        <div class="progress-bar-container" id="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        <!-- Hidden elements to keep JS working without errors if it tries to access them, or I will update JS -->
+        <div style="display:none;">
+            <span id="current-time"></span><span id="total-duration"></span>
+            <button id="loop-btn"></button><button id="volume-btn"></button>
+            <div id="volume-popup"><input id="volume-slider"></div>
         </div>
     </div>
     <audio id="bg-music"></audio>
@@ -1258,7 +1302,7 @@
                 copyOxideIdBtn: document.getElementById('copy-oxide-id'),
                 audio: {
                     player: document.getElementById('bg-music'),
-                    toggleBtn: document.getElementById('audio-player-toggle'),
+                    minimizeBtn: document.getElementById('minimize-player-btn'),
                     container: document.getElementById('audio-player-container'),
                     playPauseBtn: document.getElementById('play-pause-btn'),
                     nextBtn: document.getElementById('next-btn'),
@@ -1271,7 +1315,12 @@
                     currentTime: document.getElementById('current-time'),
                     totalDuration: document.getElementById('total-duration'),
                     progressContainer: document.getElementById('progress-bar-container'),
-                    progressFill: document.getElementById('progress-bar-fill')
+                    progressFill: document.getElementById('progress-bar-fill'),
+                    island: document.getElementById('dynamic-island'),
+                    islandTrigger: document.getElementById('island-trigger'),
+                    islandTitle: document.getElementById('island-track-title'),
+                    islandPlayBtn: document.getElementById('island-play-btn'),
+                    islandNextBtn: document.getElementById('island-next-btn')
                 },
                 soonTrigger: document.getElementById('soon-trigger'),
             };
@@ -1409,7 +1458,6 @@
 
                     this.loadTrack(this.currentTrackIndex);
                     this.bindEvents();
-                    this.initDraggable();
                 },
 
                 loadTrack(index) {
@@ -1417,6 +1465,7 @@
                     this.audio.src = this.tracks[index].src;
                     DOM.audio.trackTitle.textContent = this.tracks[index].title;
                     DOM.audio.progressFill.style.width = '0%';
+                    DOM.audio.islandTitle.textContent = this.tracks[index].title;
                     DOM.audio.currentTime.textContent = '0:00';
                     
                     this.audio.onloadedmetadata = () => {
@@ -1491,10 +1540,29 @@
                     DOM.audio.playPauseBtn.innerHTML = this.isPlaying 
                         ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
                         : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                    
+                    DOM.audio.islandPlayBtn.innerHTML = this.isPlaying
+                        ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+                        : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                },
+
+                togglePlayerVisibility(show) {
+                    if (show) {
+                        DOM.audio.container.classList.add('active');
+                        DOM.audio.island.classList.remove('active');
+                    } else {
+                        DOM.audio.container.classList.remove('active');
+                        DOM.audio.island.classList.add('active');
+                    }
                 },
 
                 bindEvents() {
-                    DOM.audio.toggleBtn.addEventListener('click', () => DOM.audio.container.classList.toggle('active'));
+                    DOM.audio.minimizeBtn.addEventListener('click', () => this.togglePlayerVisibility(false));
+                    DOM.audio.islandTrigger.addEventListener('click', () => this.togglePlayerVisibility(true));
+                    
+                    DOM.audio.islandPlayBtn.addEventListener('click', (e) => { e.stopPropagation(); this.togglePlay(); });
+                    DOM.audio.islandNextBtn.addEventListener('click', (e) => { e.stopPropagation(); this.next(); });
+
                     DOM.audio.playPauseBtn.addEventListener('click', () => this.togglePlay());
                     DOM.audio.nextBtn.addEventListener('click', () => this.next());
                     DOM.audio.prevBtn.addEventListener('click', () => this.prev());
@@ -1504,73 +1572,6 @@
                     this.audio.addEventListener('timeupdate', () => this.updateProgress());
                     this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
                     DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
-                },
-
-                initDraggable() {
-                    const container = DOM.audio.container;
-                    
-                    const savedPos = safeStorage.getItem('audioPlayerPos');
-                    if (savedPos) {
-                        try {
-                            const { left, top } = JSON.parse(savedPos);
-                            container.style.left = left;
-                            container.style.top = top;
-                            container.style.bottom = 'auto';
-                            container.style.right = 'auto';
-                        } catch (e) {}
-                    }
-
-                    let isDragging = false;
-                    let startX, startY, initialLeft, initialTop;
-
-                    const startDrag = (e) => {
-                        // Prevent dragging if interacting with controls
-                        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.progress-bar-container') || e.target.closest('.volume-popup')) return;
-
-                        container.style.cursor = 'grabbing';
-                        isDragging = true;
-                        container.style.transition = 'none';
-                        
-                        const clientX = e.clientX || e.touches[0].clientX;
-                        const clientY = e.clientY || e.touches[0].clientY;
-                        
-                        const rect = container.getBoundingClientRect();
-                        startX = clientX;
-                        startY = clientY;
-                        initialLeft = rect.left;
-                        initialTop = rect.top;
-                        
-                        container.style.bottom = 'auto';
-                        container.style.right = 'auto';
-                        container.style.left = `${initialLeft}px`;
-                        container.style.top = `${initialTop}px`;
-                    };
-
-                    const doDrag = (e) => {
-                        if (!isDragging) return;
-                        e.preventDefault();
-                        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-                        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-                        const dx = clientX - startX;
-                        const dy = clientY - startY;
-                        container.style.left = `${initialLeft + dx}px`;
-                        container.style.top = `${initialTop + dy}px`;
-                    };
-
-                    const stopDrag = () => {
-                        if (!isDragging) return;
-                        isDragging = false;
-                        container.style.transition = '';
-                        container.style.cursor = '';
-                        safeStorage.setItem('audioPlayerPos', JSON.stringify({ left: container.style.left, top: container.style.top }));
-                    };
-
-                    container.addEventListener('mousedown', startDrag);
-                    container.addEventListener('touchstart', startDrag, {passive: false});
-                    document.addEventListener('mousemove', doDrag);
-                    document.addEventListener('touchmove', doDrag, {passive: false});
-                    document.addEventListener('mouseup', stopDrag);
-                    document.addEventListener('touchend', stopDrag);
                 }
             };
 
@@ -1648,9 +1649,6 @@
                     if (!target.closest('.sidebar') && !target.closest('#menu-toggle')) {
                         DOM.sidebar.classList.remove('active');
                         DOM.menuToggle.classList.remove('active');
-                    }
-                    if (!target.closest('.audio-player-container') && !target.closest('#audio-player-toggle')) {
-                        DOM.audio.container.classList.remove('active');
                     }
 
                     if (target.classList.contains('modal')) target.classList.remove('active');
