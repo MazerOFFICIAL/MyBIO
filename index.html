@@ -969,14 +969,41 @@
             #cursor { display: none; }
             body { overflow-y: auto; display: block; }
             * { cursor: auto !important; }
-            .card { margin: 80px 20px 120px 20px; min-height: auto; padding: 40px 20px; }
-            h1 { font-size: 2.8rem; }
+            .card { 
+                margin: 60px 15px 100px 15px; 
+                min-height: auto; 
+                padding: 30px 20px;
+                max-width: none;
+            }
+            .avatar {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+            h1 { font-size: 2.5rem; }
+            .menu-btn { top: 20px; left: 20px; }
+            .lang-btn { top: 20px; right: 20px; }
+            .theme-btn { top: 20px; right: 75px; }
+            .lang-dropdown { top: 70px; right: 20px; }
+            .theme-dropdown { top: 70px; right: 75px; }
             .sidebar { width: 260px; left: -270px; }
             .sidebar.active { left: 0; }
             .modal img { transform: scale(1.2); }
             .password-box { transform: scale(1); width: 85%; padding: 25px; }
-
-            .audio-player-container { width: auto; left: 20px; right: 20px; bottom: 85px; }
+            .audio-player-toggle {
+                width: 55px;
+                height: 55px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .audio-player-container { 
+                width: auto; 
+                left: 15px;
+                right: 15px;
+                bottom: 85px; 
+                padding: 15px;
+            }
+            .track-title { font-size: 0.9rem; }
         }
         @media (min-width: 769px) {
             *, html, body { cursor: none !important; }
