@@ -1162,6 +1162,9 @@
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
     <div class="audio-player-container" id="audio-player-container">
+        <div style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+            <button id="minimize-player-btn" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.5rem; line-height: 1; padding: 5px;">&times;</button>
+        </div>
         <div class="island-visualizer"><span></span><span></span><span></span></div>
         <div class="track-title" id="track-title">Loading...</div>
         <div class="audio-controls">
@@ -1458,6 +1461,7 @@
 
                     this.loadTrack(this.currentTrackIndex);
                     this.bindEvents();
+                    this.initDraggable();
                 },
 
                 loadTrack(index) {
@@ -1572,6 +1576,70 @@
                     this.audio.addEventListener('timeupdate', () => this.updateProgress());
                     this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
                     DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
+                },
+
+                initDraggable() {
+                    const container = DOM.audio.container;
+                    
+                    const savedPos = safeStorage.getItem('audioPlayerPos');
+                    if (savedPos) {
+                        try {
+                            const { left, top } = JSON.parse(savedPos);
+                            container.style.left = left;
+                            container.style.top = top;
+                            container.style.bottom = 'auto';
+                            container.style.right = 'auto';
+                        } catch (e) {}
+                    }
+
+                    let isDragging = false;
+                    let startX, startY, initialLeft, initialTop;
+
+                    const startDrag = (e) => {
+                        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.progress-bar-container') || e.target.closest('.volume-popup')) return;
+                        
+                        isDragging = true;
+                        container.style.transition = 'none';
+                        container.style.cursor = 'grabbing';
+                        
+                        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+                        
+                        const rect = container.getBoundingClientRect();
+                        initialLeft = rect.left;
+                        initialTop = rect.top;
+                        startX = clientX;
+                        startY = clientY;
+                        
+                        container.style.bottom = 'auto';
+                        container.style.right = 'auto';
+                        container.style.left = `${initialLeft}px`;
+                        container.style.top = `${initialTop}px`;
+                    };
+
+                    const doDrag = (e) => {
+                        if (!isDragging) return;
+                        e.preventDefault();
+                        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+                        container.style.left = `${initialLeft + (clientX - startX)}px`;
+                        container.style.top = `${initialTop + (clientY - startY)}px`;
+                    };
+
+                    const stopDrag = () => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        container.style.transition = '';
+                        container.style.cursor = 'move';
+                        safeStorage.setItem('audioPlayerPos', JSON.stringify({ left: container.style.left, top: container.style.top }));
+                    };
+
+                    container.addEventListener('mousedown', startDrag);
+                    container.addEventListener('touchstart', startDrag, { passive: false });
+                    document.addEventListener('mousemove', doDrag);
+                    document.addEventListener('touchmove', doDrag, { passive: false });
+                    document.addEventListener('mouseup', stopDrag);
+                    document.addEventListener('touchend', stopDrag);
                 }
             };
 
