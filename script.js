@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             en: {
                 bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
                 worksTitle: "Projects", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
+                hobbiesText: "I love playing various games and exploring new virtual worlds.",
                 oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
                 telegram: "Telegram",
                 riddleTrigger: "A riddle for the quick-witted", riddleTitle: "RIDDLE",
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ru: {
                 bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Хобби",
                 worksTitle: "Проекты", skillsTitle: "Навыки", hobbiesTitle: "Хобби", soon: "Скоро...",
+                hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
                 oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
                 telegram: "Телеграм",
                 riddleTrigger: "Загадка для смекалистых", riddleTitle: "ЗАГАДКА",
@@ -43,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             es: {
                 bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
                 worksTitle: "Proyectos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
+                hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
                 oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
                 telegram: "Telegram",
                 riddleTrigger: "Un acertijo para los ingeniosos", riddleTitle: "ACERTIJO",
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fr: {
                 bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Loisirs",
                 worksTitle: "Projets", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
+                hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
                 oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
                 telegram: "Telegram",
                 riddleTrigger: "Une énigme pour les vifs d'esprit", riddleTitle: "ÉNIGME",
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             de: {
                 bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Fähigkeiten", hobbiesBtn: "Hobbys",
                 worksTitle: "Projekte", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
+                hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
                 oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
                 telegram: "Telegram",
                 riddleTrigger: "Ein Rätsel für die Schlauen", riddleTitle: "RÄTSEL",
@@ -176,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 bioBtn: { selector: '[data-section="bio"]', type: 'text' },
                 hobbiesBtn: { selector: '[data-section="hobbies"]', type: 'text' },
                 hobbiesTitle: { selector: '#hobbies h1', type: 'text' },
+                hobbiesText: { selector: '#hobbies-text', type: 'text' },
                 oxideDesc: { selector: '#oxide-desc', type: 'text' },
                 oxideDownload: { selector: '#oxide-download', type: 'text' },
                 telegram: { selector: '#telegram-btn', type: 'text' },
@@ -486,16 +492,20 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.langBtn.addEventListener('click', (e) => { e.stopPropagation(); DOM.langDropdown.classList.toggle('active'); DOM.themeDropdown.classList.remove('active'); });
         DOM.themeBtn.addEventListener('click', (e) => { e.stopPropagation(); DOM.themeDropdown.classList.toggle('active'); DOM.langDropdown.classList.remove('active'); });
         DOM.menuToggle.addEventListener('click', (e) => { e.stopPropagation(); DOM.menuToggle.classList.toggle('active'); DOM.sidebar.classList.toggle('active'); });
-        DOM.telegramBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            DOM.noHelloModal.classList.add('active');
-            DOM.noHelloCheckbox.checked = false;
-            DOM.noHelloCheckbox.disabled = true;
-            DOM.noHelloOverlay.style.display = 'block';
-            DOM.noHelloSubmit.disabled = true;
-            DOM.noHelloSubmit.style.opacity = '0.5';
-            DOM.noHelloWarning.style.display = 'none';
-        });
+        
+        if (DOM.telegramBtn) {
+            DOM.telegramBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                DOM.noHelloModal.classList.add('active');
+                DOM.noHelloCheckbox.checked = false;
+                DOM.noHelloCheckbox.disabled = true;
+                DOM.noHelloOverlay.style.display = 'block';
+                DOM.noHelloSubmit.disabled = true;
+                DOM.noHelloSubmit.style.opacity = '0.5';
+                DOM.noHelloWarning.style.display = 'none';
+            });
+        }
+
         DOM.noHelloLink.addEventListener('click', () => {
             DOM.noHelloCheckbox.disabled = false;
             DOM.noHelloOverlay.style.display = 'none';
@@ -512,11 +522,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 DOM.noHelloModal.classList.remove('active');
             }
         });
-        DOM.oxideIdBtn.addEventListener('click', (e) => { e.preventDefault(); DOM.oxideIdModal.classList.add('active'); });
-        DOM.oxideIdModal.querySelector('.modal-close-btn').addEventListener('click', () => DOM.oxideIdModal.classList.remove('active'));
-        DOM.copyOxideIdBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText('W7-V29-NU').then(() => UI.showToast(CONFIG.translations[State.currentLang].copied));
-        });
+
+        if (DOM.oxideIdBtn) {
+            DOM.oxideIdBtn.addEventListener('click', (e) => { e.preventDefault(); DOM.oxideIdModal.classList.add('active'); });
+            DOM.oxideIdModal.querySelector('.modal-close-btn').addEventListener('click', () => DOM.oxideIdModal.classList.remove('active'));
+            DOM.copyOxideIdBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText('W7-V29-NU').then(() => UI.showToast(CONFIG.translations[State.currentLang].copied));
+            });
+        }
+
         document.addEventListener('dragstart', (e) => e.preventDefault());
     }
 

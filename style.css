@@ -24,8 +24,8 @@
     --shadow-color: rgba(0, 0, 0, 0.8);
 }
 @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-secondary); }
-    50% { box-shadow: 0 0 40px var(--glow-color), 0 0 80px var(--glow-secondary), inset 0 0 40px rgba(var(--accent-primary-rgb), 0.2); }
+    0%, 100% { box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-secondary); }
+    50% { box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-secondary), inset 0 0 20px rgba(var(--accent-primary-rgb), 0.1); }
 }
 body.theme-midnight {
     --bg-body: linear-gradient(180deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
@@ -35,14 +35,14 @@ body.theme-midnight {
     --accent-secondary: #b2bec3;
     --accent-primary-rgb: 255, 255, 255;
     --accent-secondary-rgb: 178, 190, 195;
-    --glass-bg: rgba(20, 20, 20, 0.9);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(10, 10, 10, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.1);
     --sidebar-bg: #000000;
-    --card-bg: rgba(10, 10, 10, 0.8);
+    --card-bg: rgba(5, 5, 5, 0.9);
     --player-bg: #050505;
     --input-bg: #1a1a1a;
-    --btn-hover-bg: rgba(255, 255, 255, 0.1);
-    --shadow-color: rgba(0, 0, 0, 0.8);
+    --btn-hover-bg: rgba(255, 255, 255, 0.05);
+    --shadow-color: rgba(0, 0, 0, 0.5);
 }
 body.theme-forest {
     --bg-body: linear-gradient(135deg, #02140a 0%, #05140a 25%, #020a05 75%, #010803 100%);
@@ -694,6 +694,15 @@ h1 {
     margin-bottom: 20px;
     line-height: 1.6;
     max-width: 90%;
+}
+.hobbies-text-container {
+    padding: 30px;
+    text-align: center;
+}
+.hobbies-desc {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    line-height: 1.6;
 }
 .download-btn {
     display: inline-block; padding: 12px 30px;
