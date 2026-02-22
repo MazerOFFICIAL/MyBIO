@@ -204,8 +204,10 @@ class TimeController {
             minute: '2-digit',
             hour12: false
         });
-        const t = CONFIG.translations[State.currentLang];
-        this.el.textContent = `${t.timePrefix}${time} (PL)`;
+        const t = CONFIG.translations[State.currentLang] || CONFIG.translations['en'];
+        if (t) {
+            this.el.textContent = `${t.timePrefix}${time} (PL)`;
+        }
     }
 }
 
@@ -513,9 +515,9 @@ class App {
     constructor() {
         this.cursor = new Cursor();
         this.typewriter = new Typewriter();
-        this.time = new TimeController();
-        this.theme = new ThemeController();
         this.lang = new LanguageController(this.typewriter);
+        this.theme = new ThemeController();
+        this.time = new TimeController();
         this.audio = new AudioController();
         
         this.bindGlobalEvents();
