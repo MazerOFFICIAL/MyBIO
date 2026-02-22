@@ -485,11 +485,11 @@
         .password-box {
             background: linear-gradient(135deg, var(--player-bg) 0%, rgba(0, 0, 0, 0.7) 100%); 
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px; border: 2px solid var(--accent-primary);
             box-shadow: 0 0 60px rgba(var(--accent-primary-rgb), 0.2), 0 0 30px var(--shadow-color); 
             text-align: center;
-            display: flex; flex-direction: column; gap: 20px; transform: scale(1.1); pointer-events: auto;
+            display: flex; flex-direction: column; gap: 20px; transform: scale(0.95); pointer-events: auto; max-width: 350px;
             position: relative;
             overflow: hidden;
         }
@@ -1210,28 +1210,15 @@
     <div id="easter-egg-modal" class="modal">
         <img src="troll.gif" alt="Troll" draggable="false">
     </div>
-    <div id="password-modal" class="modal">
-        <div class="password-box">
-            <h3 id="riddle-trigger" style="cursor: pointer;">U need 80+ IQ to solve this</h3>
-            <input type="password" id="tg-password" placeholder="" autocomplete="off">
-            <button id="submit-password">✔</button>
-        </div>
-    </div>
-    <div id="riddle-modal" class="modal">
-        <div class="password-box">
-            <h3>RIDDLE</h3>
-            <p style="margin: 0; color: rgba(255,255,255,0.7); font-size: 0.9rem; max-width: 300px; line-height: 1.5;">You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?</p>
-            <input type="text" id="riddle-answer" placeholder="Answer" autocomplete="off">
-            <button id="submit-riddle">✔</button>
-        </div>
-    </div>
+
+
     <div id="success-modal" class="modal" style="z-index: 5002;">
         <div class="password-box">
             <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
         </div>
     </div>
     <div id="nohello-modal" class="modal" style="z-index: 5003;">
-        <div class="password-box" style="max-width: 400px;">
+        <div class="password-box" style="max-width: 350px;">
             <h3 id="nohello-title">Communication Etiquette</h3>
             <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
             <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
@@ -1420,20 +1407,12 @@
                 toast: document.getElementById('toast-notification'),
                 modals: document.querySelectorAll('.modal'),
                 easterEggModal: document.getElementById('easter-egg-modal'),
-                passwordModal: document.getElementById('password-modal'),
-                riddleModal: document.getElementById('riddle-modal'),
                 successModal: document.getElementById('success-modal'),
                 noHelloModal: document.getElementById('nohello-modal'),
                 oxideIdModal: document.getElementById('oxide-id-modal'),
                 snakeModal: document.getElementById('snake-modal'),
                 paintModal: document.getElementById('paint-modal'),
-                telegramBtn: document.getElementById('telegram-btn'),
-                tgPasswordInput: document.getElementById('tg-password'),
-                tgSubmitBtn: document.getElementById('submit-password'),
-                riddleTrigger: document.getElementById('riddle-trigger'),
-                riddleInput: document.getElementById('riddle-answer'),
-                riddleSubmit: document.getElementById('submit-riddle'),
-                noHelloCheckbox: document.getElementById('nohello-checkbox'),
+                snakeModal: document.getElementById('snake-modal'),
                 noHelloOverlay: document.getElementById('nohello-overlay'),
                 noHelloSubmit: document.getElementById('nohello-submit'),
                 noHelloLink: document.getElementById('nohello-link'),
@@ -2093,49 +2072,18 @@
                     }
                 });
 
-                DOM.riddleTrigger.addEventListener('click', () => {
-                    State.riddleClickCount++;
-                    if (State.riddleClickCount >= 3) {
-                        State.riddleClickCount = 0;
-                        DOM.passwordModal.classList.remove('active');
-                        DOM.riddleModal.classList.add('active');
-                        DOM.riddleInput.value = '';
-                        DOM.riddleInput.focus();
-                    }
-                });
+
 
                 DOM.telegramBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    DOM.passwordModal.classList.add('active');
-                    DOM.tgPasswordInput.value = '';
-                    DOM.tgPasswordInput.focus();
+                    DOM.noHelloModal.classList.add('active');
+                    DOM.noHelloCheckbox.checked = false;
+                    DOM.noHelloCheckbox.disabled = true;
+                    DOM.noHelloOverlay.style.display = 'block';
+                    DOM.noHelloSubmit.disabled = true;
+                    DOM.noHelloSubmit.style.opacity = '0.5';
+                    DOM.noHelloWarning.style.display = 'none';
                 });
-
-                DOM.tgSubmitBtn.addEventListener('click', () => {
-                    if (DOM.tgPasswordInput.value.trim().toLowerCase() === 'telegram') {
-                        DOM.passwordModal.classList.remove('active');
-                        DOM.noHelloModal.classList.add('active');
-                        DOM.noHelloCheckbox.checked = false;
-                        DOM.noHelloCheckbox.disabled = true;
-                        DOM.noHelloOverlay.style.display = 'block';
-                        DOM.noHelloSubmit.disabled = true;
-                        DOM.noHelloSubmit.style.opacity = '0.5';
-                        DOM.noHelloWarning.style.display = 'none';
-                    } else {
-                        UI.flashInputBorder(DOM.tgPasswordInput);
-                    }
-                });
-                DOM.tgPasswordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') DOM.tgSubmitBtn.click(); });
-
-                DOM.riddleSubmit.addEventListener('click', () => {
-                    if (CONFIG.riddleAnswers.includes(DOM.riddleInput.value.toLowerCase().trim())) {
-                        DOM.riddleModal.classList.remove('active');
-                        DOM.successModal.classList.add('active');
-                    } else {
-                        UI.flashInputBorder(DOM.riddleInput);
-                    }
-                });
-                DOM.riddleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') DOM.riddleSubmit.click(); });
 
                 DOM.noHelloLink.addEventListener('click', () => {
                     DOM.noHelloCheckbox.disabled = false;
