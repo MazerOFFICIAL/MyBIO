@@ -1412,12 +1412,13 @@
                 oxideIdModal: document.getElementById('oxide-id-modal'),
                 snakeModal: document.getElementById('snake-modal'),
                 paintModal: document.getElementById('paint-modal'),
-                snakeModal: document.getElementById('snake-modal'),
                 noHelloOverlay: document.getElementById('nohello-overlay'),
                 noHelloSubmit: document.getElementById('nohello-submit'),
                 noHelloLink: document.getElementById('nohello-link'),
+                noHelloCheckbox: document.getElementById('nohello-checkbox'),
                 noHelloWarning: document.getElementById('nohello-warning'),
                 oxideIdBtn: document.getElementById('oxide-id-btn'),
+                telegramBtn: document.getElementById('telegram-btn'),
                 copyOxideIdBtn: document.getElementById('copy-oxide-id'),
                 snake: {
                     btn: document.getElementById('snake-game-btn'),
@@ -2116,6 +2117,9 @@
                         snakeGame.handleInput(e);
                     }
                 });
+
+                DOM.paint.btn.addEventListener('click', (e) => { e.preventDefault(); DOM.paint.modal.classList.add('active'); });
+                DOM.paint.modal.querySelector('.modal-close-btn').addEventListener('click', () => DOM.paint.modal.classList.remove('active'));
             }
 
             function init() {
