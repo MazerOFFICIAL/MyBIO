@@ -1579,6 +1579,9 @@
                     this.audio.addEventListener('timeupdate', () => this.updateProgress());
                     this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
                     DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
+                    
+                    // Initialize visibility (show island by default)
+                    this.togglePlayerVisibility(false);
                 },
 
                 initDraggable() {
