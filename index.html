@@ -14,120 +14,123 @@
             -webkit-tap-highlight-color: transparent;
         }
         :root {
-            --bg-body: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            /* Default: Cyberpunk (Darker & Deeper) */
+            --bg-body: radial-gradient(circle at center, #0a0f1c 0%, #000000 100%);
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.5);
             --accent-primary: #00d2ff;
             --accent-secondary: #9d50bb;
-            --glass-bg: rgba(15, 20, 35, 0.4);
+            --glass-bg: rgba(5, 10, 20, 0.8);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --sidebar-bg: rgba(2, 2, 5, 0.4);
-            --card-bg: rgba(15, 20, 35, 0.4);
-            --player-bg: rgba(15, 20, 35, 0.85);
+            --sidebar-bg: rgba(0, 0, 0, 0.9);
+            --card-bg: rgba(5, 10, 20, 0.7);
+            --player-bg: rgba(5, 10, 20, 0.9);
             --input-bg: rgba(255, 255, 255, 0.05);
             --btn-hover-bg: rgba(0, 210, 255, 0.1);
             --particle-color: white;
-            --shadow-color: rgba(0, 0, 0, 0.5);
+            --shadow-color: rgba(0, 0, 0, 0.8);
         }
         body.theme-light {
-            --bg-body: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-            --bg-body: linear-gradient(135deg, #f0f2f5 0%, #d9e2ec 100%);
-            --text-main: #1a2533;
-            --text-muted: rgba(26, 37, 51, 0.7);
+            /* Light: Soft & Clean (Not blinding) */
+            --bg-body: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-main: #2d3436;
+            --text-muted: rgba(45, 52, 54, 0.7);
             --accent-primary: #2563eb;
-            --accent-secondary: #4f86f7;
-            --glass-bg: rgba(240, 245, 255, 0.5);
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --sidebar-bg: rgba(240, 245, 255, 0.9);
-            --card-bg: rgba(240, 245, 255, 0.5);
-            --player-bg: rgba(240, 245, 255, 0.95);
-            --input-bg: rgba(0, 0, 0, 0.08);
+            --accent-secondary: #6c5ce7;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --sidebar-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --player-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: rgba(0, 0, 0, 0.05);
             --btn-hover-bg: rgba(37, 99, 235, 0.1);
-            --particle-color: #1a2533;
-            --shadow-color: rgba(0, 0, 0, 0.15);
+            --particle-color: #636e72;
+            --shadow-color: rgba(163, 177, 198, 0.4);
         }
         body.theme-midnight {
-            --bg-body: radial-gradient(circle at center, #111111 0%, #000000 100%);
-            --bg-body: radial-gradient(circle at center, #080808 0%, #000000 100%);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.6);
+            /* Midnight: Pitch Black & Silver */
+            --bg-body: #000000;
+            --text-main: #f5f5f5;
+            --text-muted: #a0a0a0;
             --accent-primary: #ffffff;
-            --accent-secondary: #808080;
-            --glass-bg: rgba(30, 30, 30, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --accent-secondary: #b2bec3;
+            --glass-bg: rgba(20, 20, 20, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.2);
             --sidebar-bg: #000000;
-            --card-bg: #000000;
-            --player-bg: #111111;
-            --input-bg: #222222;
+            --card-bg: rgba(10, 10, 10, 0.8);
+            --player-bg: #050505;
+            --input-bg: #1a1a1a;
             --btn-hover-bg: rgba(255, 255, 255, 0.1);
             --particle-color: #ffffff;
         }
         body.theme-forest {
-            --bg-body: radial-gradient(circle at bottom, #2c5364 0%, #203a43 40%, #0f2027 100%);
-            --bg-body: linear-gradient(to bottom, #000000, #0f2027);
+            /* Forest: Deep Moss & Green */
+            --bg-body: linear-gradient(to bottom, #05140a, #020a05);
             --text-main: #f0fdf4;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(167, 243, 208, 0.6);
             --accent-primary: #4ade80;
             --accent-secondary: #22c55e;
-            --glass-bg: rgba(10, 40, 30, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --sidebar-bg: rgba(5, 20, 15, 0.6);
-            --card-bg: rgba(10, 40, 30, 0.5);
-            --player-bg: rgba(10, 40, 30, 0.9);
+            --glass-bg: rgba(6, 30, 15, 0.8);
+            --glass-border: rgba(74, 222, 128, 0.2);
+            --sidebar-bg: rgba(2, 15, 5, 0.95);
+            --card-bg: rgba(6, 30, 15, 0.7);
+            --player-bg: rgba(2, 20, 10, 0.9);
             --input-bg: rgba(255, 255, 255, 0.1);
-            --btn-hover-bg: rgba(251, 191, 36, 0.1);
+            --btn-hover-bg: rgba(74, 222, 128, 0.15);
             --particle-color: #4ade80;
         }
         body.theme-sunset {
-            --bg-body: linear-gradient(45deg, #2b0a25 0%, #6a1b4d 50%, #9e2a2f 100%);
-            --bg-body: linear-gradient(to bottom, #1a0b1c, #4a192c);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --accent-primary: #ff8a8a;
-            --accent-secondary: #5e3a75;
-            --glass-bg: rgba(43, 16, 47, 0.6);
-            --glass-border: rgba(255, 138, 138, 0.2);
-            --sidebar-bg: rgba(30, 10, 30, 0.8);
-            --card-bg: rgba(43, 16, 47, 0.6);
-            --player-bg: rgba(43, 16, 47, 0.9);
+            /* Sunset: Deep Violet & Magma */
+            --bg-body: linear-gradient(to bottom, #1a0510, #2d0a1e);
+            --text-main: #fff0f5;
+            --text-muted: rgba(255, 200, 200, 0.6);
+            --accent-primary: #ff7e5f;
+            --accent-secondary: #feb47b;
+            --glass-bg: rgba(40, 10, 25, 0.8);
+            --glass-border: rgba(255, 126, 95, 0.3);
+            --sidebar-bg: rgba(20, 5, 10, 0.95);
+            --card-bg: rgba(40, 10, 25, 0.7);
+            --player-bg: rgba(30, 5, 15, 0.9);
             --input-bg: rgba(255, 255, 255, 0.05);
-            --btn-hover-bg: rgba(255, 138, 138, 0.15);
-            --particle-color: #ff8a8a;
+            --btn-hover-bg: rgba(255, 126, 95, 0.2);
+            --particle-color: #feb47b;
         }
         body.theme-ocean {
-            --bg-body: radial-gradient(circle at top, #004e92 0%, #000428 100%);
-            --bg-body: linear-gradient(to bottom, #000428, #002b52);
+            /* Ocean: Abyss Blue */
+            --bg-body: radial-gradient(circle at bottom, #00152e 0%, #00040a 100%);
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(137, 207, 240, 0.6);
             --accent-primary: #00d2ff;
-            --accent-secondary: #004e92;
-            --glass-bg: rgba(0, 4, 40, 0.6);
+            --accent-secondary: #3a7bd5;
+            --glass-bg: rgba(0, 15, 40, 0.8);
             --glass-border: rgba(0, 210, 255, 0.2);
-            --sidebar-bg: rgba(0, 4, 40, 0.8);
-            --card-bg: rgba(0, 4, 40, 0.6);
-            --player-bg: rgba(0, 4, 40, 0.9);
+            --sidebar-bg: rgba(0, 5, 15, 0.95);
+            --card-bg: rgba(0, 15, 40, 0.7);
+            --player-bg: rgba(0, 10, 30, 0.9);
             --input-bg: rgba(255, 255, 255, 0.05);
             --btn-hover-bg: rgba(0, 210, 255, 0.15);
             --particle-color: #00d2ff;
-            --shadow-color: rgba(0, 0, 0, 0.5);
+            --shadow-color: rgba(0, 0, 0, 0.9);
         }
         body.theme-matrix {
-            --bg-body: radial-gradient(circle at center, #001100 0%, #000000 100%);
+            /* Matrix: Pure Black & Terminal Green */
+            --bg-body: #000000;
             --text-main: #00ff00;
-            --text-muted: rgba(0, 255, 0, 0.6);
+            --text-muted: rgba(0, 255, 0, 0.5);
             --accent-primary: #00ff00;
-            --accent-secondary: #003300;
-            --glass-bg: rgba(0, 20, 0, 0.8);
+            --accent-secondary: #008f11;
+            --glass-bg: rgba(0, 20, 0, 0.9);
             --glass-border: rgba(0, 255, 0, 0.3);
             --sidebar-bg: #000000;
-            --card-bg: rgba(0, 10, 0, 0.8);
-            --player-bg: #001100;
-            --input-bg: rgba(0, 50, 0, 0.3);
+            --card-bg: rgba(0, 15, 0, 0.85);
+            --player-bg: #000000;
+            --input-bg: rgba(0, 255, 0, 0.1);
             --btn-hover-bg: rgba(0, 255, 0, 0.1);
             --particle-color: #00ff00;
         }
         body.theme-retro {
-            --bg-body: linear-gradient(to bottom, #2b002b 0%, #1a001a 100%);
+            /* Retro: Deep Synthwave Purple */
+            --bg-body: linear-gradient(to bottom, #120012 0%, #050005 100%);
             --text-main: #ff00ff;
             --text-muted: rgba(0, 255, 255, 0.7);
             --accent-primary: #00ffff;
@@ -142,62 +145,65 @@
             --particle-color: #00ffff;
         }
         body.theme-ice {
-            --bg-body: radial-gradient(circle at center, #e0f7fa 0%, #b2ebf2 100%);
-            --text-main: #006064;
-            --text-muted: #00838f;
-            --accent-primary: #00bcd4;
-            --accent-secondary: #4dd0e1;
-            --glass-bg: rgba(224, 247, 250, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --sidebar-bg: rgba(224, 247, 250, 0.9);
+            /* Ice: Cool Grey & Frost (Not white) */
+            --bg-body: radial-gradient(circle at center, #ece9e6 0%, #ffffff 100%);
+            --bg-body: linear-gradient(to bottom, #dbe6f6, #c5d9f1);
+            --text-main: #2c3e50;
+            --text-muted: #5d6d7e;
+            --accent-primary: #3498db;
+            --accent-secondary: #85c1e9;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --sidebar-bg: rgba(240, 248, 255, 0.95);
             --card-bg: rgba(255, 255, 255, 0.5);
-            --player-bg: rgba(255, 255, 255, 0.8);
-            --input-bg: rgba(0, 188, 212, 0.1);
-            --btn-hover-bg: rgba(0, 188, 212, 0.2);
-            --particle-color: #00bcd4;
+            --player-bg: rgba(255, 255, 255, 0.85);
+            --input-bg: rgba(52, 152, 219, 0.1);
+            --btn-hover-bg: rgba(52, 152, 219, 0.2);
+            --particle-color: #3498db;
         }
         body.theme-nebula {
-            --bg-body: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            --bg-body: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            /* Nebula: Deep Space */
+            --bg-body: linear-gradient(to bottom, #0b001a, #1a0b2e);
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(216, 191, 216, 0.6);
             --accent-primary: #d961d6;
             --accent-secondary: #7597de;
-            --glass-bg: rgba(43, 16, 85, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --sidebar-bg: rgba(30, 10, 60, 0.6);
-            --card-bg: rgba(43, 16, 85, 0.5);
-            --player-bg: rgba(43, 16, 85, 0.9);
+            --glass-bg: rgba(30, 10, 50, 0.8);
+            --glass-border: rgba(217, 97, 214, 0.3);
+            --sidebar-bg: rgba(15, 5, 30, 0.95);
+            --card-bg: rgba(30, 10, 50, 0.7);
+            --player-bg: rgba(20, 5, 40, 0.9);
             --input-bg: rgba(255, 255, 255, 0.1);
             --btn-hover-bg: rgba(217, 97, 214, 0.15);
             --particle-color: #ffffff;
         }
         body.theme-gold {
-            --bg-body: radial-gradient(ellipse at center, #2c2c2c 0%, #000000 100%);
-            --bg-body: radial-gradient(ellipse at center, #1c1c1c 0%, #000000 100%);
+            /* Gold: Luxury Black & Gold */
+            --bg-body: #050505;
             --text-main: #ffd700;
-            --text-muted: rgba(255, 215, 0, 0.6);
+            --text-muted: rgba(218, 165, 32, 0.6);
             --accent-primary: #ffd700;
             --accent-secondary: #b8860b;
-            --glass-bg: rgba(20, 20, 20, 0.8);
+            --glass-bg: rgba(20, 20, 20, 0.9);
             --glass-border: rgba(255, 215, 0, 0.3);
             --sidebar-bg: #000000;
-            --card-bg: rgba(20, 20, 20, 0.8);
-            --player-bg: #111111;
+            --card-bg: rgba(25, 25, 25, 0.85);
+            --player-bg: #0a0a0a;
             --input-bg: rgba(255, 215, 0, 0.05);
             --btn-hover-bg: rgba(255, 215, 0, 0.1);
             --particle-color: #ffd700;
         }
         body.theme-dracula {
-            --bg-body: #282a36;
+            /* Dracula: Darker & Vampiric */
+            --bg-body: #1e1f29;
             --text-main: #f8f8f2;
             --text-muted: #6272a4;
             --accent-primary: #ff79c6;
             --accent-secondary: #bd93f9;
-            --glass-bg: rgba(40, 42, 54, 0.8);
+            --glass-bg: rgba(40, 42, 54, 0.9);
             --glass-border: rgba(189, 147, 249, 0.3);
-            --sidebar-bg: #282a36;
-            --card-bg: rgba(40, 42, 54, 0.8);
+            --sidebar-bg: #191a21;
+            --card-bg: rgba(40, 42, 54, 0.85);
             --player-bg: #282a36;
             --input-bg: rgba(255, 255, 255, 0.05);
             --btn-hover-bg: rgba(255, 121, 198, 0.1);
@@ -279,6 +285,43 @@
             animation: rotateFog 60s linear infinite;
         }
         @keyframes rotateFog { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        /* New Effects */
+        .ember {
+            position: absolute; bottom: -10px; width: 4px; height: 4px; background: #ff4500;
+            border-radius: 50%; box-shadow: 0 0 10px #ff4500;
+            animation: riseEmber 5s infinite linear;
+        }
+        @keyframes riseEmber { to { transform: translateY(-100vh) translateX(20px); opacity: 0; } }
+
+        .gold-sparkle {
+            position: absolute; width: 3px; height: 3px; background: #ffd700;
+            box-shadow: 0 0 5px #ffd700; animation: twinkle 2s infinite;
+        }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+
+        .bokeh {
+            position: absolute; border-radius: 50%; background: rgba(37, 99, 235, 0.1);
+            animation: floatBokeh 10s infinite ease-in-out;
+            filter: blur(5px);
+        }
+        @keyframes floatBokeh { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(20px, -20px); } }
+
+        .scanline {
+            width: 100%; height: 5px; background: rgba(0, 210, 255, 0.3);
+            position: absolute; top: 0; left: 0; animation: scan 3s linear infinite;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+            z-index: 0;
+        }
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+
+        .aurora-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(0,255,127,0.03), rgba(0,0,255,0.03), rgba(138,43,226,0.03));
+            background-size: 400% 400%;
+            animation: auroraAnim 15s ease infinite;
+        }
+        @keyframes auroraAnim { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }
 
         #stars-container, #snow-container, #particle-container {
             position: fixed;
