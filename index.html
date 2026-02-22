@@ -14,7 +14,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         :root {
-            /* Default: Cyberpunk (Darker & Deeper) */
             --bg-body: radial-gradient(circle at center, #0a0f1c 0%, #000000 100%);
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.5);
@@ -30,25 +29,7 @@
             --particle-color: white;
             --shadow-color: rgba(0, 0, 0, 0.8);
         }
-        body.theme-light {
-            /* Light: Soft & Clean (Not blinding) */
-            --bg-body: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-main: #2d3436;
-            --text-muted: rgba(45, 52, 54, 0.7);
-            --accent-primary: #2563eb;
-            --accent-secondary: #6c5ce7;
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --sidebar-bg: rgba(255, 255, 255, 0.95);
-            --card-bg: rgba(255, 255, 255, 0.6);
-            --player-bg: rgba(255, 255, 255, 0.9);
-            --input-bg: rgba(0, 0, 0, 0.05);
-            --btn-hover-bg: rgba(37, 99, 235, 0.1);
-            --particle-color: #636e72;
-            --shadow-color: rgba(163, 177, 198, 0.4);
-        }
         body.theme-midnight {
-            /* Midnight: Pitch Black & Silver */
             --bg-body: #000000;
             --text-main: #f5f5f5;
             --text-muted: #a0a0a0;
@@ -64,7 +45,6 @@
             --particle-color: #ffffff;
         }
         body.theme-forest {
-            /* Forest: Deep Moss & Green */
             --bg-body: linear-gradient(to bottom, #05140a, #020a05);
             --text-main: #f0fdf4;
             --text-muted: rgba(167, 243, 208, 0.6);
@@ -80,7 +60,6 @@
             --particle-color: #4ade80;
         }
         body.theme-sunset {
-            /* Sunset: Deep Violet & Magma */
             --bg-body: linear-gradient(to bottom, #1a0510, #2d0a1e);
             --text-main: #fff0f5;
             --text-muted: rgba(255, 200, 200, 0.6);
@@ -96,7 +75,6 @@
             --particle-color: #feb47b;
         }
         body.theme-ocean {
-            /* Ocean: Abyss Blue */
             --bg-body: radial-gradient(circle at bottom, #00152e 0%, #00040a 100%);
             --text-main: #ffffff;
             --text-muted: rgba(137, 207, 240, 0.6);
@@ -113,7 +91,6 @@
             --shadow-color: rgba(0, 0, 0, 0.9);
         }
         body.theme-matrix {
-            /* Matrix: Pure Black & Terminal Green */
             --bg-body: #000000;
             --text-main: #00ff00;
             --text-muted: rgba(0, 255, 0, 0.5);
@@ -129,7 +106,6 @@
             --particle-color: #00ff00;
         }
         body.theme-retro {
-            /* Retro: Deep Synthwave Purple */
             --bg-body: linear-gradient(to bottom, #120012 0%, #050005 100%);
             --text-main: #ff00ff;
             --text-muted: rgba(0, 255, 255, 0.7);
@@ -144,24 +120,7 @@
             --btn-hover-bg: rgba(0, 255, 255, 0.15);
             --particle-color: #00ffff;
         }
-        body.theme-ice {
-            /* Ice: Cool Grey & Frost (Not white) */
-            --bg-body: linear-gradient(to bottom, #dbe6f6, #c5d9f1);
-            --text-main: #2c3e50;
-            --text-muted: #5d6d7e;
-            --accent-primary: #3498db;
-            --accent-secondary: #85c1e9;
-            --glass-bg: rgba(255, 255, 255, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --sidebar-bg: rgba(240, 248, 255, 0.95);
-            --card-bg: rgba(255, 255, 255, 0.5);
-            --player-bg: rgba(255, 255, 255, 0.85);
-            --input-bg: rgba(52, 152, 219, 0.1);
-            --btn-hover-bg: rgba(52, 152, 219, 0.2);
-            --particle-color: #3498db;
-        }
         body.theme-nebula {
-            /* Nebula: Deep Space */
             --bg-body: linear-gradient(to bottom, #0b001a, #1a0b2e);
             --text-main: #ffffff;
             --text-muted: rgba(216, 191, 216, 0.6);
@@ -177,7 +136,6 @@
             --particle-color: #ffffff;
         }
         body.theme-gold {
-            /* Gold: Luxury Black & Gold */
             --bg-body: #050505;
             --text-main: #ffd700;
             --text-muted: rgba(218, 165, 32, 0.6);
@@ -193,7 +151,6 @@
             --particle-color: #ffd700;
         }
         body.theme-dracula {
-            /* Dracula: Darker & Vampiric */
             --bg-body: #1e1f29;
             --text-main: #f8f8f2;
             --text-muted: #6272a4;
@@ -227,167 +184,6 @@
             overflow-x: hidden;
             overscroll-behavior: none;
         }
-        #theme-effects {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1; overflow: hidden;
-        }
-        /* Theme Specific Effects */
-        .retro-grid {
-            position: absolute; bottom: -30%; left: -50%; width: 200%; height: 100%;
-            background-image:
-                linear-gradient(rgba(255, 0, 255, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 0, 255, 0.3) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg);
-            animation: retroGridMove 3s linear infinite;
-            mask-image: linear-gradient(to top, black 0%, transparent 60%);
-            -webkit-mask-image: linear-gradient(to top, black 0%, transparent 60%);
-        }
-        @keyframes retroGridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
-        
-        .ice-vignette {
-            box-shadow: inset 0 0 150px rgba(255, 255, 255, 0.8);
-            width: 100%; height: 100%; position: absolute;
-        }
-        
-        .firefly {
-            position: absolute; width: 4px; height: 4px; background: #ffff00;
-            border-radius: 50%; box-shadow: 0 0 10px #ffff00;
-            animation: fly 10s infinite alternate;
-        }
-        @keyframes fly {
-            0% { transform: translate(0,0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translate(100px, -100px); opacity: 0; }
-        }
-        
-        .bubble {
-            position: absolute; bottom: -20px; background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: rise 8s infinite ease-in;
-        }
-        @keyframes rise {
-            0% { bottom: -20px; transform: translateX(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { bottom: 100vh; transform: translateX(20px); opacity: 0; }
-        }
-        
-        .fog-layer {
-            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: rotateFog 60s linear infinite;
-        }
-        @keyframes rotateFog { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        /* New Effects */
-        .ember {
-            position: absolute; bottom: -10px; width: 4px; height: 4px; background: #ff4500;
-            border-radius: 50%; box-shadow: 0 0 10px #ff4500;
-            animation: riseEmber 5s infinite linear;
-        }
-        @keyframes riseEmber { to { transform: translateY(-100vh) translateX(20px); opacity: 0; } }
-
-        .gold-sparkle {
-            position: absolute; width: 3px; height: 3px; background: #ffd700;
-            box-shadow: 0 0 5px #ffd700; animation: twinkle 2s infinite;
-        }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
-
-        .bokeh {
-            position: absolute; border-radius: 50%; background: rgba(37, 99, 235, 0.1);
-            animation: floatBokeh 10s infinite ease-in-out;
-            filter: blur(5px);
-        }
-        @keyframes floatBokeh { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(20px, -20px); } }
-
-        .cyber-lines {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 210, 255, 0.03) 3px, rgba(0, 210, 255, 0.03) 4px);
-            pointer-events: none; z-index: 0;
-        }
-        .cyber-scan {
-            position: absolute; top: 0; left: 0; width: 100%; height: 10px;
-            background: rgba(0, 210, 255, 0.3);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
-            animation: cyberScan 3s linear infinite;
-            pointer-events: none; z-index: 1;
-        }
-        @keyframes cyberScan { 0% { top: -10%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 110%; opacity: 0; } }
-
-        .aurora-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, rgba(0,255,127,0.03), rgba(0,0,255,0.03), rgba(138,43,226,0.03));
-            background-size: 400% 400%;
-            animation: auroraAnim 15s ease infinite;
-        }
-        @keyframes auroraAnim { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }
-
-        /* --- New Total Overhaul Effects --- */
-        #matrix-rain {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        .ocean-caustics {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image:
-                radial-gradient(ellipse 40% 40% at 20% 20%, rgba(255,255,255,0.05), transparent),
-                radial-gradient(ellipse 30% 30% at 70% 80%, rgba(255,255,255,0.08), transparent);
-            background-size: 200% 200%;
-            animation: causticsMove 20s linear infinite;
-            transform: rotate(45deg) scale(1.5);
-        }
-        @keyframes causticsMove {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .sunset-haze {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 20%;
-            background: linear-gradient(to top, rgba(255, 126, 95, 0.1), transparent);
-            animation: haze-shimmer 5s ease-in-out infinite alternate;
-        }
-        @keyframes haze-shimmer {
-            from { transform: skewX(-10deg) scaleX(1.2); opacity: 0.7; }
-            to { transform: skewX(10deg) scaleX(1.2); opacity: 0.8; }
-        }
-
-        .dracula-bat {
-            position: absolute;
-            width: 50px; height: 30px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3E%3Cpath d='M12 2.5c-4.67 0-8.5 3.83-8.5 8.5v.5h17v-.5c0-4.67-3.83-8.5-8.5-8.5zm-5.5 11c-1.66 0-3 1.34-3 3s1.34 3 3 3c.95 0 1.78-.44 2.31-1.12.33-.41.72-.77 1.19-1.05-.47-.28-.86-.64-1.19-1.05C7.28 16.94 6.45 16.5 5.5 16.5zm11 0c-.95 0-1.78.44-2.31 1.12-.33.41-.72.77-1.19 1.05.47.28.86.64 1.19 1.05.53.68 1.36 1.12 2.31 1.12 1.66 0 3-1.34 3-3s-1.34-3-3-3z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.3;
-            animation: flyBat 15s linear infinite;
-        }
-        @keyframes flyBat {
-            0% { transform: translate(-10vw, 20vh) scale(0.8); }
-            100% { transform: translate(110vw, 10vh) scale(1.2); }
-        }
-
-        .retro-flicker {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            animation: flicker 0.05s infinite;
-        }
-        @keyframes flicker {
-            0% { opacity: 0.01; }
-            50% { opacity: 0.05; }
-            100% { opacity: 0.01; }
-        }
-
-        #stars-container, #snow-container, #particle-container {
-            position: fixed;
-
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-        #particle-container { z-index: 9999; }
         #cursor {
             position: fixed;
             width: 24px;
@@ -512,10 +308,6 @@
         .link-btn:hover { background: var(--btn-hover-bg); color: var(--accent-primary); border-color: var(--accent-primary); box-shadow: 0 0 15px var(--accent-primary); }
         .snow, .click-snow { position: absolute; color: var(--particle-color); user-select: none; pointer-events: none; will-change: transform; }
         @keyframes starFade { from { opacity: 0.2; } to { opacity: 0.8; } }
-        @keyframes fall {
-            from { transform: translate3d(0, -10vh, 0) rotate(0deg); }
-            to { transform: translate3d(0, 110vh, 0) rotate(360deg); }
-        }
         .project-list { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .project-item {
             background: var(--input-bg);
@@ -959,10 +751,6 @@
 </head>
 
 <body>
-    <div id="stars-container"></div>
-    <div id="snow-container"></div>
-    <div id="particle-container"></div>
-    <div id="theme-effects"></div>
     <div id="transition-overlay"></div>
     <div id="toast-notification"></div>
     <div class="lang-btn" id="lang-btn">EN</div>
@@ -978,7 +766,6 @@
     </div>
     <div class="theme-dropdown" id="theme-dropdown">
         <div class="theme-option" data-theme="default">Cyberpunk</div>
-        <div class="theme-option" data-theme="light">Light</div>
         <div class="theme-option" data-theme="midnight">Midnight</div>
         <div class="theme-option" data-theme="forest">Forest</div>
         <div class="theme-option" data-theme="sunset">Sunset</div>
@@ -988,7 +775,6 @@
         <div class="theme-option" data-theme="gold">Gold</div>
         <div class="theme-option" data-theme="dracula">Dracula</div>
         <div class="theme-option" data-theme="retro">Retro</div>
-        <div class="theme-option" data-theme="ice">Ice</div>
     </div>
     <div class="snake-btn" id="snake-game-btn">
         <svg viewBox="0 0 24 24"><path d="M13,6V5C13,3.31 14.31,2 16,2C17.69,2 19,3.31 19,5V6C19,7.69 17.69,9 16,9H14C12.89,9 12,9.89 12,11V12C12,13.11 12.89,14 14,14H16C17.69,14 19,15.31 19,17V18C19,19.69 17.69,21 16,21H13V19H16C16.55,19 17,18.55 17,18V17C17,16.45 16.55,16 16,16H14C12.89,16 12,15.11 12,14V13C12,11.89 12.89,11 14,11H16C16.55,11 17,10.55 17,10V9C17,8.45 16.55,8 16,8C15.45,8 15,8.45 15,9V10H13V9C13,7.31 14.31,6 16,6H13Z"/></svg>
@@ -1003,61 +789,16 @@
             <h1>Mazer</h1>
             <div class="status-text" id="typewriter"></div>
             <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
-            <!-- <a href="https://t.me/MazerOxideSurvivalIsland" target="_blank" rel="noopener noreferrer" id="tg-channel-btn" class="link-btn">My Telegram Channel</a> -->
-            <!-- <a href="https://www.youtube.com/@MazerOxide" target="_blank" rel="noopener noreferrer" class="link-btn">Youtube</a> -->
             <a href="#" id="oxide-id-btn" class="link-btn">Oxide HH-ID</a>
         </div>
         <div id="projects" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Works</h1>
-            <!--
-            <div class="project-list">
-                <div class="project-item">
-                    <div class="project-title">PROJECT 1</div>
-                    <div class="project-desc">Краткое описание первого проекта.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">PROJECT 2</div>
-                    <div class="project-desc">Краткое описание второго проекта.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">PROJECT 3</div>
-                    <div class="project-desc">Краткое описание третьего проекта.</div>
-                    <a href="#" class="project-link-small">Visit</a>
-                </div>
-            </div>
-            -->
             <div style="padding: 50px; text-align: center; opacity: 0.5;">
                 <h3 class="soon-text" id="soon-trigger" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
         </div>
         <div id="skills" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Skills</h1>
-            <!--
-            <div class="skills-container">
-                <div class="skill-item">
-                    <div class="skill-info"><span>HTML5</span><span>95%</span></div>
-                    <div class="progress-bar"><div class="progress-fill" data-width="95%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>CSS3 / SCSS</span><span>90%</span></div>
-                    <div class="progress-bar"><div class="progress-fill" data-width="90%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>JavaScript</span><span>85%</span></div>
-                    <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>Python</span><span>70%</span></div>
-                    <div class="progress-bar"><div class="progress-fill" data-width="70%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>Design</span><span>80%</span></div>
-                    <div class="progress-bar"><div class="progress-fill" data-width="80%"></div></div>
-                </div>
-            </div>
-            -->
             <div style="padding: 50px; text-align: center; opacity: 0.5;">
                 <h3 class="soon-text" style="margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.5rem; pointer-events: auto;">Soon...</h3>
             </div>
@@ -1191,14 +932,8 @@
     <script>
         'use strict';
 
-        /**
-         * Main application module.
-         * Encapsulates all functionality to avoid polluting the global namespace.
-         * Follows a modular structure for better organization and maintainability.
-         */
         (function MazerBio() {
 
-            // --- 1. CONFIGURATION & STATE ---
 
             const CONFIG = {
                 secretTgLink: "aHR0cHM6Ly90Lm1lL0l3ZWhlamo=",
@@ -1243,7 +978,6 @@
                         snakeBtn: "Змейка", snakeStart: "СТАРТ", snakeAgain: "Сыграть снова", paintBtn: "Рисовалка", paintClear: "Очистить",
                         noHelloTitle: "Этикет общения", noHelloText: "Пожалуйста, прочтите это перед тем как писать:", noHelloCheckbox: "Прочитал(а) и понимаю", noHelloBtn: "Продолжить", noHelloWarning: "Сначала прочитайте \"nohello.net\""
                     },
-                    // Other languages can be added here following the same structure
                     es: {
                         bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
                         worksTitle: "Proyectos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
@@ -1290,14 +1024,10 @@
             };
 
             const DOM = {
-                // Cache all DOM elements here for performance
                 body: document.body,
                 cursor: document.getElementById('cursor'),
                 menuToggle: document.getElementById('menu-toggle'),
                 sidebar: document.getElementById('sidebar'),
-                particleContainer: document.getElementById('particle-container'),
-                starsContainer: document.getElementById('stars-container'),
-                snowContainer: document.getElementById('snow-container'),
                 langBtn: document.getElementById('lang-btn'),
                 langDropdown: document.getElementById('lang-dropdown'),
                 themeBtn: document.getElementById('theme-btn'),
@@ -1305,7 +1035,6 @@
                 typewriter: document.getElementById('typewriter'),
                 transitionOverlay: document.getElementById('transition-overlay'),
                 toast: document.getElementById('toast-notification'),
-                // Modals
                 modals: document.querySelectorAll('.modal'),
                 easterEggModal: document.getElementById('easter-egg-modal'),
                 passwordModal: document.getElementById('password-modal'),
@@ -1315,7 +1044,6 @@
                 oxideIdModal: document.getElementById('oxide-id-modal'),
                 snakeModal: document.getElementById('snake-modal'),
                 paintModal: document.getElementById('paint-modal'),
-                // Buttons & Inputs
                 telegramBtn: document.getElementById('telegram-btn'),
                 tgPasswordInput: document.getElementById('tg-password'),
                 tgSubmitBtn: document.getElementById('submit-password'),
@@ -1329,7 +1057,6 @@
                 noHelloWarning: document.getElementById('nohello-warning'),
                 oxideIdBtn: document.getElementById('oxide-id-btn'),
                 copyOxideIdBtn: document.getElementById('copy-oxide-id'),
-                // Snake Game
                 snake: {
                     btn: document.getElementById('snake-game-btn'),
                     canvas: document.getElementById('snake-canvas'),
@@ -1337,7 +1064,6 @@
                     scoreDisplay: document.getElementById('snake-score-display'),
                     closeBtn: document.querySelector('#snake-modal .modal-close-btn')
                 },
-                // Paint
                 paint: {
                     modal: document.getElementById('paint-modal'),
                     btn: document.getElementById('paint-btn'),
@@ -1347,7 +1073,6 @@
                     clearBtn: document.getElementById('paint-clear'),
                     closeBtn: document.querySelector('#paint-modal .modal-close-btn')
                 },
-                // Audio Player
                 audio: {
                     player: document.getElementById('bg-music'),
                     toggleBtn: document.getElementById('audio-player-toggle'),
@@ -1365,7 +1090,6 @@
                     progressContainer: document.getElementById('progress-bar-container'),
                     progressFill: document.getElementById('progress-bar-fill')
                 },
-                // Other interactive elements
                 soonTrigger: document.getElementById('soon-trigger'),
             };
 
@@ -1388,23 +1112,15 @@
                 }
             };
 
-            // --- 2. UTILITY & HELPER MODULES ---
-
-            /**
-             * Safe localStorage wrapper to handle potential security errors in some browsers.
-             */
             const safeStorage = {
                 getItem: (key) => { try { return localStorage.getItem(key); } catch (e) { return null; } },
                 setItem: (key, val) => { try { localStorage.setItem(key, val); } catch (e) { /* ignore */ } }
             };
 
-            /**
-             * Manages language switching and translation application.
-            */
             const LangManager = {
                 init() {
                     State.currentLang = safeStorage.getItem('siteLang') || 'en';
-                    this.set(State.currentLang, false); // Initial load without animation
+                    this.set(State.currentLang, false);
                 },
 
                 set(lang, animate = true) {
@@ -1427,7 +1143,6 @@
                     const t = CONFIG.translations[State.currentLang];
                     if (!t) return;
 
-                    // A map for direct text/attribute updates
                     const translationMap = {
                         bioBtn: { selector: '[data-section="bio"]', type: 'text' },
                         projectsBtn: { selector: '[data-section="projects"]', type: 'text' },
@@ -1491,227 +1206,21 @@
                 }
             };
 
-            /**
-             * Manages theme switching and dynamic background effects.
-             */
             const ThemeManager = {
-                activeInterval: null,
-                activeAnimationFrameId: null,
-
                 init() {
                     State.currentTheme = safeStorage.getItem('siteTheme') || 'default';
                     this.set(State.currentTheme);
                 },
-
                 set(theme) {
                     State.currentTheme = theme;
                     safeStorage.setItem('siteTheme', theme);
                     DOM.body.className = theme === 'default' ? '' : `theme-${theme}`;
-                    this.updateEffects(theme);
-
                     document.querySelectorAll('.theme-option').forEach(opt => {
                         opt.classList.toggle('selected', opt.getAttribute('data-theme') === theme);
                     });
-                },
-
-                clearEffects() {
-                    document.getElementById('theme-effects').innerHTML = '';
-                    document.getElementById('snow-container').innerHTML = '';
-                    if (this.activeInterval) {
-                        clearInterval(this.activeInterval);
-                        this.activeInterval = null;
-                    }
-                    if (this.activeAnimationFrameId) {
-                        cancelAnimationFrame(this.activeAnimationFrameId);
-                        this.activeAnimationFrameId = null;
-                    }
-                },
-
-                updateEffects(theme) {
-                    this.clearEffects();
-
-                    const effectMap = {
-                        'default': this.createCyberpunkOverlay, 'light': this.createBokehs,
-                        'midnight': this.createAurora, 'forest': this.createFireflies,
-                        'sunset': this.createSunsetHaze, 'ocean': this.createOceanCaustics,
-                        'matrix': this.createMatrixRain, 'nebula': this.createNebulaFog,
-                        'gold': this.createGoldSparkles, 'dracula': this.createDraculaBats,
-                        'retro': this.createRetroFlicker, 'ice': this.createIceFX,
-                    };
-
-                    const generator = effectMap[theme];
-                    if (generator) generator.call(this);
-
-                },
-
-                // Effect creation methods
-                startSnow() {
-                    this.activeInterval = setInterval(() => {
-                        const snowChars = ['❄', '❅', '❆'];
-                        const snowflake = document.createElement('div');
-                        snowflake.className = 'snow';
-                        snowflake.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-                        const duration = Math.random() * 5 + 10;
-                        snowflake.style.cssText = `color: var(--particle-color); left: ${Math.random() * 100}vw; font-size: ${Math.random() * 10 + 10}px; opacity: ${Math.random() * 0.5 + 0.3}; animation: fall ${duration}s linear forwards;`;
-                        DOM.snowContainer.appendChild(snowflake);
-                        setTimeout(() => snowflake.remove(), duration * 1000);
-                    }, CONFIG.snowInterval);
-                },
-                createCyberpunkOverlay: () => document.getElementById('theme-effects').innerHTML = `<div class="cyber-lines"></div><div class="cyber-scan"></div>`,
-                createAurora: () => document.getElementById('theme-effects').innerHTML = `<div class="aurora-overlay"></div>`,
-                
-                createFogLayer(color) {
-                    const fog = document.createElement('div');
-                    fog.className = 'fog-layer';
-                    if (color) fog.style.background = `radial-gradient(circle, ${color} 0%, transparent 60%)`;
-                    document.getElementById('theme-effects').appendChild(fog);
-                },
-                createFireflies: (count) => {
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < count; i++) {
-                        const f = document.createElement('div');
-                        f.className = 'firefly';
-                        f.style.left = `${Math.random() * 100}%`;
-                        f.style.top = `${Math.random() * 100}%`;
-                        f.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                        f.style.animationDelay = `${Math.random() * 5}s`;
-                        container.appendChild(f);
-                    }
-                },
-                createEmbers(count) {
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < count; i++) {
-                        const e = document.createElement('div');
-                        e.className = 'ember';
-                        e.style.left = `${Math.random() * 100}%`;
-                        e.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                        e.style.animationDelay = `${Math.random() * 2}s`;
-                        container.appendChild(e);
-                    }
-                },
-                createBubbles(count) {
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < count; i++) {
-                        const b = document.createElement('div');
-                        b.className = 'bubble';
-                        b.style.left = `${Math.random() * 100}%`;
-                        const size = Math.random() * 20 + 10;
-                        b.style.width = `${size}px`;
-                        b.style.height = `${size}px`;
-                        b.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                        b.style.animationDelay = `${Math.random() * 5}s`;
-                        container.appendChild(b);
-                    }
-                },
-                createGoldSparkles(count = 30) {
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < count; i++) {
-                        const s = document.createElement('div');
-                        s.className = 'gold-sparkle';
-                        s.style.left = `${Math.random() * 100}%`;
-                        s.style.top = `${Math.random() * 100}%`;
-                        s.style.animationDelay = `${Math.random() * 2}s`;
-                        container.appendChild(s);
-                    }
-                },
-                createBokehs(count = 10) {
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < count; i++) {
-                        const b = document.createElement('div');
-                        b.className = 'bokeh';
-                        const size = Math.random() * 50 + 20;
-                        b.style.width = `${size}px`;
-                        b.style.height = `${size}px`;
-                        b.style.left = `${Math.random() * 100}%`;
-                        b.style.top = `${Math.random() * 100}%`;
-                        b.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                        container.appendChild(b);
-                    }
-                },
-                createMatrixRain() {
-                    const container = document.getElementById('theme-effects');
-                    const canvas = document.createElement('canvas');
-                    canvas.id = 'matrix-rain';
-                    container.appendChild(canvas);
-                    const ctx = canvas.getContext('2d');
-
-                    const resize = () => {
-                        canvas.width = window.innerWidth;
-                        canvas.height = window.innerHeight;
-                    };
-                    window.addEventListener('resize', resize);
-                    resize();
-
-                    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-                    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    const nums = '0123456789';
-                    const alphabet = katakana + latin + nums;
-
-                    const fontSize = 16;
-                    const columns = canvas.width / fontSize;
-                    const rainDrops = Array.from({ length: columns }).fill(1);
-
-                    const draw = () => {
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
-                        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-main').trim() || '#00ff00';
-                        ctx.font = `${fontSize}px monospace`;
-
-                        for (let i = 0; i < rainDrops.length; i++) {
-                            const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-                            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                                rainDrops[i] = 0;
-                            }
-                            rainDrops[i]++;
-                        }
-                    };
-
-                    const loop = () => {
-                        draw();
-                        this.activeAnimationFrameId = requestAnimationFrame(loop);
-                    };
-                    loop();
-                },
-                createOceanCaustics() {
-                    const container = document.getElementById('theme-effects');
-                    container.innerHTML = `<div class="ocean-caustics"></div>`;
-                    this.createBubbles(10);
-                },
-                createSunsetHaze() {
-                    const container = document.getElementById('theme-effects');
-                    container.innerHTML = `<div class="sunset-haze"></div>`;
-                    this.createEmbers(20);
-                },
-                createDraculaBats() {
-                    this.createFogLayer('rgba(255,0,0,0.05)');
-                    const container = document.getElementById('theme-effects');
-                    for (let i = 0; i < 3; i++) {
-                        const bat = document.createElement('div');
-                        bat.className = 'dracula-bat';
-                        bat.style.top = `${10 + Math.random() * 30}%`;
-                        bat.style.animationDelay = `${i * 5}s`;
-                        container.appendChild(bat);
-                    }
-                },
-                createRetroFlicker() {
-                    const container = document.getElementById('theme-effects');
-                    container.innerHTML = `<div class="retro-grid"></div><div class="retro-flicker"></div>`;
-                },
-                createIceFX() {
-                    document.getElementById('theme-effects').innerHTML = `<div class="ice-vignette"></div>`;
-                    this.startSnow();
-                },
-                createNebulaFog() { this.createFogLayer(); }
+                }
             };
 
-            // --- 3. CORE FEATURE MODULES ---
-
-            /**
-             * Encapsulates all logic for the Snake game.
-             */
             class SnakeGame {
                 constructor(canvas, scoreDisplay, startBtn) {
                     this.canvas = canvas;
@@ -1770,7 +1279,6 @@
                 processInput() {
                     if (this.inputQueue.length > 0) {
                         const nextMove = this.inputQueue.shift();
-                        // Prevent moving directly backward
                         if (this.snake.length === 1 || (nextMove.x !== -this.direction.x && nextMove.y !== -this.direction.y)) {
                             this.direction = nextMove;
                         }
@@ -1780,7 +1288,6 @@
                 moveSnake() {
                     const head = { x: this.snake[0].x + this.direction.x, y: this.snake[0].y + this.direction.y };
                     this.snake.unshift(head);
-                    // If food not eaten, remove tail
                     if (head.x !== this.food.x || head.y !== this.food.y) {
                         this.snake.pop();
                     }
@@ -1788,11 +1295,9 @@
 
                 checkCollision() {
                     const head = this.snake[0];
-                    // Wall collision
                     if (head.x < 0 || head.x >= this.config.tileCount || head.y < 0 || head.y >= this.config.tileCount) {
                         this.gameOver();
                     }
-                    // Self collision
                     for (let i = 1; i < this.snake.length; i++) {
                         if (head.x === this.snake[i].x && head.y === this.snake[i].y) {
                             this.gameOver();
@@ -1865,7 +1370,6 @@
                 }
 
                 playSound(type) {
-                    // Sound generation logic remains similar, as it's a nice feature
                     if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
                     const osc = this.audioCtx.createOscillator();
                     const gain = this.audioCtx.createGain();
@@ -1894,9 +1398,6 @@
 
             const snakeGame = new SnakeGame(DOM.snake.canvas, DOM.snake.scoreDisplay, DOM.snake.startBtn);
 
-            /**
-             * Encapsulates all logic for the Paint tool.
-             */
             class Paint {
                 constructor(domElements) {
                     this.dom = domElements;
@@ -1970,13 +1471,9 @@
 
             const paintApp = new Paint(DOM.paint);
 
-            /**
-             * Manages general UI interactions, animations, and modals.
-             */
             const UI = {
                 init() {
                     this.animateCursor();
-                    this.createStars();
                 },
 
                 animateCursor() {
@@ -2027,15 +1524,6 @@
                     setTimeout(() => DOM.toast.classList.remove('show'), 2000);
                 },
 
-                createStars() {
-                    const fragment = document.createDocumentFragment();
-                    for (let i = 0; i < 100; i++) {
-                        const star = document.createElement('div');
-                        star.style.cssText = `position: absolute; width: 1px; height: 1px; background: var(--particle-color); left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; opacity: ${Math.random()}; animation: starFade ${Math.random() * 3 + 2}s infinite alternate;`;
-                        fragment.appendChild(star);
-                    }
-                    DOM.starsContainer.appendChild(fragment);
-                },
 
                 flashInputBorder(input) {
                     input.style.borderColor = '#ff0055';
@@ -2047,17 +1535,10 @@
                 }
             };
 
-            // --- 4. EVENT BINDING ---
-
-            /**
-             * Centralized event listener setup.
-             */
             function bindEvents() {
-                // Global click handler for popups, modals, etc.
                 document.addEventListener('click', (e) => {
                     const target = e.target;
 
-                    // Close popups if clicked outside
                     if (!target.closest('.lang-dropdown') && !target.closest('#lang-btn')) DOM.langDropdown.classList.remove('active');
                     if (!target.closest('.theme-dropdown') && !target.closest('#theme-btn')) DOM.themeDropdown.classList.remove('active');
                     if (!target.closest('.volume-popup') && !target.closest('#volume-btn')) DOM.audio.volumePopup.classList.remove('active');
@@ -2069,10 +1550,8 @@
                         DOM.audio.container.classList.remove('active');
                     }
 
-                    // Modal closing
                     if (target.classList.contains('modal')) target.classList.remove('active');
 
-                    // Delegated clicks
                     const langOption = target.closest('.lang-option');
                     if (langOption) {
                         LangManager.set(langOption.dataset.lang, true);
@@ -2096,7 +1575,6 @@
                     }
                 });
 
-                // Mouse and cursor
                 document.addEventListener('mousemove', e => {
                     State.cursor.targetX = e.clientX;
                     State.cursor.targetY = e.clientY;
@@ -2108,12 +1586,10 @@
                 });
                 document.addEventListener('mouseleave', () => { DOM.cursor.style.opacity = '0'; });
 
-                // Dropdown toggles
                 DOM.langBtn.addEventListener('click', (e) => { e.stopPropagation(); DOM.langDropdown.classList.toggle('active'); DOM.themeDropdown.classList.remove('active'); });
                 DOM.themeBtn.addEventListener('click', (e) => { e.stopPropagation(); DOM.themeDropdown.classList.toggle('active'); DOM.langDropdown.classList.remove('active'); });
                 DOM.menuToggle.addEventListener('click', (e) => { e.stopPropagation(); DOM.menuToggle.classList.toggle('active'); DOM.sidebar.classList.toggle('active'); });
 
-                // Easter eggs
                 DOM.soonTrigger.addEventListener('click', () => {
                     State.easterEggClickCount++;
                     if (State.easterEggClickCount >= 3) {
@@ -2135,7 +1611,6 @@
                     }
                 });
 
-                // Modal logic
                 DOM.telegramBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     DOM.passwordModal.classList.add('active');
@@ -2147,7 +1622,6 @@
                     if (DOM.tgPasswordInput.value.trim().toLowerCase() === 'telegram') {
                         DOM.passwordModal.classList.remove('active');
                         DOM.noHelloModal.classList.add('active');
-                        // Reset no-hello state
                         DOM.noHelloCheckbox.checked = false;
                         DOM.noHelloCheckbox.disabled = true;
                         DOM.noHelloOverlay.style.display = 'block';
@@ -2170,7 +1644,6 @@
                 });
                 DOM.riddleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') DOM.riddleSubmit.click(); });
 
-                // No-hello logic
                 DOM.noHelloLink.addEventListener('click', () => {
                     DOM.noHelloCheckbox.disabled = false;
                     DOM.noHelloOverlay.style.display = 'none';
@@ -2188,14 +1661,12 @@
                     }
                 });
 
-                // Oxide ID Modal
                 DOM.oxideIdBtn.addEventListener('click', (e) => { e.preventDefault(); DOM.oxideIdModal.classList.add('active'); });
                 DOM.oxideIdModal.querySelector('.modal-close-btn').addEventListener('click', () => DOM.oxideIdModal.classList.remove('active'));
                 DOM.copyOxideIdBtn.addEventListener('click', () => {
                     navigator.clipboard.writeText('W7-V29-NU').then(() => UI.showToast(CONFIG.translations[State.currentLang].copied));
                 });
 
-                // Snake Game
                 DOM.snake.btn.addEventListener('click', (e) => { e.preventDefault(); DOM.snakeModal.classList.add('active'); });
                 DOM.snake.closeBtn.addEventListener('click', () => { DOM.snakeModal.classList.remove('active'); snakeGame.stop(); });
                 DOM.snake.startBtn.addEventListener('click', () => snakeGame.start());
@@ -2205,8 +1676,6 @@
                     }
                 });
 
-                // Audio Player
-                // ... (Audio player event binding logic would go here, it's quite extensive so keeping it brief for this refactor example)
                 DOM.audio.toggleBtn.addEventListener('click', () => DOM.audio.container.classList.toggle('active'));
                 DOM.audio.playPauseBtn.addEventListener('click', () => {
                     State.audio.bindsEnabled = true;
@@ -2214,25 +1683,17 @@
                     if (player.paused) player.play().catch(e => console.error("Audio play failed:", e));
                     else player.pause();
                 });
-                // ... etc for next, prev, volume, progress bar
             }
 
-            // --- 5. INITIALIZATION ---
-
-            /**
-             * Initializes all application modules.
-             */
             function init() {
                 console.log("Mazer.bio is initializing...");
                 LangManager.init();
                 ThemeManager.init();
                 UI.init();
                 bindEvents();
-                // AudioPlayer.init(); // Would be called here
                 console.log("Initialization complete.");
             }
 
-            // Run the app
             document.addEventListener('DOMContentLoaded', init);
 
         })();
