@@ -33,10 +33,7 @@
             <img src="me.png" alt="Avatar" class="avatar" draggable="false">
             <div class="greeting" id="greeting"></div>
             <h1>Mazer</h1>
-            <div class="status-text" id="typewriter"></div>
             <div id="local-time" class="local-time"></div>
-            <a href="#" id="telegram-btn" class="link-btn">Telegram</a>
-            <a href="#" id="oxide-id-btn" class="link-btn">Oxide HH-ID</a>
         </div>
         <div id="hobbies" class="content-section">
             <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Hobbies</h1>
@@ -62,38 +59,6 @@
     </div>
     <div id="easter-egg-modal" class="modal">
         <img src="troll.gif" alt="Troll" draggable="false">
-    </div>
-
-
-    <div id="success-modal" class="modal" style="z-index: 5002;">
-        <div class="password-box">
-            <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
-        </div>
-    </div>
-    <div id="nohello-modal" class="modal" style="z-index: 5003;">
-        <div class="password-box">
-            <h3 id="nohello-title">Communication Etiquette</h3>
-            <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
-            <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; user-select: none;">
-                <div style="position: relative; width: 20px; height: 20px;">
-                    <input type="checkbox" id="nohello-checkbox" disabled style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-primary); opacity: 0.5; cursor: not-allowed;">
-                    <div id="nohello-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></div>
-                </div>
-                <label for="nohello-checkbox" id="nohello-label" style="color: var(--text-main); cursor: pointer;">I have read and understood</label>
-            </div>
-            <div id="nohello-warning" style="color: #ff4444; font-size: 0.9rem; margin-bottom: 15px; display: none; animation: fadeIn 0.3s;">First read "nohello.net"</div>
-            <button id="nohello-submit" disabled style="opacity: 0.5; cursor: not-allowed;">Continue</button>
-        </div>
-    </div>
-
-    <div id="oxide-id-modal" class="modal">
-        <div class="info-box">
-            <button class="modal-close-btn">&times;</button>
-            <div class="info-id">W7-V29-NU</div>
-            <div id="oxide-donate-text" style="font-size: 0.85rem; color: var(--text-muted); margin: -10px 0 5px 0;">Donate to me if you can please</div>
-            <button id="copy-oxide-id" class="info-copy-btn">Copy</button>
-        </div>
     </div>
 
     <div class="audio-player-toggle" id="audio-player-toggle">

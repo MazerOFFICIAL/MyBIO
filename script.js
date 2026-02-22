@@ -1,10 +1,7 @@
 'use strict';
 
 const CONFIG = {
-    secretTgLink: "aHR0cHM6Ly90Lm1lL21hemVyb3hpZGU=",
     cursorSpeed: 0.9,
-    typewriterInterval: 3000,
-    typewriterFade: 600,
     musicTracks: [
         { src: 'background-music1.mp3', title: 'LO-FI #1' },
         { src: 'background-music2.mp3', title: 'LO-FI #2' },
@@ -19,14 +16,8 @@ const CONFIG = {
                 timePrefix: "My time now: ",
             hobbiesText: "I love playing various games and exploring new virtual worlds.",
             oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
-            telegram: "Telegram",
-            riddleTrigger: "A riddle for the quick-witted", riddleTitle: "RIDDLE",
-            riddleText: "You enter a dark room. There is a candle, a kerosene lamp, and a fireplace. You have only one box of matches in your pocket. What will you light first?",
-            riddlePlaceholder: "Answer", passwordPrefix: "Password is ", typewriter: ['Gamer', 'Dreamer'],
             audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track", audioLoop: "Repeat track", audioVolume: "Volume",
-            passwordPlaceholder: "Password", greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
-            copied: "Copied to clipboard", oxideBtn: "Oxide HH-ID", oxideDonate: "I would be grateful for your support", copyBtn: "Copy",
-            noHelloTitle: "Communication Etiquette", noHelloText: "Please read this before messaging:", noHelloCheckbox: "I have read and understood", noHelloBtn: "Continue", noHelloWarning: "First read \"nohello.net\""
+            greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" }
         },
         ru: {
             bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Хобби",
@@ -34,14 +25,8 @@ const CONFIG = {
                 timePrefix: "Мое время сейчас: ",
             hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
             oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
-            telegram: "Телеграм",
-            riddleTrigger: "Загадка для смекалистых", riddleTitle: "ЗАГАДКА",
-            riddleText: "Вы входите в темную комнату. В ней есть свеча, керосиновая лампа и камин. У вас в кармане только один коробок спичек. Что вы зажжете первым?",
-            riddlePlaceholder: "Ответ", passwordPrefix: "Пароль: ", typewriter: ['Геймер', 'Мечтатель'],
             audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек", audioLoop: "Зациклить трек", audioVolume: "Громкость",
-            passwordPlaceholder: "Пароль", greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
-            copied: "Скопировано в буфер обмена", oxideBtn: "Oxide HH-ID", oxideDonate: "Буду благодарен за поддержку", copyBtn: "Копировать",
-            noHelloTitle: "Этикет общения", noHelloText: "Пожалуйста, прочтите это перед тем как писать:", noHelloCheckbox: "Прочитал(а) и понимаю", noHelloBtn: "Продолжить", noHelloWarning: "Сначала прочитайте \"nohello.net\""
+            greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" }
         },
         es: {
             bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
@@ -49,14 +34,8 @@ const CONFIG = {
                 timePrefix: "Mi hora ahora: ",
             hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
             oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
-            telegram: "Telegram",
-            riddleTrigger: "Un acertijo para los ingeniosos", riddleTitle: "ACERTIJO",
-            riddleText: "Entras en una habitación oscura. Hay una vela, una lámpara de queroseno y una chimenea. Solo tienes una caja de cerillas en tu bolsillo. ¿Qué encenderás primero?",
-            riddlePlaceholder: "Respuesta", passwordPrefix: "La contraseña es ", typewriter: ['Jugador', 'Soñador'],
             audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente", audioLoop: "Repetir pista", audioVolume: "Volumen",
-            passwordPlaceholder: "Contraseña", greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
-            copied: "Copiado al portapapeles", oxideBtn: "Oxide HH-ID", oxideDonate: "Agradecería tu apoyo", copyBtn: "Copiar",
-            noHelloTitle: "Etiqueta de comunicación", noHelloText: "Por favor lea esto antes de enviar mensajes:", noHelloCheckbox: "He leído y entendido", noHelloBtn: "Continuar", noHelloWarning: "Primero lee \"nohello.net\""
+            greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" }
         },
         fr: {
             bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Loisirs",
@@ -64,14 +43,8 @@ const CONFIG = {
                 timePrefix: "Mon heure maintenant : ",
             hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
             oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
-            telegram: "Telegram",
-            riddleTrigger: "Une énigme pour les vifs d'esprit", riddleTitle: "ÉNIGME",
-            riddleText: "Vous entrez dans une pièce sombre. Il y a une bougie, une lampe à pétrole et une cheminée. Vous n'avez qu'une boîte d'allumettes dans votre poche. Qu'allumez-vous en premier ?",
-            riddlePlaceholder: "Réponse", passwordPrefix: "Le mot de passe est ", typewriter: ['Joueur', 'Rêveur'],
             audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante", audioLoop: "Répéter la piste", audioVolume: "Volume",
-            passwordPlaceholder: "Mot de passe", greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
-            copied: "Copié dans le presse-papiers", oxideBtn: "Oxide HH-ID", oxideDonate: "Je vous serais reconnaissant de votre soutien", copyBtn: "Copier",
-            noHelloTitle: "Étiquette de communication", noHelloText: "Veuillez lire ceci avant d'envoyer un message :", noHelloCheckbox: "J'ai lu et compris", noHelloBtn: "Continuer", noHelloWarning: "Lisez d'abord \"nohello.net\""
+            greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" }
         },
         de: {
             bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Fähigkeiten", hobbiesBtn: "Hobbys",
@@ -79,14 +52,8 @@ const CONFIG = {
                 timePrefix: "Meine Zeit jetzt: ",
             hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
             oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
-            telegram: "Telegram",
-            riddleTrigger: "Ein Rätsel für die Schlauen", riddleTitle: "RÄTSEL",
-            riddleText: "Du betrittst einen dunklen Raum. Es gibt eine Kerze, eine Petroleumlampe und einen Kamin. Du hast nur eine Schachtel Streichhölzer in der Tasche. Was zündest du zuerst an?",
-            riddlePlaceholder: "Antwort", passwordPrefix: "Passwort ist ", typewriter: ['Gamer', 'Träumer'],
             audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel", audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
-            passwordPlaceholder: "Passwort", greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
-            copied: "In die Zwischenablage kopiert", oxideBtn: "Oxide HH-ID", oxideDonate: "Ich wäre für Ihre Unterstützung dankbar", copyBtn: "Kopieren",
-            noHelloTitle: "Kommunikationsetikette", noHelloText: "Bitte lesen Sie dies, bevor Sie eine Nachricht senden:", noHelloCheckbox: "Ich habe gelesen und verstanden", noHelloBtn: "Weiter", noHelloWarning: "Lies zuerst \"nohello.net\""
+            greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" }
         }
     }
 };
@@ -285,11 +252,6 @@ class LanguageController {
             '[data-section="hobbies"]': { k: 'hobbiesBtn', attr: 'text' },
             '#hobbies h1': { k: 'hobbiesTitle', attr: 'text' },
             '#hobbies-text': { k: 'hobbiesText', attr: 'text' },
-            '#nohello-title': { k: 'noHelloTitle', attr: 'text' },
-            '#nohello-text': { k: 'noHelloText', attr: 'text' },
-            '#nohello-label': { k: 'noHelloCheckbox', attr: 'text' },
-            '#nohello-submit': { k: 'noHelloBtn', attr: 'text' },
-            '#nohello-warning': { k: 'noHelloWarning', attr: 'text' },
             '#prev-btn': { k: 'audioPrev', attr: 'title' },
             '#play-pause-btn': { k: 'audioPlay', attr: 'title' },
             '#next-btn': { k: 'audioNext', attr: 'title' },
