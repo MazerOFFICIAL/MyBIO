@@ -527,14 +527,16 @@ class App {
         const sidebar = Utils.qs('#sidebar');
         const menuToggle = Utils.qs('#menu-toggle');
 
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuToggle.classList.toggle('active');
-            sidebar.classList.toggle('active');
-        });
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menuToggle.classList.toggle('active');
+                sidebar.classList.toggle('active');
+            });
+        }
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.sidebar') && !e.target.closest('#menu-toggle')) {
+            if (sidebar && menuToggle && !e.target.closest('.sidebar') && !e.target.closest('#menu-toggle')) {
                 sidebar.classList.remove('active');
                 menuToggle.classList.remove('active');
             }
