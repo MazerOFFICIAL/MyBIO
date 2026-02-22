@@ -762,6 +762,10 @@ h1 {
     position: relative; z-index: 1;
     filter: drop-shadow(0 0 5px var(--accent-primary));
 }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.audio-player-toggle.playing svg {
+    animation: spin 3s linear infinite;
+}
 .audio-player-container {
     position: fixed;
     bottom: 95px;
