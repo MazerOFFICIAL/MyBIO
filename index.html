@@ -28,10 +28,7 @@
             --player-bg: rgba(5, 10, 20, 0.9);
             --input-bg: rgba(255, 255, 255, 0.05);
             --btn-hover-bg: rgba(var(--accent-primary-rgb), 0.1);
-            --particle-color: white;
             --shadow-color: rgba(0, 0, 0, 0.8);
-            --glow-color: #00d2ff;
-            --glow-secondary: #9d50bb;
         }
         @keyframes glow-pulse {
             0%, 100% { box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-secondary); }
@@ -224,9 +221,10 @@
             margin: 0;
             padding: 0;
             display: flex;
-             justify-content: center;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh; min-height: 100dvh;
+            min-height: 100vh;
+            min-height: 100dvh;
             background: var(--bg-body);
             font-family: 'Segoe UI', sans-serif;
             color: var(--text-main);
