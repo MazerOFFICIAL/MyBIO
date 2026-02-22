@@ -690,18 +690,18 @@
         .game-box {
             background: var(--player-bg);
             backdrop-filter: blur(20px);
-            padding: 20px;
+            padding: 15px;
             border-radius: 20px;
-
             border: 1px solid var(--accent-primary);
             box-shadow: 0 0 40px var(--shadow-color);
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            transform: scale(1.1);
+            gap: 10px;
+            transform: scale(0.9);
             pointer-events: auto;
             position: relative;
+            max-width: 310px;
         }
 
         #snake-canvas {
@@ -1245,11 +1245,12 @@
 
     <div id="snake-modal" class="modal">
         <div class="game-box">
-            <button class="modal-close-btn">&times;</button>
             <div style="display: flex; justify-content: space-between; align-items: center; color: var(--accent-primary); font-weight: bold; font-size: 1.2rem;">
+                <button class="modal-close-btn" style="padding: 0; width: 30px; height: 30px; font-size: 1.5rem;">&times;</button>
                 <span id="snake-score-display">Score: 0</span>
+                <div style="width: 30px;"></div>
             </div>
-            <canvas id="snake-canvas" width="300" height="300"></canvas>
+            <canvas id="snake-canvas" width="250" height="250"></canvas>
             <button id="start-snake-btn" class="info-copy-btn">START</button>
         </div>
     </div>
