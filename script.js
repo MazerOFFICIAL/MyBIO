@@ -16,6 +16,7 @@ const CONFIG = {
         en: {
             bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
             worksTitle: "Projects", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
+                timePrefix: "My time now: ",
             hobbiesText: "I love playing various games and exploring new virtual worlds.",
             oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
             telegram: "Telegram",
@@ -30,6 +31,7 @@ const CONFIG = {
         ru: {
             bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Хобби",
             worksTitle: "Проекты", skillsTitle: "Навыки", hobbiesTitle: "Хобби", soon: "Скоро...",
+                timePrefix: "Мое время сейчас: ",
             hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
             oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
             telegram: "Телеграм",
@@ -44,6 +46,7 @@ const CONFIG = {
         es: {
             bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
             worksTitle: "Proyectos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
+                timePrefix: "Mi hora ahora: ",
             hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
             oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
             telegram: "Telegram",
@@ -58,6 +61,7 @@ const CONFIG = {
         fr: {
             bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Loisirs",
             worksTitle: "Projets", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
+                timePrefix: "Mon heure maintenant : ",
             hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
             oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
             telegram: "Telegram",
@@ -72,6 +76,7 @@ const CONFIG = {
         de: {
             bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Fähigkeiten", hobbiesBtn: "Hobbys",
             worksTitle: "Projekte", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
+                timePrefix: "Meine Zeit jetzt: ",
             hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
             oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
             telegram: "Telegram",
@@ -199,7 +204,8 @@ class TimeController {
             minute: '2-digit',
             hour12: false
         });
-        this.el.textContent = `${time} (PL)`;
+        const t = CONFIG.translations[State.currentLang];
+        this.el.textContent = `${t.timePrefix}${time} (PL)`;
     }
 }
 
