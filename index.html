@@ -1284,6 +1284,7 @@
                 },
                 // Paint
                 paint: {
+                    modal: document.getElementById('paint-modal'),
                     btn: document.getElementById('paint-btn'),
                     canvas: document.getElementById('paint-canvas'),
                     colorInput: document.getElementById('paint-color'),
@@ -1475,7 +1476,7 @@
                     };
 
                     if (effectGenerators[theme]) {
-                        effectGeneratorstheme;
+                        effectGenerators[theme]();
                     }
                 },
 
@@ -1503,10 +1504,56 @@
                         container.appendChild(f);
                     }
                 },
-                createEmbers: (count) => { /* similar to fireflies */ },
-                createBubbles: (count) => { /* similar to fireflies */ },
-                createGoldSparkles: (count) => { /* similar to fireflies */ },
-                createBokehs: (count) => { /* similar to fireflies */ },
+                createEmbers: (count) => {
+                    const container = document.getElementById('theme-effects');
+                    for (let i = 0; i < count; i++) {
+                        const e = document.createElement('div');
+                        e.className = 'ember';
+                        e.style.left = `${Math.random() * 100}%`;
+                        e.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                        e.style.animationDelay = `${Math.random() * 2}s`;
+                        container.appendChild(e);
+                    }
+                },
+                createBubbles: (count) => {
+                    const container = document.getElementById('theme-effects');
+                    for (let i = 0; i < count; i++) {
+                        const b = document.createElement('div');
+                        b.className = 'bubble';
+                        b.style.left = `${Math.random() * 100}%`;
+                        const size = Math.random() * 20 + 10;
+                        b.style.width = `${size}px`;
+                        b.style.height = `${size}px`;
+                        b.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                        b.style.animationDelay = `${Math.random() * 5}s`;
+                        container.appendChild(b);
+                    }
+                },
+                createGoldSparkles: (count) => {
+                    const container = document.getElementById('theme-effects');
+                    for (let i = 0; i < count; i++) {
+                        const s = document.createElement('div');
+                        s.className = 'gold-sparkle';
+                        s.style.left = `${Math.random() * 100}%`;
+                        s.style.top = `${Math.random() * 100}%`;
+                        s.style.animationDelay = `${Math.random() * 2}s`;
+                        container.appendChild(s);
+                    }
+                },
+                createBokehs: (count) => {
+                    const container = document.getElementById('theme-effects');
+                    for (let i = 0; i < count; i++) {
+                        const b = document.createElement('div');
+                        b.className = 'bokeh';
+                        const size = Math.random() * 50 + 20;
+                        b.style.width = `${size}px`;
+                        b.style.height = `${size}px`;
+                        b.style.left = `${Math.random() * 100}%`;
+                        b.style.top = `${Math.random() * 100}%`;
+                        b.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                        container.appendChild(b);
+                    }
+                },
             };
 
             // --- 3. CORE FEATURE MODULES ---
@@ -1695,6 +1742,82 @@
             }
 
             const snakeGame = new SnakeGame(DOM.snake.canvas, DOM.snake.scoreDisplay, DOM.snake.startBtn);
+
+            /**
+             * Encapsulates all logic for the Paint tool.
+             */
+            class Paint {
+                constructor(domElements) {
+                    this.dom = domElements;
+                    this.ctx = this.dom.canvas.getContext('2d');
+                    this.isPainting = false;
+                    this.bind();
+                }
+
+                open() {
+                    this.dom.modal.classList.add('active');
+                    this.resizeCanvas();
+                }
+
+                close() {
+                    this.dom.modal.classList.remove('active');
+                }
+
+                clear() {
+                    this.ctx.clearRect(0, 0, this.dom.canvas.width, this.dom.canvas.height);
+                }
+
+                resizeCanvas() {
+                    const maxWidth = Math.min(window.innerWidth * 0.9, 500);
+                    const maxHeight = Math.min(window.innerHeight * 0.6, 500);
+                    this.dom.canvas.width = maxWidth;
+                    this.dom.canvas.height = maxHeight;
+                    this.ctx.lineCap = 'round';
+                    this.ctx.lineJoin = 'round';
+                }
+
+                startPaint(e) {
+                    this.isPainting = true;
+                    this.draw(e);
+                }
+
+                endPaint() {
+                    this.isPainting = false;
+                    this.ctx.beginPath();
+                }
+
+                draw(e) {
+                    if (!this.isPainting) return;
+                    e.preventDefault();
+                    const rect = this.dom.canvas.getBoundingClientRect();
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    const x = (clientX - rect.left) * (this.dom.canvas.width / rect.width);
+                    const y = (clientY - rect.top) * (this.dom.canvas.height / rect.height);
+
+                    this.ctx.lineWidth = this.dom.sizeInput.value;
+                    this.ctx.strokeStyle = this.dom.colorInput.value;
+
+                    this.ctx.lineTo(x, y);
+                    this.ctx.stroke();
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, y);
+                }
+
+                bind() {
+                    this.dom.btn.addEventListener('click', (e) => { e.preventDefault(); this.open(); });
+                    this.dom.closeBtn.addEventListener('click', () => this.close());
+                    this.dom.clearBtn.addEventListener('click', () => this.clear());
+                    this.dom.modal.addEventListener('click', (e) => { if (e.target === this.dom.modal) this.close(); });
+
+                    ['mousedown', 'touchstart'].forEach(evt => this.dom.canvas.addEventListener(evt, (e) => this.startPaint(e), { passive: false }));
+                    ['mouseup', 'touchend', 'mouseleave'].forEach(evt => this.dom.canvas.addEventListener(evt, () => this.endPaint()));
+                    ['mousemove', 'touchmove'].forEach(evt => this.dom.canvas.addEventListener(evt, (e) => this.draw(e), { passive: false }));
+                    window.addEventListener('resize', () => { if (this.dom.modal.classList.contains('active')) this.resizeCanvas(); });
+                }
+            }
+
+            const paintApp = new Paint(DOM.paint);
 
             /**
              * Manages general UI interactions, animations, and modals.
