@@ -179,6 +179,30 @@ class Typewriter {
     }
 }
 
+class TimeController {
+    constructor() {
+        this.el = Utils.qs('#local-time');
+        if (this.el) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.update();
+        setInterval(() => this.update(), 1000);
+    }
+
+    update() {
+        const time = new Date().toLocaleTimeString('en-GB', {
+            timeZone: 'Europe/Warsaw',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+        this.el.textContent = `${time} (PL)`;
+    }
+}
+
 class ThemeController {
     constructor() {
         this.themes = ['midnight', 'forest', 'ocean', 'nebula', 'gold'];
@@ -483,6 +507,7 @@ class App {
     constructor() {
         this.cursor = new Cursor();
         this.typewriter = new Typewriter();
+        this.time = new TimeController();
         this.theme = new ThemeController();
         this.lang = new LanguageController(this.typewriter);
         this.audio = new AudioController();
