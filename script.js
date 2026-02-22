@@ -160,19 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
             State.currentLang = safeStorage.getItem('siteLang') || 'en';
             this.set(State.currentLang, false);
         },
-        set(lang, animate = true) {
+        set(lang) {
             State.currentLang = lang;
             safeStorage.setItem('siteLang', lang);
             document.documentElement.lang = lang;
-            if (animate) {
-                DOM.transitionOverlay.classList.add('active');
-                setTimeout(() => {
-                    this.apply();
-                    setTimeout(() => DOM.transitionOverlay.classList.remove('active'), 300);
-                }, 500);
-            } else {
-                this.apply();
-            }
+            this.apply();
         },
         apply() {
             const t = CONFIG.translations[State.currentLang];
