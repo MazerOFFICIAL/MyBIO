@@ -15,6 +15,7 @@
         }
         :root {
             --bg-body: radial-gradient(circle at center, #0a0f1c 0%, #000000 100%);
+            --modal-close-offset: 18px;
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.5);
             --accent-primary: #00d2ff;
@@ -549,8 +550,8 @@
         }
         .modal-close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: var(--modal-close-offset);
+            right: var(--modal-close-offset);
             background: linear-gradient(135deg, var(--input-bg), rgba(255, 255, 255, 0.05));
             border: 2px solid var(--glass-border);
             color: var(--text-muted);
@@ -559,8 +560,8 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             display: inline-grid;
             place-items: center;
             border-radius: 10px;
