@@ -1471,6 +1471,116 @@
 
             const paintApp = new Paint(DOM.paint);
 
+            const AudioPlayer = {
+                init() {
+                    this.tracks = CONFIG.musicTracks;
+                    this.currentTrackIndex = 0;
+                    this.isPlaying = false;
+                    this.isLooping = false;
+                    this.audio = DOM.audio.player;
+                    
+                    this.audio.volume = 0.5;
+                    DOM.audio.volumeSlider.value = 0.5;
+
+                    this.loadTrack(this.currentTrackIndex);
+                    this.bindEvents();
+                },
+
+                loadTrack(index) {
+                    this.currentTrackIndex = index;
+                    this.audio.src = this.tracks[index].src;
+                    DOM.audio.trackTitle.textContent = this.tracks[index].title;
+                    DOM.audio.progressFill.style.width = '0%';
+                    DOM.audio.currentTime.textContent = '0:00';
+                    
+                    this.audio.onloadedmetadata = () => {
+                        DOM.audio.totalDuration.textContent = this.formatTime(this.audio.duration);
+                    };
+                    
+                    this.updatePlayPauseIcon();
+                },
+
+                play() {
+                    this.audio.play().then(() => {
+                        this.isPlaying = true;
+                        this.updatePlayPauseIcon();
+                    }).catch(e => console.error("Audio play failed:", e));
+                },
+
+                pause() {
+                    this.audio.pause();
+                    this.isPlaying = false;
+                    this.updatePlayPauseIcon();
+                },
+
+                togglePlay() {
+                    if (this.isPlaying) this.pause();
+                    else this.play();
+                },
+
+                next() {
+                    this.currentTrackIndex = (this.currentTrackIndex + 1) % this.tracks.length;
+                    this.loadTrack(this.currentTrackIndex);
+                    if (this.isPlaying) this.play();
+                },
+
+                prev() {
+                    this.currentTrackIndex = (this.currentTrackIndex - 1 + this.tracks.length) % this.tracks.length;
+                    this.loadTrack(this.currentTrackIndex);
+                    if (this.isPlaying) this.play();
+                },
+
+                toggleLoop() {
+                    this.isLooping = !this.isLooping;
+                    this.audio.loop = this.isLooping;
+                    DOM.audio.loopBtn.classList.toggle('active', this.isLooping);
+                },
+
+                setVolume(val) {
+                    this.audio.volume = val;
+                },
+
+                updateProgress() {
+                    const { duration, currentTime } = this.audio;
+                    if (duration) {
+                        DOM.audio.progressFill.style.width = `${(currentTime / duration) * 100}%`;
+                        DOM.audio.currentTime.textContent = this.formatTime(currentTime);
+                        DOM.audio.totalDuration.textContent = this.formatTime(duration);
+                    }
+                },
+
+                setProgress(e) {
+                    const width = DOM.audio.progressContainer.clientWidth;
+                    const duration = this.audio.duration;
+                    if (duration) this.audio.currentTime = (e.offsetX / width) * duration;
+                },
+
+                formatTime(s) {
+                    if (isNaN(s)) return "0:00";
+                    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+                    return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+                },
+
+                updatePlayPauseIcon() {
+                    DOM.audio.playPauseBtn.innerHTML = this.isPlaying 
+                        ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+                        : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                },
+
+                bindEvents() {
+                    DOM.audio.toggleBtn.addEventListener('click', () => DOM.audio.container.classList.toggle('active'));
+                    DOM.audio.playPauseBtn.addEventListener('click', () => this.togglePlay());
+                    DOM.audio.nextBtn.addEventListener('click', () => this.next());
+                    DOM.audio.prevBtn.addEventListener('click', () => this.prev());
+                    DOM.audio.loopBtn.addEventListener('click', () => this.toggleLoop());
+                    DOM.audio.volumeBtn.addEventListener('click', (e) => { e.stopPropagation(); DOM.audio.volumePopup.classList.toggle('active'); });
+                    DOM.audio.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
+                    this.audio.addEventListener('timeupdate', () => this.updateProgress());
+                    this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
+                    DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
+                }
+            };
+
             const UI = {
                 init() {
                     this.animateCursor();
@@ -1675,14 +1785,6 @@
                         snakeGame.handleInput(e);
                     }
                 });
-
-                DOM.audio.toggleBtn.addEventListener('click', () => DOM.audio.container.classList.toggle('active'));
-                DOM.audio.playPauseBtn.addEventListener('click', () => {
-                    State.audio.bindsEnabled = true;
-                    const player = DOM.audio.player;
-                    if (player.paused) player.play().catch(e => console.error("Audio play failed:", e));
-                    else player.pause();
-                });
             }
 
             function init() {
@@ -1690,6 +1792,7 @@
                 LangManager.init();
                 ThemeManager.init();
                 UI.init();
+                AudioPlayer.init();
                 bindEvents();
                 console.log("Initialization complete.");
             }
