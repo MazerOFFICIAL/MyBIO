@@ -468,7 +468,7 @@
             border-radius: 20px; border: 2px solid var(--accent-primary);
             box-shadow: 0 0 60px rgba(var(--accent-primary-rgb), 0.2), 0 0 30px var(--shadow-color); 
             text-align: center;
-            display: flex; flex-direction: column; gap: 20px; transform: scale(0.95); pointer-events: auto; max-width: 350px;
+            display: flex; flex-direction: column; gap: 20px; transform: scale(1); pointer-events: auto; max-width: 480px;
             position: relative;
             overflow: hidden;
         }
@@ -533,11 +533,11 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            transform: scale(1.05);
+            transform: scale(1);
             pointer-events: auto;
             position: relative;
             width: 90%;
-            max-width: 320px;
+            max-width: 450px;
             overflow: hidden;
         }
         .info-box::before {
@@ -676,10 +676,10 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            transform: scale(1.05);
+            transform: scale(1);
             pointer-events: auto;
             position: relative;
-            max-width: 340px;
+            max-width: 420px;
         }
 
         #snake-canvas {
@@ -1198,7 +1198,7 @@
         </div>
     </div>
     <div id="nohello-modal" class="modal" style="z-index: 5003;">
-        <div class="password-box" style="max-width: 350px;">
+        <div class="password-box">
             <h3 id="nohello-title">Communication Etiquette</h3>
             <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
             <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
