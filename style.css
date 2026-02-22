@@ -61,23 +61,6 @@ body.theme-forest {
     --btn-hover-bg: rgba(74, 222, 128, 0.2);
     --shadow-color: rgba(0, 0, 0, 0.8);
 }
-body.theme-sunset {
-    --bg-body: linear-gradient(135deg, #1a0510 0%, #2d0a1e 35%, #3d1220 100%);
-    --text-main: #fff0f5;
-    --text-muted: rgba(255, 200, 200, 0.7);
-    --accent-primary: #ff7e5f;
-    --accent-secondary: #feb47b;
-    --accent-primary-rgb: 255, 126, 95;
-    --accent-secondary-rgb: 254, 180, 123;
-    --glass-bg: rgba(40, 10, 25, 0.85);
-    --glass-border: rgba(255, 126, 95, 0.35);
-    --sidebar-bg: rgba(20, 5, 10, 0.95);
-    --card-bg: rgba(40, 10, 25, 0.8);
-    --player-bg: rgba(30, 5, 15, 0.9);
-    --input-bg: rgba(255, 126, 95, 0.1);
-    --btn-hover-bg: rgba(255, 126, 95, 0.25);
-    --shadow-color: rgba(0, 0, 0, 0.8);
-}
 body.theme-ocean {
     --bg-body: radial-gradient(circle at 50% 100%, #003a7d 0%, #00152e 40%, #00040a 100%);
     --text-main: #ffffff;
@@ -94,40 +77,6 @@ body.theme-ocean {
     --input-bg: rgba(0, 210, 255, 0.08);
     --btn-hover-bg: rgba(0, 210, 255, 0.2);
     --shadow-color: rgba(0, 0, 0, 0.9);
-}
-body.theme-matrix {
-    --bg-body: linear-gradient(135deg, #000000 0%, #001a00 50%, #000000 100%);
-    --text-main: #00ff00;
-    --text-muted: rgba(0, 255, 0, 0.6);
-    --accent-primary: #00ff00;
-    --accent-secondary: #008f11;
-    --accent-primary-rgb: 0, 255, 0;
-    --accent-secondary-rgb: 0, 143, 17;
-    --glass-bg: rgba(0, 20, 0, 0.9);
-    --glass-border: rgba(0, 255, 0, 0.35);
-    --sidebar-bg: #000000;
-    --card-bg: rgba(0, 15, 0, 0.9);
-    --player-bg: #000000;
-    --input-bg: rgba(0, 255, 0, 0.12);
-    --btn-hover-bg: rgba(0, 255, 0, 0.15);
-    --shadow-color: rgba(0, 0, 0, 0.8);
-}
-body.theme-retro {
-    --bg-body: linear-gradient(135deg, #120012 0%, #2d003d 50%, #050005 100%);
-    --text-main: #ff00ff;
-    --text-muted: rgba(0, 255, 255, 0.75);
-    --accent-primary: #00ffff;
-    --accent-secondary: #ff00ff;
-    --accent-primary-rgb: 0, 255, 255;
-    --accent-secondary-rgb: 255, 0, 255;
-    --glass-bg: rgba(43, 0, 43, 0.7);
-    --glass-border: rgba(0, 255, 255, 0.35);
-    --sidebar-bg: rgba(20, 0, 20, 0.95);
-    --card-bg: rgba(43, 0, 43, 0.75);
-    --player-bg: rgba(20, 0, 20, 0.9);
-    --input-bg: rgba(0, 255, 255, 0.12);
-    --btn-hover-bg: rgba(0, 255, 255, 0.2);
-    --shadow-color: rgba(0, 0, 0, 0.8);
 }
 body.theme-nebula {
     --bg-body: linear-gradient(135deg, #0b001a 0%, #1a0b2e 40%, #2d0a3d 100%);
@@ -161,23 +110,6 @@ body.theme-gold {
     --player-bg: #0a0a0a;
     --input-bg: rgba(255, 215, 0, 0.1);
     --btn-hover-bg: rgba(255, 215, 0, 0.15);
-    --shadow-color: rgba(0, 0, 0, 0.8);
-}
-body.theme-dracula {
-    --bg-body: linear-gradient(135deg, #1e1f29 0%, #282a36 50%, #191a21 100%);
-    --text-main: #f8f8f2;
-    --text-muted: #6272a4;
-    --accent-primary: #ff79c6;
-    --accent-secondary: #bd93f9;
-    --accent-primary-rgb: 255, 121, 198;
-    --accent-secondary-rgb: 189, 147, 249;
-    --glass-bg: rgba(40, 42, 54, 0.9);
-    --glass-border: rgba(189, 147, 249, 0.35);
-    --sidebar-bg: #191a21;
-    --card-bg: rgba(40, 42, 54, 0.9);
-    --player-bg: #282a36;
-    --input-bg: rgba(189, 147, 249, 0.1);
-    --btn-hover-bg: rgba(255, 121, 198, 0.15);
     --shadow-color: rgba(0, 0, 0, 0.8);
 }
 input, textarea {

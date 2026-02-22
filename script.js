@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const State = {
         currentLang: 'en',
-        currentTheme: 'default',
+        currentTheme: 'midnight',
         typewriter: {
             phrases: [],
             phraseIndex: 0,
@@ -225,7 +225,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const ThemeManager = {
         init() {
-            State.currentTheme = safeStorage.getItem('siteTheme') || 'default';
+            const validThemes = ['midnight', 'forest', 'ocean', 'nebula', 'gold'];
+            let theme = safeStorage.getItem('siteTheme');
+            if (!theme || !validThemes.includes(theme)) {
+                theme = 'midnight';
+            }
+            State.currentTheme = theme;
             this.set(State.currentTheme);
         },
         set(theme) {
