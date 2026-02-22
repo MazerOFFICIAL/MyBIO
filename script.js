@@ -449,6 +449,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 DOM.sidebar.classList.remove('active');
                 DOM.menuToggle.classList.remove('active');
             }
+            if (!target.closest('.audio-player-container') && !target.closest('#audio-player-toggle')) {
+                AudioPlayer.togglePlayerVisibility(false);
+            }
             if (target.classList.contains('modal')) target.classList.remove('active');
             const langOption = target.closest('.lang-option');
             if (langOption) {
