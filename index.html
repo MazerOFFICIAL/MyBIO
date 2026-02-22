@@ -245,12 +245,6 @@
         }
         @keyframes retroGridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
         
-        .matrix-overlay {
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
-            width: 100%; height: 100%; position: absolute;
-        }
-        
         .ice-vignette {
             box-shadow: inset 0 0 150px rgba(255, 255, 255, 0.8);
             width: 100%; height: 100%; position: absolute;
@@ -327,6 +321,61 @@
             animation: auroraAnim 15s ease infinite;
         }
         @keyframes auroraAnim { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }
+
+        /* --- New Total Overhaul Effects --- */
+        #matrix-rain {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        .ocean-caustics {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                radial-gradient(ellipse 40% 40% at 20% 20%, rgba(255,255,255,0.05), transparent),
+                radial-gradient(ellipse 30% 30% at 70% 80%, rgba(255,255,255,0.08), transparent);
+            background-size: 200% 200%;
+            animation: causticsMove 20s linear infinite;
+            transform: rotate(45deg) scale(1.5);
+        }
+        @keyframes causticsMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .sunset-haze {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 20%;
+            background: linear-gradient(to top, rgba(255, 126, 95, 0.1), transparent);
+            animation: haze-shimmer 5s ease-in-out infinite alternate;
+        }
+        @keyframes haze-shimmer {
+            from { transform: skewX(-10deg) scaleX(1.2); opacity: 0.7; }
+            to { transform: skewX(10deg) scaleX(1.2); opacity: 0.8; }
+        }
+
+        .dracula-bat {
+            position: absolute;
+            width: 50px; height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3E%3Cpath d='M12 2.5c-4.67 0-8.5 3.83-8.5 8.5v.5h17v-.5c0-4.67-3.83-8.5-8.5-8.5zm-5.5 11c-1.66 0-3 1.34-3 3s1.34 3 3 3c.95 0 1.78-.44 2.31-1.12.33-.41.72-.77 1.19-1.05-.47-.28-.86-.64-1.19-1.05C7.28 16.94 6.45 16.5 5.5 16.5zm11 0c-.95 0-1.78.44-2.31 1.12-.33.41-.72.77-1.19 1.05.47.28.86.64 1.19 1.05.53.68 1.36 1.12 2.31 1.12 1.66 0 3-1.34 3-3s-1.34-3-3-3z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            animation: flyBat 15s linear infinite;
+        }
+        @keyframes flyBat {
+            0% { transform: translate(-10vw, 20vh) scale(0.8); }
+            100% { transform: translate(110vw, 10vh) scale(1.2); }
+        }
+
+        .retro-flicker {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            animation: flicker 0.05s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.01; }
+            50% { opacity: 0.05; }
+            100% { opacity: 0.01; }
+        }
 
         #stars-container, #snow-container, #particle-container {
             position: fixed;
@@ -1447,6 +1496,7 @@
              */
             const ThemeManager = {
                 activeInterval: null,
+                activeAnimationFrameId: null,
 
                 init() {
                     State.currentTheme = safeStorage.getItem('siteTheme') || 'default';
@@ -1464,36 +1514,34 @@
                     });
                 },
 
-                updateEffects(theme) {
-                    const container = document.getElementById('theme-effects');
-                    container.innerHTML = ''; // Clear previous effects
-                    
+                clearEffects() {
+                    document.getElementById('theme-effects').innerHTML = '';
+                    document.getElementById('snow-container').innerHTML = '';
                     if (this.activeInterval) {
                         clearInterval(this.activeInterval);
                         this.activeInterval = null;
                     }
+                    if (this.activeAnimationFrameId) {
+                        cancelAnimationFrame(this.activeAnimationFrameId);
+                        this.activeAnimationFrameId = null;
+                    }
+                },
 
-                    const effectGenerators = {
-                        'default': () => this.createCyberpunkOverlay(),
-                        'retro': () => this.createRetroGrid(),
-                        'matrix': () => this.createMatrixOverlay(),
-                        'ice': () => {
-                            this.createIceVignette();
-                            this.startSnow();
-                        },
-                        'forest': () => this.createFireflies(20),
-                        'sunset': () => this.createEmbers(20),
-                        'ocean': () => this.createBubbles(15),
-                        'nebula': () => this.createFogLayer(),
-                        'dracula': () => this.createFogLayer('rgba(255,0,0,0.05)'),
-                        'gold': () => this.createGoldSparkles(30),
-                        'light': () => this.createBokehs(10),
-                        'midnight': () => this.createAurora(),
+                updateEffects(theme) {
+                    this.clearEffects();
+
+                    const effectMap = {
+                        'default': this.createCyberpunkOverlay, 'light': this.createBokehs,
+                        'midnight': this.createAurora, 'forest': this.createFireflies,
+                        'sunset': this.createSunsetHaze, 'ocean': this.createOceanCaustics,
+                        'matrix': this.createMatrixRain, 'nebula': this.createNebulaFog,
+                        'gold': this.createGoldSparkles, 'dracula': this.createDraculaBats,
+                        'retro': this.createRetroFlicker, 'ice': this.createIceFX,
                     };
 
-                    if (effectGenerators[theme]) {
-                        effectGenerators[theme]();
-                    }
+                    const generator = effectMap[theme];
+                    if (generator) generator.call(this);
+
                 },
 
                 // Effect creation methods
@@ -1509,15 +1557,10 @@
                         setTimeout(() => snowflake.remove(), duration * 1000);
                     }, CONFIG.snowInterval);
                 },
-                createCyberpunkOverlay() {
-                    const container = document.getElementById('theme-effects');
-                    container.innerHTML = `<div class="cyber-lines"></div><div class="cyber-scan"></div>`;
-                },
-                createRetroGrid: () => document.getElementById('theme-effects').innerHTML = `<div class="retro-grid"></div>`,
-                createMatrixOverlay: () => document.getElementById('theme-effects').innerHTML = `<div class="matrix-overlay"></div>`,
-                createIceVignette: () => document.getElementById('theme-effects').innerHTML = `<div class="ice-vignette"></div>`,
+                createCyberpunkOverlay: () => document.getElementById('theme-effects').innerHTML = `<div class="cyber-lines"></div><div class="cyber-scan"></div>`,
                 createAurora: () => document.getElementById('theme-effects').innerHTML = `<div class="aurora-overlay"></div>`,
-                createFogLayer: (color) => {
+                
+                createFogLayer(color) {
                     const fog = document.createElement('div');
                     fog.className = 'fog-layer';
                     if (color) fog.style.background = `radial-gradient(circle, ${color} 0%, transparent 60%)`;
@@ -1535,7 +1578,7 @@
                         container.appendChild(f);
                     }
                 },
-                createEmbers: (count) => {
+                createEmbers(count) {
                     const container = document.getElementById('theme-effects');
                     for (let i = 0; i < count; i++) {
                         const e = document.createElement('div');
@@ -1546,7 +1589,7 @@
                         container.appendChild(e);
                     }
                 },
-                createBubbles: (count) => {
+                createBubbles(count) {
                     const container = document.getElementById('theme-effects');
                     for (let i = 0; i < count; i++) {
                         const b = document.createElement('div');
@@ -1560,7 +1603,7 @@
                         container.appendChild(b);
                     }
                 },
-                createGoldSparkles: (count) => {
+                createGoldSparkles(count = 30) {
                     const container = document.getElementById('theme-effects');
                     for (let i = 0; i < count; i++) {
                         const s = document.createElement('div');
@@ -1571,7 +1614,7 @@
                         container.appendChild(s);
                     }
                 },
-                createBokehs: (count) => {
+                createBokehs(count = 10) {
                     const container = document.getElementById('theme-effects');
                     for (let i = 0; i < count; i++) {
                         const b = document.createElement('div');
@@ -1585,6 +1628,83 @@
                         container.appendChild(b);
                     }
                 },
+                createMatrixRain() {
+                    const container = document.getElementById('theme-effects');
+                    const canvas = document.createElement('canvas');
+                    canvas.id = 'matrix-rain';
+                    container.appendChild(canvas);
+                    const ctx = canvas.getContext('2d');
+
+                    const resize = () => {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    };
+                    window.addEventListener('resize', resize);
+                    resize();
+
+                    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+                    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    const nums = '0123456789';
+                    const alphabet = katakana + latin + nums;
+
+                    const fontSize = 16;
+                    const columns = canvas.width / fontSize;
+                    const rainDrops = Array.from({ length: columns }).fill(1);
+
+                    const draw = () => {
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        
+                        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-main').trim() || '#00ff00';
+                        ctx.font = `${fontSize}px monospace`;
+
+                        for (let i = 0; i < rainDrops.length; i++) {
+                            const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                                rainDrops[i] = 0;
+                            }
+                            rainDrops[i]++;
+                        }
+                    };
+
+                    const loop = () => {
+                        draw();
+                        this.activeAnimationFrameId = requestAnimationFrame(loop);
+                    };
+                    loop();
+                },
+                createOceanCaustics() {
+                    const container = document.getElementById('theme-effects');
+                    container.innerHTML = `<div class="ocean-caustics"></div>`;
+                    this.createBubbles(10);
+                },
+                createSunsetHaze() {
+                    const container = document.getElementById('theme-effects');
+                    container.innerHTML = `<div class="sunset-haze"></div>`;
+                    this.createEmbers(20);
+                },
+                createDraculaBats() {
+                    this.createFogLayer('rgba(255,0,0,0.05)');
+                    const container = document.getElementById('theme-effects');
+                    for (let i = 0; i < 3; i++) {
+                        const bat = document.createElement('div');
+                        bat.className = 'dracula-bat';
+                        bat.style.top = `${10 + Math.random() * 30}%`;
+                        bat.style.animationDelay = `${i * 5}s`;
+                        container.appendChild(bat);
+                    }
+                },
+                createRetroFlicker() {
+                    const container = document.getElementById('theme-effects');
+                    container.innerHTML = `<div class="retro-grid"></div><div class="retro-flicker"></div>`;
+                },
+                createIceFX() {
+                    document.getElementById('theme-effects').innerHTML = `<div class="ice-vignette"></div>`;
+                    this.startSnow();
+                },
+                createNebulaFog() { this.createFogLayer(); }
             };
 
             // --- 3. CORE FEATURE MODULES ---
