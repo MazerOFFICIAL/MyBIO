@@ -549,7 +549,6 @@
         }
         .modal-close-btn {
             position: absolute;
-            top: 25px;
             top: 15px;
             right: 15px;
             background: linear-gradient(135deg, var(--input-bg), rgba(255, 255, 255, 0.05));
@@ -567,7 +566,6 @@
             justify-content: center;
             border-radius: 10px;
             z-index: 2;
-            position: relative;
             overflow: hidden;
         }
         .modal-close-btn::before {
@@ -1225,12 +1223,9 @@
 
     <div id="snake-modal" class="modal">
         <div class="game-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; color: var(--accent-primary); font-weight: bold; font-size: 1.2rem;">
-                <button class="modal-close-btn" style="padding: 0; width: 30px; height: 30px; font-size: 1.5rem;">&times;</button>
             <button class="modal-close-btn" style="padding: 0; width: 30px; height: 30px; font-size: 1.5rem; top: 10px; right: 10px;">&times;</button>
             <div style="color: var(--accent-primary); font-weight: bold; font-size: 1.2rem; margin-bottom: 5px;">
                 <span id="snake-score-display">Score: 0</span>
-                <div style="width: 30px;"></div>
             </div>
             <canvas id="snake-canvas" width="300" height="300"></canvas>
             <button id="start-snake-btn" class="info-copy-btn">START</button>
@@ -1294,7 +1289,6 @@
                 snowInterval: 400,
                 typewriterInterval: 3000,
                 typewriterFade: 600,
-                riddleAnswers: ['match', 'a match', 'the match', 'спичку', 'спичка', 'cerilla', 'fosforo', 'allumette', 'streichholz'],
                 musicTracks: [
                     { src: 'background-music1.mp3', title: 'LO-FI #1' },
                     { src: 'background-music2.mp3', title: 'LO-FI #2' },
@@ -1450,7 +1444,6 @@
                 cursor: { x: 0, y: 0, targetX: 0, targetY: 0 },
                 lastTouchTime: 0,
                 easterEggClickCount: 0,
-                riddleClickCount: 0,
                 audio: {
                     currentTrackIndex: 0,
                     isDraggingProgress: false,
@@ -1500,10 +1493,6 @@
                         oxideDesc: { selector: '#oxide-desc', type: 'text' },
                         oxideDownload: { selector: '#oxide-download', type: 'text' },
                         telegram: { selector: '#telegram-btn', type: 'text' },
-                        riddleTrigger: { selector: '#riddle-trigger', type: 'text' },
-                        riddleTitle: { selector: '#riddle-modal h3', type: 'text' },
-                        riddleText: { selector: '#riddle-modal p', type: 'text' },
-                        riddlePlaceholder: { selector: '#riddle-answer', type: 'placeholder' },
                         passwordPlaceholder: { selector: '#tg-password', type: 'placeholder' },
                         oxideBtn: { selector: '#oxide-id-btn', type: 'text' },
                         oxideDonate: { selector: '#oxide-donate-text', type: 'text' },
