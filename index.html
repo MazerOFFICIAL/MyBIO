@@ -1480,7 +1480,10 @@
                 },
 
                 bindEvents() {
-                    DOM.audio.toggleBtn.addEventListener('click', () => this.togglePlayerVisibility(true));
+                    DOM.audio.toggleBtn.addEventListener('click', () => {
+                        const isActive = DOM.audio.container.classList.contains('active');
+                        this.togglePlayerVisibility(!isActive);
+                    });
                     DOM.audio.minimizeBtn.addEventListener('click', () => this.togglePlayerVisibility(false));
 
                     DOM.audio.playPauseBtn.addEventListener('click', () => this.togglePlay());
