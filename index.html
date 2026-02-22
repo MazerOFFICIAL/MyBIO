@@ -786,6 +786,7 @@
             transform: translateY(20px) scale(0.95);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
+            cursor: move;
         }
         .audio-player-container.active { 
             opacity: 1; 
@@ -889,7 +890,7 @@
         .track-title {
             font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 5px; text-shadow: 0 0 15px var(--accent-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            cursor: move; user-select: none;
+            user-select: none;
         }
         .lang-btn {
             position: absolute;
@@ -1003,7 +1004,7 @@
     </style>
 </head>
 
-<body>
+<body ondragstart="return false">
     <div id="transition-overlay"></div>
     <div id="toast-notification"></div>
     <div class="lang-btn" id="lang-btn">EN</div>
@@ -1507,7 +1508,6 @@
 
                 initDraggable() {
                     const container = DOM.audio.container;
-                    const handle = DOM.audio.trackTitle;
                     
                     const savedPos = safeStorage.getItem('audioPlayerPos');
                     if (savedPos) {
@@ -1524,7 +1524,10 @@
                     let startX, startY, initialLeft, initialTop;
 
                     const startDrag = (e) => {
-                        if (e.target !== handle) return;
+                        // Prevent dragging if interacting with controls
+                        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.progress-bar-container') || e.target.closest('.volume-popup')) return;
+
+                        container.style.cursor = 'grabbing';
                         isDragging = true;
                         container.style.transition = 'none';
                         
@@ -1558,11 +1561,12 @@
                         if (!isDragging) return;
                         isDragging = false;
                         container.style.transition = '';
+                        container.style.cursor = '';
                         safeStorage.setItem('audioPlayerPos', JSON.stringify({ left: container.style.left, top: container.style.top }));
                     };
 
-                    handle.addEventListener('mousedown', startDrag);
-                    handle.addEventListener('touchstart', startDrag, {passive: false});
+                    container.addEventListener('mousedown', startDrag);
+                    container.addEventListener('touchstart', startDrag, {passive: false});
                     document.addEventListener('mousemove', doDrag);
                     document.addEventListener('touchmove', doDrag, {passive: false});
                     document.addEventListener('mouseup', stopDrag);
@@ -1735,6 +1739,8 @@
                     navigator.clipboard.writeText('W7-V29-NU').then(() => UI.showToast(CONFIG.translations[State.currentLang].copied));
                 });
 
+                // Global prevention of dragging
+                document.addEventListener('dragstart', (e) => e.preventDefault());
             }
 
             function init() {
