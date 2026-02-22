@@ -767,44 +767,6 @@
             position: relative; z-index: 1;
             filter: drop-shadow(0 0 5px var(--accent-primary));
         }
-        #dynamic-island {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.9);
-            width: auto;
-            min-width: 220px;
-            height: 44px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 22px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0 15px;
-            z-index: 2090;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #dynamic-island.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateX(-50%) scale(1);
-            top: 15px;
-        }
-        .island-content { display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer; overflow: hidden; }
-        .island-controls { display: flex; align-items: center; gap: 5px; }
-        .island-controls button {
-            background: transparent; border: none; color: white; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center;
-        }
-        .island-controls button svg { width: 20px; height: 20px; fill: white; }
-        .island-controls button:hover svg { fill: var(--accent-primary); }
-
         .audio-player-container {
             position: fixed;
             bottom: 95px;
@@ -1308,6 +1270,7 @@
                 copyOxideIdBtn: document.getElementById('copy-oxide-id'),
                 audio: {
                     player: document.getElementById('bg-music'),
+                    toggleBtn: document.getElementById('audio-player-toggle'),
                     minimizeBtn: document.getElementById('minimize-player-btn'),
                     container: document.getElementById('audio-player-container'),
                     playPauseBtn: document.getElementById('play-pause-btn'),
@@ -1321,12 +1284,7 @@
                     currentTime: document.getElementById('current-time'),
                     totalDuration: document.getElementById('total-duration'),
                     progressContainer: document.getElementById('progress-bar-container'),
-                    progressFill: document.getElementById('progress-bar-fill'),
-                    island: document.getElementById('dynamic-island'),
-                    islandTrigger: document.getElementById('island-trigger'),
-                    islandTitle: document.getElementById('island-track-title'),
-                    islandPlayBtn: document.getElementById('island-play-btn'),
-                    islandNextBtn: document.getElementById('island-next-btn')
+                    progressFill: document.getElementById('progress-bar-fill')
                 },
                 soonTrigger: document.getElementById('soon-trigger'),
             };
@@ -1472,7 +1430,6 @@
                     this.audio.src = this.tracks[index].src;
                     DOM.audio.trackTitle.textContent = this.tracks[index].title;
                     DOM.audio.progressFill.style.width = '0%';
-                    DOM.audio.islandTitle.textContent = this.tracks[index].title;
                     DOM.audio.currentTime.textContent = '0:00';
                     
                     this.audio.onloadedmetadata = () => {
@@ -1547,28 +1504,19 @@
                     DOM.audio.playPauseBtn.innerHTML = this.isPlaying 
                         ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
                         : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-                    
-                    DOM.audio.islandPlayBtn.innerHTML = this.isPlaying
-                        ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
-                        : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
                 },
 
                 togglePlayerVisibility(show) {
                     if (show) {
                         DOM.audio.container.classList.add('active');
-                        DOM.audio.island.classList.remove('active');
                     } else {
                         DOM.audio.container.classList.remove('active');
-                        DOM.audio.island.classList.add('active');
                     }
                 },
 
                 bindEvents() {
+                    DOM.audio.toggleBtn.addEventListener('click', () => this.togglePlayerVisibility(true));
                     DOM.audio.minimizeBtn.addEventListener('click', () => this.togglePlayerVisibility(false));
-                    DOM.audio.islandTrigger.addEventListener('click', () => this.togglePlayerVisibility(true));
-                    
-                    DOM.audio.islandPlayBtn.addEventListener('click', (e) => { e.stopPropagation(); this.togglePlay(); });
-                    DOM.audio.islandNextBtn.addEventListener('click', (e) => { e.stopPropagation(); this.next(); });
 
                     DOM.audio.playPauseBtn.addEventListener('click', () => this.togglePlay());
                     DOM.audio.nextBtn.addEventListener('click', () => this.next());
@@ -1580,8 +1528,8 @@
                     this.audio.addEventListener('ended', () => { if (!this.isLooping) this.next(); });
                     DOM.audio.progressContainer.addEventListener('click', (e) => this.setProgress(e));
                     
-                    // Initialize visibility (show island by default)
-                    this.togglePlayerVisibility(false);
+                    // Initialize visibility (show player by default)
+                    this.togglePlayerVisibility(true);
                 },
 
                 initDraggable() {
