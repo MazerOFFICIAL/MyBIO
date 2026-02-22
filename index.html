@@ -306,13 +306,19 @@
         }
         @keyframes floatBokeh { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(20px, -20px); } }
 
-        .scanline {
-            width: 100%; height: 5px; background: rgba(0, 210, 255, 0.3);
-            position: absolute; top: 0; left: 0; animation: scan 3s linear infinite;
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
-            z-index: 0;
+        .cyber-lines {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 210, 255, 0.03) 3px, rgba(0, 210, 255, 0.03) 4px);
+            pointer-events: none; z-index: 0;
         }
-        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+        .cyber-scan {
+            position: absolute; top: 0; left: 0; width: 100%; height: 10px;
+            background: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+            animation: cyberScan 3s linear infinite;
+            pointer-events: none; z-index: 1;
+        }
+        @keyframes cyberScan { 0% { top: -10%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 110%; opacity: 0; } }
 
         .aurora-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -1440,6 +1446,8 @@
              * Manages theme switching and dynamic background effects.
              */
             const ThemeManager = {
+                activeInterval: null,
+
                 init() {
                     State.currentTheme = safeStorage.getItem('siteTheme') || 'default';
                     this.set(State.currentTheme);
@@ -1459,12 +1467,20 @@
                 updateEffects(theme) {
                     const container = document.getElementById('theme-effects');
                     container.innerHTML = ''; // Clear previous effects
+                    
+                    if (this.activeInterval) {
+                        clearInterval(this.activeInterval);
+                        this.activeInterval = null;
+                    }
 
                     const effectGenerators = {
-                        'default': () => this.createScanline(),
+                        'default': () => this.createCyberpunkOverlay(),
                         'retro': () => this.createRetroGrid(),
                         'matrix': () => this.createMatrixOverlay(),
-                        'ice': () => this.createIceVignette(),
+                        'ice': () => {
+                            this.createIceVignette();
+                            this.startSnow();
+                        },
                         'forest': () => this.createFireflies(20),
                         'sunset': () => this.createEmbers(20),
                         'ocean': () => this.createBubbles(15),
@@ -1481,7 +1497,22 @@
                 },
 
                 // Effect creation methods
-                createScanline: () => document.getElementById('theme-effects').innerHTML = `<div class="scanline"></div>`,
+                startSnow() {
+                    this.activeInterval = setInterval(() => {
+                        const snowChars = ['❄', '❅', '❆'];
+                        const snowflake = document.createElement('div');
+                        snowflake.className = 'snow';
+                        snowflake.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
+                        const duration = Math.random() * 5 + 10;
+                        snowflake.style.cssText = `color: var(--particle-color); left: ${Math.random() * 100}vw; font-size: ${Math.random() * 10 + 10}px; opacity: ${Math.random() * 0.5 + 0.3}; animation: fall ${duration}s linear forwards;`;
+                        DOM.snowContainer.appendChild(snowflake);
+                        setTimeout(() => snowflake.remove(), duration * 1000);
+                    }, CONFIG.snowInterval);
+                },
+                createCyberpunkOverlay() {
+                    const container = document.getElementById('theme-effects');
+                    container.innerHTML = `<div class="cyber-lines"></div><div class="cyber-scan"></div>`;
+                },
                 createRetroGrid: () => document.getElementById('theme-effects').innerHTML = `<div class="retro-grid"></div>`,
                 createMatrixOverlay: () => document.getElementById('theme-effects').innerHTML = `<div class="matrix-overlay"></div>`,
                 createIceVignette: () => document.getElementById('theme-effects').innerHTML = `<div class="ice-vignette"></div>`,
@@ -1826,7 +1857,6 @@
                 init() {
                     this.animateCursor();
                     this.createStars();
-                    setInterval(this.createSnow, CONFIG.snowInterval);
                 },
 
                 animateCursor() {
@@ -1887,17 +1917,6 @@
                     DOM.starsContainer.appendChild(fragment);
                 },
 
-                createSnow() {
-                    const snowChars = ['❄', '❅', '❆'];
-                    const snowflake = document.createElement('div');
-                    snowflake.className = 'snow';
-                    snowflake.innerText = snowChars[Math.floor(Math.random() * snowChars.length)];
-                    const duration = Math.random() * 5 + 10;
-                    snowflake.style.cssText = `color: var(--particle-color); left: ${Math.random() * 100}vw; font-size: ${Math.random() * 10 + 10}px; opacity: ${Math.random() * 0.5 + 0.3}; animation: fall ${duration}s linear forwards;`;
-                    DOM.snowContainer.appendChild(snowflake);
-                    setTimeout(() => snowflake.remove(), duration * 1000);
-                },
-
                 flashInputBorder(input) {
                     input.style.borderColor = '#ff0055';
                     input.style.boxShadow = '0 0 15px #ff0055';
@@ -1935,10 +1954,16 @@
 
                     // Delegated clicks
                     const langOption = target.closest('.lang-option');
-                    if (langOption) LangManager.set(langOption.dataset.lang, true);
+                    if (langOption) {
+                        LangManager.set(langOption.dataset.lang, true);
+                        DOM.langDropdown.classList.remove('active');
+                    }
 
                     const themeOption = target.closest('.theme-option');
-                    if (themeOption) ThemeManager.set(themeOption.dataset.theme);
+                    if (themeOption) {
+                        ThemeManager.set(themeOption.dataset.theme);
+                        DOM.themeDropdown.classList.remove('active');
+                    }
 
                     const sectionLink = target.closest('.sidebar .link-btn');
                     if (sectionLink) {
