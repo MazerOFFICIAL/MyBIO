@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initCursor();
     initOtherFeatures();
-    removeUnwantedElements(); // Удаляем плеер и Oxide
 
     function initTime() {
         const timeEl = document.getElementById('local-time');
@@ -346,31 +345,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.target.classList.remove('active');
             }
         });
-    }
-
-    function removeUnwantedElements() {
-        // Список ID элементов, которые нужно удалить (плеер, кнопки, модалки Oxide)
-        const idsToRemove = [
-            'bg-music', 
-            'audio-player-container', 
-            'audio-player-toggle',
-            'oxide-id-modal',
-            'oxide-id-btn',
-            'copy-oxide-id',
-            'oxide-download-btn'
-        ];
-
-        idsToRemove.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.remove();
-        });
-
-        // Пытаемся найти и удалить описание Oxide в хобби, чтобы уменьшить размер блока
-        const oxideDesc = document.getElementById('oxide-desc');
-        if (oxideDesc) {
-            // Ищем родительский контейнер (карточку или блок) и удаляем его
-            const container = oxideDesc.closest('.game-card') || oxideDesc.closest('.card') || oxideDesc.parentElement;
-            if (container) container.remove();
-        }
     }
 });
