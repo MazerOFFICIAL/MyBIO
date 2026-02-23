@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTime();
     initNavigation();
     initCursor();
+    initMazerEasterEgg();
 
     function initTime() {
         const timeEl = document.getElementById('local-time');
@@ -263,6 +264,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.addEventListener('mouseleave', () => {
             cursor.style.opacity = '0';
+        });
+    }
+
+    function initMazerEasterEgg() {
+        const mazerH1 = document.querySelector('#bio h1');
+        if (!mazerH1) return;
+
+        let clickCount = 0;
+        let clickTimer = null;
+        const clickThreshold = 3;
+        const resetTime = 1000; // Time in ms to reset click count
+
+        mazerH1.addEventListener('click', () => {
+            clickCount++;
+
+            if (clickTimer) clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => { clickCount = 0; }, resetTime);
+
+            if (clickCount === clickThreshold) {
+                const modal = document.getElementById('easter-egg-modal');
+                if (modal) modal.classList.add('active');
+                
+                clickCount = 0;
+                clearTimeout(clickTimer);
+            }
         });
     }
 });
