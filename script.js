@@ -1,10 +1,9 @@
 'use strict';
 
 const CONFIG = {
-    cursorSpeed: 1,
     typewriterInterval: 3000,
     typewriterFade: 500,
-    secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l', // Example: btoa('https://t.me/your_username_here')
+    secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l',
     translations: {
         en: {
             bioBtn: "My Bio", hobbiesBtn: "My Hobbies",
@@ -105,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (toggle) toggle.classList.remove('active');
             }
 
-            // Close dropdowns and modals if clicked outside
             const langDropdown = document.getElementById('lang-dropdown');
             const langBtn = document.getElementById('lang-btn');
             if (langDropdown && langDropdown.classList.contains('active') && !langDropdown.contains(e.target) && !langBtn.contains(e.target)) {
@@ -140,8 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sidebar.classList.toggle('active');
             });
         }
-
-        // Открытие меню при наведении на левый край
+        
         document.addEventListener('mousemove', (e) => {
             if (window.innerWidth > 768 && e.clientX < 20) {
                 if (sidebar && !sidebar.classList.contains('active')) {
@@ -259,26 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const cursor = document.getElementById('cursor');
         if (!cursor) return;
 
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
             cursor.style.opacity = '1';
+            cursor.style.transform = `translate3d(${e.clientX - 7.5}px, ${e.clientY - 1.5}px, 0)`;
         });
 
         document.addEventListener('mouseleave', () => {
             cursor.style.opacity = '0';
         });
-
-        function animate() {
-            const speed = CONFIG.cursorSpeed;
-            cursorX += (mouseX - cursorX) * speed;
-            cursorY += (mouseY - cursorY) * speed;
-            cursor.style.transform = `translate3d(${cursorX - 7.5}px, ${cursorY - 1.5}px, 0)`;
-            requestAnimationFrame(animate);
-        }
-        animate();
     }
 });
