@@ -2,6 +2,9 @@
 
 const CONFIG = {
     cursorSpeed: 0.9,
+    typewriterInterval: 3000,
+    typewriterFade: 500,
+    secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l', // Example: btoa('https://t.me/your_username_here')
     musicTracks: [
         { src: 'background-music1.mp3', title: 'LO-FI #1' },
         { src: 'background-music2.mp3', title: 'LO-FI #2' },
@@ -17,7 +20,9 @@ const CONFIG = {
             hobbiesText: "I love playing various games and exploring new virtual worlds.",
             oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
             audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track", audioLoop: "Repeat track", audioVolume: "Volume",
-            greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" }
+            greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
+            typewriter: ["Software Developer", "Gamer", "Tech Enthusiast"],
+            copied: "Copied to clipboard!"
         },
         ru: {
             bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Хобби",
@@ -26,7 +31,9 @@ const CONFIG = {
             hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
             oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
             audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек", audioLoop: "Зациклить трек", audioVolume: "Громкость",
-            greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" }
+            greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
+            typewriter: ["Разработчик", "Геймер", "Энтузиаст технологий"],
+            copied: "Скопировано в буфер обмена!"
         },
         es: {
             bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
@@ -35,7 +42,9 @@ const CONFIG = {
             hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
             oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
             audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente", audioLoop: "Repetir pista", audioVolume: "Volumen",
-            greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" }
+            greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
+            typewriter: ["Desarrollador de software", "Jugador", "Entusiasta de la tecnología"],
+            copied: "¡Copiado al portapapeles!"
         },
         fr: {
             bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Loisirs",
@@ -44,7 +53,9 @@ const CONFIG = {
             hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
             oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
             audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante", audioLoop: "Répéter la piste", audioVolume: "Volume",
-            greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" }
+            greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
+            typewriter: ["Développeur de logiciels", "Joueur", "Passionné de technologie"],
+            copied: "Copié dans le presse-papiers !"
         },
         de: {
             bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Fähigkeiten", hobbiesBtn: "Hobbys",
@@ -53,7 +64,9 @@ const CONFIG = {
             hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
             oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
             audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel", audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
-            greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" }
+            greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
+            typewriter: ["Softwareentwickler", "Gamer", "Technik-Enthusiast"],
+            copied: "In die Zwischenablage kopiert!"
         }
     }
 };
@@ -170,10 +183,12 @@ class TimeController {
             timeZone: 'Europe/Warsaw',
             hour: '2-digit',
             minute: '2-digit',
+            second: '2-digit',
             hour12: false
         });
-        const t = CONFIG.translations[State.currentLang] || CONFIG.translations['en'];
-        if (t) {
+        const lang = Store.get('siteLang', 'en');
+        const t = CONFIG.translations[lang] || CONFIG.translations['en'];
+        if (t && this.el) {
             this.el.textContent = `${t.timePrefix}${time} (PL)`;
         }
     }
@@ -249,8 +264,14 @@ class LanguageController {
 
         const map = {
             '[data-section="bio"]': { k: 'bioBtn', attr: 'text' },
+            '[data-section="projects"]': { k: 'projectsBtn', attr: 'text' },
+            '[data-section="skills"]': { k: 'skillsBtn', attr: 'text' },
             '[data-section="hobbies"]': { k: 'hobbiesBtn', attr: 'text' },
+            '#projects h1': { k: 'worksTitle', attr: 'text' },
+            '#skills h1': { k: 'skillsTitle', attr: 'text' },
             '#hobbies h1': { k: 'hobbiesTitle', attr: 'text' },
+            '#projects .soon': { k: 'soon', attr: 'text' },
+            '#skills .soon': { k: 'soon', attr: 'text' },
             '#hobbies-text': { k: 'hobbiesText', attr: 'text' },
             '#prev-btn': { k: 'audioPrev', attr: 'title' },
             '#play-pause-btn': { k: 'audioPlay', attr: 'title' },
@@ -279,7 +300,7 @@ class LanguageController {
         const noHelloLink = Utils.qs('#nohello-link');
         if (noHelloLink) noHelloLink.href = `https://nohello.net/${lang}/`;
 
-        this.typewriter.setPhrases(t.typewriter);
+        if (t.typewriter) this.typewriter.setPhrases(t.typewriter);
 
         Utils.qsa('.lang-option', this.dropdown).forEach(opt => {
             opt.classList.toggle('selected', opt.dataset.lang === lang);
