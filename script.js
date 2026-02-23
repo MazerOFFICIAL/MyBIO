@@ -7,48 +7,43 @@ const CONFIG = {
     secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l', // Example: btoa('https://t.me/your_username_here')
     translations: {
         en: {
-            bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
-            worksTitle: "Projects", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
+            bioBtn: "My Bio", hobbiesBtn: "My Hobbies",
+            hobbiesTitle: "Hobbies",
                 timePrefix: "My time now: ",
             hobbiesText: "I love playing various games and exploring new virtual worlds.",
             greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
-            typewriter: ["Software Developer", "Gamer", "Tech Enthusiast"],
             copied: "Copied to clipboard!"
         },
         ru: {
-            bioBtn: "Биография", projectsBtn: "Проекты", skillsBtn: "Навыки", hobbiesBtn: "Хобби",
-            worksTitle: "Проекты", skillsTitle: "Навыки", hobbiesTitle: "Хобби", soon: "Скоро...",
+            bioBtn: "Биография", hobbiesBtn: "Хобби",
+            hobbiesTitle: "Хобби",
                 timePrefix: "Мое время сейчас: ",
             hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
             greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
-            typewriter: ["Разработчик", "Геймер", "Энтузиаст технологий"],
             copied: "Скопировано в буфер обмена!"
         },
         es: {
-            bioBtn: "Biografía", projectsBtn: "Proyectos", skillsBtn: "Habilidades", hobbiesBtn: "Pasatiempos",
-            worksTitle: "Proyectos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
+            bioBtn: "Biografía", hobbiesBtn: "Pasatiempos",
+            hobbiesTitle: "Pasatiempos",
                 timePrefix: "Mi hora ahora: ",
             hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
             greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
-            typewriter: ["Desarrollador de software", "Jugador", "Entusiasta de la tecnología"],
             copied: "¡Copiado al portapapeles!"
         },
         fr: {
-            bioBtn: "Biographie", projectsBtn: "Projets", skillsBtn: "Compétences", hobbiesBtn: "Loisirs",
-            worksTitle: "Projets", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
+            bioBtn: "Biographie", hobbiesBtn: "Loisirs",
+            hobbiesTitle: "Loisirs",
                 timePrefix: "Mon heure maintenant : ",
             hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
             greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
-            typewriter: ["Développeur de logiciels", "Joueur", "Passionné de technologie"],
             copied: "Copié dans le presse-papiers !"
         },
         de: {
-            bioBtn: "Biografie", projectsBtn: "Projekte", skillsBtn: "Fähigkeiten", hobbiesBtn: "Hobbys",
-            worksTitle: "Projekte", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
+            bioBtn: "Biografie", hobbiesBtn: "Hobbys",
+            hobbiesTitle: "Hobbys",
                 timePrefix: "Meine Zeit jetzt: ",
             hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
             greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
-            typewriter: ["Softwareentwickler", "Gamer", "Technik-Enthusiast"],
             copied: "In die Zwischenablage kopiert!"
         }
     }
@@ -64,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTime();
     initNavigation();
     initCursor();
-    initOtherFeatures();
 
     function initTime() {
         const timeEl = document.getElementById('local-time');
@@ -176,15 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const map = {
             '[data-section="bio"]': 'bioBtn',
-            '[data-section="projects"]': 'projectsBtn',
-            '[data-section="skills"]': 'skillsBtn',
             '[data-section="hobbies"]': 'hobbiesBtn',
-            '#projects h1': 'worksTitle',
-            '#skills h1': 'skillsTitle',
             '#hobbies h1': 'hobbiesTitle',
             '#hobbies-text': 'hobbiesText',
-            '#projects .soon': 'soon',
-            '#skills .soon': 'soon',
         };
 
         for (const [selector, val] of Object.entries(map)) {
@@ -203,10 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const h = new Date().getHours();
             const timeOfDay = h < 6 ? 'night' : h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening';
             greetingEl.textContent = t.greetings[timeOfDay];
-        }
-
-        if (t.typewriter) {
-            startTypewriter(t.typewriter);
         }
         
         document.querySelectorAll('.lang-option').forEach(opt => {
@@ -248,25 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function startTypewriter(phrases) {
-        const el = document.getElementById('typewriter');
-        if (!el) return;
-
-        let phraseIndex = 0;
-        clearTimeout(typewriterTimeout);
-
-        function loop() {
-            el.style.opacity = '0';
-            setTimeout(() => {
-                el.textContent = phrases[phraseIndex];
-                el.style.opacity = '1';
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typewriterTimeout = setTimeout(loop, CONFIG.typewriterInterval);
-            }, CONFIG.typewriterFade);
-        }
-        loop();
-    }
-
     function initCursor() {
         const cursor = document.getElementById('cursor');
         if (!cursor) return;
@@ -292,58 +257,5 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
         }
         animate();
-    }
-
-    function initOtherFeatures() {
-        const noHelloModal = document.getElementById('nohello-modal');
-        const noHelloCheck = document.getElementById('nohello-checkbox');
-        const noHelloBtn = document.getElementById('nohello-submit');
-        const tgBtn = document.getElementById('telegram-btn');
-
-        if (tgBtn && noHelloModal) {
-            tgBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                noHelloModal.classList.add('active');
-                if (noHelloCheck) {
-                    noHelloCheck.checked = false;
-                    noHelloCheck.disabled = true;
-                }
-                if (noHelloBtn) {
-                    noHelloBtn.disabled = true;
-                    noHelloBtn.style.opacity = '0.5';
-                }
-                const overlay = document.getElementById('nohello-overlay');
-                if (overlay) overlay.style.display = 'block';
-            });
-        }
-
-        const noHelloLink = document.getElementById('nohello-link');
-        if (noHelloLink && noHelloCheck) {
-            noHelloLink.addEventListener('click', () => {
-                noHelloCheck.disabled = false;
-                const overlay = document.getElementById('nohello-overlay');
-                if (overlay) overlay.style.display = 'none';
-            });
-        }
-
-        if (noHelloCheck && noHelloBtn) {
-            noHelloCheck.addEventListener('change', () => {
-                noHelloBtn.disabled = !noHelloCheck.checked;
-                noHelloBtn.style.opacity = noHelloCheck.checked ? '1' : '0.5';
-            });
-
-            noHelloBtn.addEventListener('click', () => {
-                if (!noHelloBtn.disabled) {
-                    window.open(atob(CONFIG.secretTgLink), '_blank');
-                    noHelloModal.classList.remove('active');
-                }
-            });
-        }
-
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('active');
-            }
-        });
     }
 });
