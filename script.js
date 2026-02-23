@@ -1,7 +1,7 @@
 'use strict';
 
 const CONFIG = {
-    cursorSpeed: 0.9,
+    cursorSpeed: 1,
     typewriterInterval: 3000,
     typewriterFade: 500,
     secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l', // Example: btoa('https://t.me/your_username_here')
