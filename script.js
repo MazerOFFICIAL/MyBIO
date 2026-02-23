@@ -104,6 +104,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (sidebar) sidebar.classList.remove('active');
                 if (toggle) toggle.classList.remove('active');
             }
+
+            // Close dropdowns and modals if clicked outside
+            const langDropdown = document.getElementById('lang-dropdown');
+            const langBtn = document.getElementById('lang-btn');
+            if (langDropdown && langDropdown.classList.contains('active') && !langDropdown.contains(e.target) && !langBtn.contains(e.target)) {
+                langDropdown.classList.remove('active');
+            }
+
+            const themeDropdown = document.getElementById('theme-dropdown');
+            const themeBtn = document.getElementById('theme-btn');
+            if (themeDropdown && themeDropdown.classList.contains('active') && !themeDropdown.contains(e.target) && !themeBtn.contains(e.target)) {
+                themeDropdown.classList.remove('active');
+            }
+
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('menu-toggle');
+            if (sidebar && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+                toggle.classList.remove('active');
+            }
         });
 
         const toggle = document.getElementById('menu-toggle');
@@ -114,13 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.stopPropagation();
                 toggle.classList.toggle('active');
                 sidebar.classList.toggle('active');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                    toggle.classList.remove('active');
-                }
             });
         }
 
