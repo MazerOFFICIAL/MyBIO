@@ -5,21 +5,12 @@ const CONFIG = {
     typewriterInterval: 3000,
     typewriterFade: 500,
     secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l', // Example: btoa('https://t.me/your_username_here')
-    musicTracks: [
-        { src: 'background-music1.mp3', title: 'LO-FI #1' },
-        { src: 'background-music2.mp3', title: 'LO-FI #2' },
-        { src: 'background-music3.mp3', title: 'LO-FI #3' },
-        { src: 'background-music4.mp3', title: 'LO-FI #4' },
-        { src: 'background-music5.mp3', title: 'LO-FI #5' }
-    ],
     translations: {
         en: {
             bioBtn: "My Bio", projectsBtn: "My Projects", skillsBtn: "My Skills", hobbiesBtn: "My Hobbies",
             worksTitle: "Projects", skillsTitle: "Skills", hobbiesTitle: "Hobbies", soon: "Soon...",
                 timePrefix: "My time now: ",
             hobbiesText: "I love playing various games and exploring new virtual worlds.",
-            oxideDesc: "Hardcore survival game where I spend most of my time. Raid, build, dominate.", oxideDownload: "Download",
-            audioPrev: "Previous track", audioPlay: "Play / Pause", audioNext: "Next track", audioLoop: "Repeat track", audioVolume: "Volume",
             greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
             typewriter: ["Software Developer", "Gamer", "Tech Enthusiast"],
             copied: "Copied to clipboard!"
@@ -29,8 +20,6 @@ const CONFIG = {
             worksTitle: "Проекты", skillsTitle: "Навыки", hobbiesTitle: "Хобби", soon: "Скоро...",
                 timePrefix: "Мое время сейчас: ",
             hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
-            oxideDesc: "Хардкорная игра на выживание, где я провожу большую часть времени. Рейди, строй, доминируй.", oxideDownload: "Скачать",
-            audioPrev: "Предыдущий трек", audioPlay: "Воспроизвести / Пауза", audioNext: "Следующий трек", audioLoop: "Зациклить трек", audioVolume: "Громкость",
             greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
             typewriter: ["Разработчик", "Геймер", "Энтузиаст технологий"],
             copied: "Скопировано в буфер обмена!"
@@ -40,8 +29,6 @@ const CONFIG = {
             worksTitle: "Proyectos", skillsTitle: "Habilidades", hobbiesTitle: "Pasatiempos", soon: "Pronto...",
                 timePrefix: "Mi hora ahora: ",
             hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
-            oxideDesc: "Juego de supervivencia hardcore donde paso la mayor parte de mi tiempo. Asalta, construye, domina.", oxideDownload: "Descargar",
-            audioPrev: "Pista anterior", audioPlay: "Reproducir / Pausa", audioNext: "Pista siguiente", audioLoop: "Repetir pista", audioVolume: "Volumen",
             greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
             typewriter: ["Desarrollador de software", "Jugador", "Entusiasta de la tecnología"],
             copied: "¡Copiado al portapapeles!"
@@ -51,8 +38,6 @@ const CONFIG = {
             worksTitle: "Projets", skillsTitle: "Compétences", hobbiesTitle: "Loisirs", soon: "Bientôt...",
                 timePrefix: "Mon heure maintenant : ",
             hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
-            oxideDesc: "Jeu de survie hardcore où je passe la plupart de mon temps. Raidez, construisez, dominez.", oxideDownload: "Télécharger",
-            audioPrev: "Piste précédente", audioPlay: "Lecture / Pause", audioNext: "Piste suivante", audioLoop: "Répéter la piste", audioVolume: "Volume",
             greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
             typewriter: ["Développeur de logiciels", "Joueur", "Passionné de technologie"],
             copied: "Copié dans le presse-papiers !"
@@ -62,8 +47,6 @@ const CONFIG = {
             worksTitle: "Projekte", skillsTitle: "Fähigkeiten", hobbiesTitle: "Hobbys", soon: "Bald...",
                 timePrefix: "Meine Zeit jetzt: ",
             hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
-            oxideDesc: "Hardcore-Survival-Spiel, in dem ich die meiste Zeit verbringe. Raiden, bauen, dominieren.", oxideDownload: "Herunterladen",
-            audioPrev: "Vorheriger Titel", audioPlay: "Wiedergabe / Pause", audioNext: "Nächster Titel", audioLoop: "Titel wiederholen", audioVolume: "Lautstärke",
             greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
             typewriter: ["Softwareentwickler", "Gamer", "Technik-Enthusiast"],
             copied: "In die Zwischenablage kopiert!"
@@ -81,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTime();
     initNavigation();
     initCursor();
-    initAudio();
     initOtherFeatures();
 
     function initTime() {
@@ -147,6 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
+        // Открытие меню при наведении на левый край
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768 && e.clientX < 20) {
+                if (sidebar && !sidebar.classList.contains('active')) {
+                    sidebar.classList.add('active');
+                    if (toggle) toggle.classList.add('active');
+                }
+            }
+        });
     }
 
     function initLanguage() {
@@ -193,11 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             '#hobbies-text': 'hobbiesText',
             '#projects .soon': 'soon',
             '#skills .soon': 'soon',
-            '#prev-btn': { k: 'audioPrev', attr: 'title' },
-            '#play-pause-btn': { k: 'audioPlay', attr: 'title' },
-            '#next-btn': { k: 'audioNext', attr: 'title' },
-            '#loop-btn': { k: 'audioLoop', attr: 'title' },
-            '#volume-btn': { k: 'audioVolume', attr: 'title' }
         };
 
         for (const [selector, val] of Object.entries(map)) {
@@ -307,86 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
     }
 
-    function initAudio() {
-        const player = document.getElementById('bg-music');
-        if (!player) return;
-
-        const tracks = CONFIG.musicTracks;
-        let isPlaying = false;
-        let currentTrack = 0;
-
-        const playBtn = document.getElementById('play-pause-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const titleEl = document.getElementById('track-title');
-        const togglePlayerBtn = document.getElementById('audio-player-toggle');
-        const container = document.getElementById('audio-player-container');
-        const volumeSlider = document.getElementById('volume-slider');
-        const volumeBtn = document.getElementById('volume-btn');
-        const volumePopup = document.getElementById('volume-popup');
-
-        function loadTrack(index) {
-            currentTrack = index;
-            player.src = tracks[index].src;
-            if (titleEl) titleEl.textContent = tracks[index].title;
-            if (isPlaying) player.play().catch(e => console.log(e));
-        }
-
-        function togglePlay() {
-            if (player.paused) {
-                player.play().then(() => {
-                    isPlaying = true;
-                    updateIcon();
-                }).catch(e => console.error(e));
-            } else {
-                player.pause();
-                isPlaying = false;
-                updateIcon();
-            }
-        }
-
-        function updateIcon() {
-            if (playBtn) {
-                playBtn.innerHTML = isPlaying 
-                    ? '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
-                    : '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-            }
-            if (togglePlayerBtn) {
-                togglePlayerBtn.classList.toggle('playing', isPlaying);
-            }
-        }
-
-        if (playBtn) playBtn.addEventListener('click', togglePlay);
-        if (nextBtn) nextBtn.addEventListener('click', () => loadTrack((currentTrack + 1) % tracks.length));
-        if (prevBtn) prevBtn.addEventListener('click', () => loadTrack((currentTrack - 1 + tracks.length) % tracks.length));
-        
-        if (togglePlayerBtn && container) {
-            togglePlayerBtn.addEventListener('click', () => {
-                container.classList.toggle('active');
-            });
-        }
-
-        if (volumeBtn && volumePopup) {
-            volumeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                volumePopup.classList.toggle('active');
-            });
-        }
-
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', (e) => {
-                player.volume = e.target.value;
-            });
-        }
-
-        player.addEventListener('ended', () => {
-            loadTrack((currentTrack + 1) % tracks.length);
-        });
-
-        loadTrack(0);
-        player.volume = 0.5;
-    }
-
     function initOtherFeatures() {
         const noHelloModal = document.getElementById('nohello-modal');
         const noHelloCheck = document.getElementById('nohello-checkbox');
@@ -430,30 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.open(atob(CONFIG.secretTgLink), '_blank');
                     noHelloModal.classList.remove('active');
                 }
-            });
-        }
-
-        const copyBtn = document.getElementById('copy-oxide-id');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText('W7-V29-NU').then(() => {
-                    const toast = document.getElementById('toast-notification');
-                    if (toast) {
-                        const t = CONFIG.translations[currentLang] || CONFIG.translations['en'];
-                        toast.textContent = t.copied;
-                        toast.classList.add('show');
-                        setTimeout(() => toast.classList.remove('show'), 2000);
-                    }
-                });
-            });
-        }
-        
-        const oxideBtn = document.getElementById('oxide-id-btn');
-        const oxideModal = document.getElementById('oxide-id-modal');
-        if (oxideBtn && oxideModal) {
-            oxideBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                oxideModal.classList.add('active');
             });
         }
 
