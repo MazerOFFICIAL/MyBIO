@@ -160,42 +160,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyLanguage(lang) {
-        currentLang = lang;
-        localStorage.setItem('siteLang', lang);
-        document.documentElement.lang = lang;
+        document.body.classList.add('lang-transition');
 
-        const t = CONFIG.translations[lang] || CONFIG.translations['en'];
-        const btn = document.getElementById('lang-btn');
-        if (btn) btn.textContent = lang.toUpperCase();
+        setTimeout(() => {
+            currentLang = lang;
+            localStorage.setItem('siteLang', lang);
+            document.documentElement.lang = lang;
 
-        const map = {
-            '[data-section="bio"]': 'bioBtn',
-            '[data-section="hobbies"]': 'hobbiesBtn',
-            '#hobbies h1': 'hobbiesTitle',
-            '#hobbies-text': 'hobbiesText',
-        };
+            const t = CONFIG.translations[lang] || CONFIG.translations['en'];
+            const btn = document.getElementById('lang-btn');
+            if (btn) btn.textContent = lang.toUpperCase();
 
-        for (const [selector, val] of Object.entries(map)) {
-            const elements = document.querySelectorAll(selector);
-            elements.forEach(el => {
-                if (typeof val === 'string') {
-                    if (t[val]) el.textContent = t[val];
-                } else {
-                    if (t[val.k]) el[val.attr] = t[val.k];
-                }
+            const map = {
+                '[data-section="bio"]': 'bioBtn',
+                '[data-section="hobbies"]': 'hobbiesBtn',
+                '#hobbies h1': 'hobbiesTitle',
+                '#hobbies-text': 'hobbiesText',
+            };
+
+            for (const [selector, val] of Object.entries(map)) {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    if (typeof val === 'string') {
+                        if (t[val]) el.textContent = t[val];
+                    } else {
+                        if (t[val.k]) el[val.attr] = t[val.k];
+                    }
+                });
+            }
+
+            const greetingEl = document.getElementById('greeting');
+            if (greetingEl) {
+                const h = new Date().getHours();
+                const timeOfDay = h < 6 ? 'night' : h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening';
+                greetingEl.textContent = t.greetings[timeOfDay];
+            }
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('selected', opt.dataset.lang === lang);
             });
-        }
 
-        const greetingEl = document.getElementById('greeting');
-        if (greetingEl) {
-            const h = new Date().getHours();
-            const timeOfDay = h < 6 ? 'night' : h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening';
-            greetingEl.textContent = t.greetings[timeOfDay];
-        }
-        
-        document.querySelectorAll('.lang-option').forEach(opt => {
-            opt.classList.toggle('selected', opt.dataset.lang === lang);
-        });
+            document.body.classList.remove('lang-transition');
+        }, 200);
     }
 
     function initTheme() {

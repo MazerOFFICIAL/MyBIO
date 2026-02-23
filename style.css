@@ -255,11 +255,16 @@ body {
     min-height: auto;
     z-index: 1;
     position: relative;
-    transition: all 0.4s ease;
+    transition: all 0.4s ease, opacity 0.2s ease;
     border: 2px solid var(--glass-border);
     box-shadow: 0 20px 50px var(--shadow-color), inset 0 1px 0 rgba(255,255,255,0.1);
     overflow: hidden;
 }
+
+body.lang-transition .card {
+    opacity: 0;
+}
+
 .card::before {
     content: '';
     position: absolute;
