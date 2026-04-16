@@ -4,81 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mazer Bio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body ondragstart="return false">
     <div id="transition-overlay"></div>
     <div id="toast-notification"></div>
+    
     <div class="lang-btn" id="lang-btn">EN</div>
     <div class="lang-dropdown" id="lang-dropdown">
         <div class="lang-option" data-lang="en">English</div>
         <div class="lang-option" data-lang="ru">Русский</div>
         <div class="lang-option" data-lang="es">Español</div>
-        <div class="lang-option" data-lang="fr">Français</div>
-        <div class="lang-option" data-lang="de">Deutsch</div>
     </div>
+    
     <div class="theme-btn" id="theme-btn">
-        <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--gold)"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
     </div>
     <div class="theme-dropdown" id="theme-dropdown">
-        <div class="theme-option" data-theme="midnight">Midnight</div>
+        <div class="theme-option" data-theme="default">Default</div>
+        <div class="theme-option" data-theme="light">Light</div>
+        <div class="theme-option" data-theme="void">Void</div>
+        <div class="theme-option" data-theme="blood">Blood</div>
+        <div class="theme-option" data-theme="ice">Ice</div>
         <div class="theme-option" data-theme="forest">Forest</div>
-        <div class="theme-option" data-theme="ocean">Ocean</div>
-        <div class="theme-option" data-theme="nebula">Nebula</div>
-        <div class="theme-option" data-theme="gold">Gold</div>
     </div>
+
     <div class="card">
-        <div id="bio" class="content-section active">
-            <img src="me.png" alt="Avatar" class="avatar" draggable="false">
-            <div class="greeting" id="greeting"></div>
-            <h1>Mazer</h1>
-            <div id="local-time" class="local-time"></div>
+        <div class="avatar-container">
+            <img src="avatar.jpg" alt="Avatar" class="avatar">
         </div>
-        <div id="hobbies" class="content-section">
-            <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Hobbies</h1>
-            <div class="hobbies-text-container">
-                <p id="hobbies-text" class="hobbies-desc">I love playing various games.</p>
+        
+        <h1 id="name">Mazer</h1>
+        
+        <div class="nav-buttons">
+            <button class="nav-btn active" data-target="bio" id="btn-bio">My Bio</button>
+            <button class="nav-btn" data-target="hobbies" id="btn-hobbies">Hobbies</button>
+        </div>
+
+        <div id="bio" class="section active">
+            <p id="time-display" style="color: var(--gold); margin-bottom: 10px; font-family: var(--font-ui); font-size: 18px;"></p>
+            <h3 id="etiquette-title" style="color: var(--gold2); font-family: var(--font-display);">Etiquette</h3>
+            <p id="nohello-text" style="color: var(--text2); margin-bottom: 15px;">Please read this before messaging:</p>
+            <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--gold2); font-size: 1.2rem; font-family: var(--font-display);">nohello.net</a>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                <input type="checkbox" id="nohello-checkbox" style="width: 20px; height: 20px; accent-color: var(--gold);">
+                <label for="nohello-checkbox" id="nohello-label" style="color: var(--text); cursor: pointer;">I have read and understood</label>
             </div>
         </div>
-    </div>
-    <div id="cursor">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L28 16L16 18L10 28V2Z" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <div class="menu-btn" id="menu-toggle"><span></span><span></span><span></span></div>
-    <div class="sidebar" id="sidebar">
-        <a href="#" class="link-btn" data-section="bio">My Bio</a>
-        <a href="#" class="link-btn" data-section="hobbies">My Hobbies</a>
-    </div>
-    <div id="easter-egg-modal" class="modal">
-        <img src="troll.gif" alt="Troll" draggable="false">
-    </div>
 
-
-    <div id="success-modal" class="modal" style="z-index: 5002;">
-        <div class="password-box">
-            <h3 style="font-size: 1.5rem;">Password is <span style="color: #00d2ff;">Telegram</span></h3>
-        </div>
-    </div>
-    <div id="nohello-modal" class="modal" style="z-index: 5003;">
-        <div class="password-box">
-            <h3 id="nohello-title">Communication Etiquette</h3>
-            <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 15px;">Please read this before messaging:</p>
-            <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="display: block; margin-bottom: 20px; color: var(--accent-primary); font-size: 1.2rem; text-decoration: underline; text-underline-offset: 4px;">nohello.net</a>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; user-select: none;">
-                <div style="position: relative; width: 20px; height: 20px;">
-                    <input type="checkbox" id="nohello-checkbox" disabled style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-primary); opacity: 0.5; cursor: not-allowed;">
-                    <div id="nohello-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></div>
-                </div>
-                <label for="nohello-checkbox" id="nohello-label" style="color: var(--text-main); cursor: pointer;">I have read and understood</label>
-            </div>
-            <div id="nohello-warning" style="color: #ff4444; font-size: 0.9rem; margin-bottom: 15px; display: none; animation: fadeIn 0.3s;">First read "nohello.net"</div>
-            <button id="nohello-submit" disabled style="opacity: 0.5; cursor: not-allowed;">Continue</button>
+        <div id="hobbies" class="section" style="display: none;">
+            <h2 id="hobbies-title" style="color: var(--gold2); font-family: var(--font-display);">Hobbies</h2>
+            <p id="hobbies-text" style="color: var(--text2);"></p>
         </div>
     </div>
 
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
