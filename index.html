@@ -3,315 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mazer Bio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Mazer | Bio & Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0e0c09;
-            --bg2: #141208;
-            --bg3: #1a1710;
-            --surface: #1e1b13;
-            --surface2: #252118;
-            --surface3: #2d281d;
-            --border: rgba(180,150,80,0.12);
-            --border2: rgba(180,150,80,0.25);
-            --border3: rgba(180,150,80,0.45);
-            --gold: #c9a84c;
-            --gold2: #e8c870;
-            --gold3: #f5dfa0;
-            --gold-dim: rgba(201,168,76,0.15);
-            --gold-glow: rgba(201,168,76,0.3);
-            --text: #e8dfc8;
-            --text2: #a8987a;
-            --text3: #6a5e48;
-            --danger: #c0392b;
-            --danger2: #e74c3c;
-            --danger-dim: rgba(192,57,43,0.15);
-            --success: #27ae60;
-            --success2: #2ecc71;
-            --success-dim: rgba(39,174,96,0.12);
-            --font-display: 'Cinzel', serif;
-            --font-ui: 'Barlow Condensed', sans-serif;
-            --font-body: 'Barlow', sans-serif;
+            --bg: #0e0c09; --bg2: #141208; --bg3: #1a1710;
+            --surface: #1e1b13; --surface2: #252118; --surface3: #2d281d;
+            --border: rgba(180,150,80,0.12); --border2: rgba(180,150,80,0.25); --border3: rgba(180,150,80,0.45);
+            --gold: #c9a84c; --gold2: #e8c870; --gold3: #f5dfa0; --gold-dim: rgba(201,168,76,0.15); --gold-glow: rgba(201,168,76,0.3);
+            --text: #e8dfc8; --text2: #a8987a; --text3: #6a5e48;
+            --danger: #c0392b; --danger2: #e74c3c; --danger-dim: rgba(192,57,43,0.15);
+            --font-display: 'Cinzel', serif; --font-ui: 'Barlow Condensed', sans-serif; --font-body: 'Barlow', sans-serif;
         }
-        [data-theme="light"] {
-            --bg: #f0ece0; --bg2: #e8e4d8; --bg3: #ddd8c8; --surface: #faf7ee; --surface2: #f5f0e0; --surface3: #eeeadb;
-            --border: rgba(100,80,40,0.12); --border2: rgba(100,80,40,0.25); --border3: rgba(100,80,40,0.45);
-            --gold: #8b6914; --gold2: #a07820; --gold3: #c09030; --gold-dim: rgba(139,105,20,0.1); --gold-glow: rgba(139,105,20,0.2);
-            --text: #2c2410; --text2: #5a4c30; --text3: #9a8860;
-            --danger: #a93226; --danger2: #c0392b; --danger-dim: rgba(169,50,38,0.1);
-        }
+
         [data-theme="void"] {
-            --bg: #040408; --bg2: #07070f; --bg3: #0c0c18; --surface: #10101e; --surface2: #16162a; --surface3: #1e1e38;
-            --border: rgba(100,140,255,0.1); --border2: rgba(100,140,255,0.22); --border3: rgba(100,140,255,0.4);
-            --gold: #6688ee; --gold2: #8899ff; --gold3: #aabbff; --gold-dim: rgba(100,136,238,0.12); --gold-glow: rgba(100,136,238,0.25);
-            --text: #c8d4f8; --text2: #7888b8; --text3: #445588;
-            --danger: #cc3366; --danger2: #ff4488; --danger-dim: rgba(204,51,102,0.15);
+            --bg: #040408; --bg2: #07070f; --surface: #10101e; --surface2: #16162a;
+            --gold: #6688ee; --gold2: #8899ff; --gold-glow: rgba(100,136,238,0.3); --border: rgba(100,140,255,0.1);
         }
         [data-theme="blood"] {
-            --bg: #0f0404; --bg2: #160606; --bg3: #1e0808; --surface: #230c0c; --surface2: #2d1010; --surface3: #381414;
-            --border: rgba(220,60,60,0.12); --border2: rgba(220,60,60,0.25); --border3: rgba(220,60,60,0.45);
-            --gold: #dd4444; --gold2: #ee6666; --gold3: #ffaaaa; --gold-dim: rgba(221,68,68,0.12); --gold-glow: rgba(221,68,68,0.3);
-            --text: #f8d8d8; --text2: #c89090; --text3: #886060;
-            --danger: #ff6600; --danger2: #ff8822; --danger-dim: rgba(255,102,0,0.15);
-        }
-        [data-theme="ice"] {
-            --bg: #04080f; --bg2: #07101a; --bg3: #0c1a28; --surface: #102030; --surface2: #162840; --surface3: #1e3450;
-            --border: rgba(120,200,240,0.1); --border2: rgba(120,200,240,0.22); --border3: rgba(120,200,240,0.4);
-            --gold: #60c8ee; --gold2: #88ddff; --gold3: #bbeeff; --gold-dim: rgba(96,200,238,0.1); --gold-glow: rgba(96,200,238,0.25);
-            --text: #d0eef8; --text2: #7aaac8; --text3: #405878;
-            --danger: #ee4466; --danger2: #ff6688; --danger-dim: rgba(238,68,102,0.15);
+            --bg: #0f0404; --bg2: #160606; --surface: #230c0c; --surface2: #2d1010;
+            --gold: #dd4444; --gold2: #ee6666; --gold-glow: rgba(221,68,68,0.3); --border: rgba(220,60,60,0.12);
         }
         [data-theme="forest"] {
-            --bg: #050d06; --bg2: #09140a; --bg3: #0e1c10; --surface: #122416; --surface2: #182e1c; --surface3: #203824;
-            --border: rgba(80,160,80,0.12); --border2: rgba(80,160,80,0.25); --border3: rgba(80,160,80,0.45);
-            --gold: #5caa5c; --gold2: #78cc78; --gold3: #aaeeaa; --gold-dim: rgba(92,170,92,0.12); --gold-glow: rgba(92,170,92,0.25);
-            --text: #d0f0d0; --text2: #80b880; --text3: #487048;
-            --danger: #dd4422; --danger2: #ff6644; --danger-dim: rgba(221,68,34,0.15);
+            --bg: #050d06; --bg2: #09140a; --surface: #122416; --surface2: #182e1c;
+            --gold: #5caa5c; --gold2: #78cc78; --gold-glow: rgba(92,170,92,0.3); --border: rgba(80,160,80,0.12);
         }
-        * {
-            box-sizing: border-box; margin: 0; padding: 0;
-            user-select: none !important;
-            -webkit-user-select: none !important;
-            -webkit-user-drag: none !important;
-            cursor: none !important;
-        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none !important; cursor: none !important; }
+        
         body {
             background-color: var(--bg);
             background-image: 
                 repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
                 repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px);
             background-size: 40px 40px;
-            color: var(--text);
-            font-family: var(--font-body);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
+            color: var(--text); font-family: var(--font-body);
+            min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
         }
+
+        #cursor {
+            position: fixed; width: 30px; height: 30px; pointer-events: none; z-index: 10000; opacity: 0;
+            transition: opacity 0.2s ease; transform: translate3d(-15px, -15px, 0);
+        }
+        #cursor svg { width: 100%; height: 100%; filter: drop-shadow(0 0 5px var(--gold)); }
+        #cursor svg path { fill: var(--gold); stroke: var(--bg); stroke-width: 1px; }
+
         header {
-            background: var(--bg2);
-            border-bottom: 1px solid var(--border2);
-            padding: 0 clamp(16px,3vw,32px);
-            height: 64px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+            background: var(--bg2); border-bottom: 1px solid var(--border2);
+            height: 64px; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 30px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.5);
         }
-        header::before {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
-            opacity: 0.6;
-        }
-        .logo-area { display: flex; align-items: center; gap: 14px; }
+
+        .logo-area { display: flex; align-items: center; gap: 12px; }
         .logo-icon {
-            width: 36px; height: 36px;
-            border: 1px solid var(--border3);
-            display: flex; align-items: center; justify-content: center;
-            transform: rotate(45deg); flex-shrink: 0;
+            width: 32px; height: 32px; border: 1px solid var(--gold);
+            transform: rotate(45deg); display: flex; align-items: center; justify-content: center;
             background: var(--gold-dim);
         }
-        .logo-icon-inner {
-            width: 12px; height: 12px; background: var(--gold);
-            transform: rotate(0deg); box-shadow: 0 0 12px var(--gold-glow);
-        }
-        .logo-area h1 {
-            font-family: var(--font-display);
-            font-size: 20px; font-weight: 700;
-            color: var(--gold2); letter-spacing: 3px; text-transform: uppercase;
-        }
-        .header-nav {
-            display: flex; align-items: center; gap: 4px;
-            background: var(--bg); border: 1px solid var(--border2); padding: 4px;
-        }
-        .tab-btn {
-            font-family: var(--font-ui); font-size: 12px; font-weight: 700;
-            letter-spacing: 2px; text-transform: uppercase;
-            padding: 8px 24px; background: transparent; border: none;
-            color: var(--text3); position: relative; transition: color 0.2s;
-        }
-        .tab-btn::after {
-            content: ''; position: absolute; bottom: 0; left: 10px; right: 10px;
-            height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.2s;
-        }
-        .tab-btn:hover { color: var(--text2); }
-        .tab-btn.active { color: var(--gold2); }
-        .tab-btn.active::after { transform: scaleX(1); }
-        .controls-area { display: flex; gap: 8px; align-items: center; }
+        .logo-icon div { width: 10px; height: 10px; background: var(--gold); transform: rotate(-45deg); }
+
+        .controls-area { display: flex; gap: 10px; }
         .hdr-select {
             background: var(--bg); color: var(--text2); border: 1px solid var(--border2);
-            padding: 7px 28px 7px 12px; font-family: var(--font-ui); font-size: 12px;
-            font-weight: 600; letter-spacing: 1px; outline: none; appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%228%22 height%3D%226%22%3E%3Cpath fill%3D%22%23a8987a%22 d%3D%22M0 0l4 6 4-6z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 10px center; transition: border-color 0.2s;
+            padding: 6px 12px; font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+            text-transform: uppercase; outline: none; letter-spacing: 1px;
         }
-        .hdr-select:hover { border-color: var(--border3); color: var(--text); }
-        .hdr-select option { background: var(--bg2); }
-        main { flex: 1; padding: clamp(16px,3vw,28px); width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
-        .section { display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; width: 100%; }
-        .section.active { display: block; opacity: 1; transform: translateY(0); }
-        .center-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 20px; }
-        .cat-card { background: var(--surface); border: 1px solid var(--border); margin-bottom: 18px; overflow: hidden; max-width: 450px; width: 100%; transition: border-color 0.3s; }
-        .cat-card:hover { border-color: var(--border2); }
-        .cat-head { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); background: var(--surface2); }
-        .cat-diamond { width: 10px; height: 10px; transform: rotate(45deg); flex-shrink: 0; }
-        .cat-name { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text2); }
-        .switch { position: relative; display: inline-block; width: 34px; height: 18px; flex-shrink: 0; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--surface3); }
-        .slider::before { position: absolute; content: ''; height: 12px; width: 12px; left: 3px; bottom: 3px; background: var(--text3); transition: 0.25s; }
-        input:checked + .slider { background: var(--gold-dim); border: 1px solid var(--gold); }
-        input:checked + .slider::before { transform: translateX(16px); background: var(--gold); }
-        .m-btn { padding: 14px 20px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: 1px solid; transition: all 0.15s; background: transparent; width: 100%; }
-        .m-btn.again { border-color: var(--border2); color: var(--text2); }
-        .m-btn.again:hover { border-color: var(--gold); color: var(--gold2); background: var(--gold-dim); }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s; }
-        .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-box { background: var(--surface); border: 1px solid var(--border2); max-width: 480px; width: 90%; position: relative; transform: translateY(20px) scale(0.97); transition: transform 0.25s; overflow: hidden; }
-        .modal-overlay.show .modal-box { transform: translateY(0) scale(1); }
-        .modal-stripe { height: 6px; background: var(--modal-color, var(--gold)); }
-        .modal-body { padding: 36px 40px 40px; text-align: center; }
-        .modal-name { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
-        .corner-deco { position: absolute; width: 20px; height: 20px; border-color: var(--border2); border-style: solid; }
-        .corner-deco.tl { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
-        .corner-deco.tr { top: 6px; right: 6px; border-width: 1px 1px 0 0; }
-        .corner-deco.bl { bottom: 6px; left: 6px; border-width: 0 0 1px 1px; }
-        .corner-deco.br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
-        #cursor {
-            position: fixed; width: 28px; height: 28px; pointer-events: none; z-index: 20000;
-            left: 0; top: 0; transform: translate3d(-10px, -10px, 0); opacity: 0;
-            transition: opacity 0.2s ease; will-change: transform;
+
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+
+        .main-card {
+            background: var(--surface); border: 1px solid var(--border2); border-top: 4px solid var(--gold);
+            width: 100%; max-width: 520px; position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
-        #cursor svg path { fill: var(--gold); stroke: var(--bg); filter: drop-shadow(0 0 5px var(--gold-glow)); }
-        .wheel-outer { position: absolute; inset: -10px; border: 2px solid var(--border3); border-radius: 50%; box-shadow: inset 0 0 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6); }
-        #toast-notification {
-            position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: var(--surface2);
-            border: 1px solid var(--gold); color: var(--gold2); padding: 12px 25px;
-            z-index: 10001; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8); font-family: var(--font-ui); font-weight: 600;
-            letter-spacing: 2px; text-transform: uppercase; visibility: hidden;
+
+        .card-content { padding: 40px; text-align: center; }
+
+        .avatar-container {
+            position: relative; width: 160px; height: 160px; margin: 0 auto 30px;
         }
-        #toast-notification.show { top: 30px; opacity: 1; visibility: visible; }
-        .btn-action { margin-top: 20px; padding: 10px 20px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: var(--bg2); border: 1px solid var(--border2); color: var(--text3); transition: 0.3s; width: 100%; }
-        .btn-action.enabled { border-color: var(--success); color: var(--success2); background: var(--success-dim); }
-        .btn-action.enabled:hover { background: var(--success); color: #000; }
-        @media (max-width: 768px) { #cursor { display: none; } * { cursor: auto !important; } }
+        .avatar-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            border: 4px solid var(--bg2); position: relative; z-index: 5;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .avatar-pulse {
+            position: absolute; inset: -10px; border: 1px solid var(--gold);
+            border-radius: 50%; animation: avPulse 2s infinite; pointer-events: none;
+        }
+        @keyframes avPulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.2); opacity: 0; } }
+
+        .user-name {
+            font-family: var(--font-display); font-size: 42px; font-weight: 900;
+            color: var(--gold2); letter-spacing: 6px; text-transform: uppercase;
+            margin-bottom: 10px; text-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .local-time {
+            font-family: var(--font-ui); color: var(--text3); font-size: 14px;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px;
+        }
+
+        .tabs-nav {
+            display: flex; background: var(--bg2); border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+        .tab-btn {
+            flex: 1; background: transparent; border: none; color: var(--text3);
+            padding: 14px; font-family: var(--font-ui); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+        }
+        .tab-btn.active { color: var(--gold2); background: var(--surface2); box-shadow: inset 0 -2px 0 var(--gold); }
+
+        .section { display: none; text-align: left; }
+        .section.active { display: block; animation: sectionIn 0.5s ease forwards; }
+        @keyframes sectionIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* MUSIC PLAYER */
+        .player-box { background: var(--bg2); border: 1px solid var(--border); padding: 20px; }
+        .player-main { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+        .track-art { 
+            width: 80px; height: 80px; background: var(--surface3); 
+            border: 1px solid var(--border3); flex-shrink: 0; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px;
+        }
+        .track-info { flex: 1; min-width: 0; }
+        .track-name { 
+            font-family: var(--font-ui); color: var(--gold2); font-size: 18px; 
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .track-author { color: var(--text3); font-size: 12px; margin-top: 4px; }
+
+        .visualizer {
+            display: flex; align-items: flex-end; gap: 2px; height: 20px; margin-top: 10px;
+        }
+        .v-bar { width: 3px; background: var(--gold); animation: vMove 1s infinite alternate; }
+        @keyframes vMove { from { height: 20%; } to { height: 100%; } }
+
+        .progress-wrap { margin-bottom: 15px; }
+        .progress-bar { 
+            width: 100%; height: 4px; background: var(--surface3); 
+            position: relative; overflow: hidden;
+        }
+        .progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.1s linear; }
+        .time-labels { 
+            display: flex; justify-content: space-between; 
+            font-family: var(--font-ui); font-size: 10px; color: var(--text3); margin-top: 6px;
+        }
+
+        .player-controls { display: flex; justify-content: center; align-items: center; gap: 25px; }
+        .p-btn { background: transparent; border: none; color: var(--text2); font-size: 20px; transition: 0.2s; }
+        .p-btn:hover { color: var(--gold); transform: scale(1.1); }
+        .play-pause-btn { 
+            width: 50px; height: 50px; border: 1px solid var(--gold); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: var(--gold); background: var(--gold-dim);
+        }
+
+        .playlist { 
+            margin-top: 20px; max-height: 120px; overflow-y: auto; 
+            border-top: 1px solid var(--border); padding-top: 10px;
+        }
+        .playlist-item {
+            padding: 8px 12px; font-size: 12px; color: var(--text2);
+            display: flex; justify-content: space-between; transition: 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .playlist-item:hover { background: var(--surface3); color: var(--gold); }
+        .playlist-item.active { color: var(--gold); font-weight: 700; background: var(--gold-dim); }
+
+        /* BUTTONS */
+        .btn-gold {
+            width: 100%; background: var(--gold-dim); border: 1px solid var(--gold);
+            color: var(--gold2); padding: 16px; font-family: var(--font-display);
+            font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+            margin-top: 20px; transition: 0.3s;
+        }
+        .btn-gold:hover { background: var(--gold); color: var(--bg); box-shadow: 0 0 25px var(--gold-glow); }
+
+        /* MODALS */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px); display: none; align-items: center;
+            justify-content: center; z-index: 5000;
+        }
+        .modal-box {
+            background: var(--surface); border: 1px solid var(--border3);
+            width: 90%; max-width: 420px; position: relative; padding: 40px; text-align: center;
+        }
+        .modal-stripe { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gold); }
+        .modal-title { font-family: var(--font-display); color: var(--gold2); font-size: 20px; margin-bottom: 15px; }
+        .modal-text { color: var(--text2); font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
+        
+        .nohello-link { 
+            color: var(--gold); font-family: var(--font-display); font-size: 24px; 
+            text-decoration: none; display: block; margin-bottom: 30px;
+            transition: 0.3s;
+        }
+        .nohello-link:hover { text-shadow: 0 0 15px var(--gold); }
+
+        .checkbox-row {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 15px; background: var(--bg2); border: 1px solid var(--border);
+        }
+        .checkbox-row input { width: 18px; height: 18px; accent-color: var(--gold); }
+        .checkbox-row label { font-family: var(--font-ui); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+
+        #toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--surface2); border: 1px solid var(--gold);
+            color: var(--gold2); padding: 12px 25px; font-family: var(--font-ui);
+            text-transform: uppercase; letter-spacing: 2px; z-index: 6000;
+            opacity: 0; transition: 0.4s;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
     </style>
 </head>
 <body ondragstart="return false">
+
     <div id="cursor">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 32 32" fill="none">
             <path d="M10 2L28 16L16 18L10 28V2Z" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
     </div>
-    
-    <div id="toast-notification"></div>
+
+    <div id="toast">Copied!</div>
 
     <header>
         <div class="logo-area">
-            <div class="logo-icon"><div class="logo-icon-inner"></div></div>
+            <div class="logo-icon"><div></div></div>
             <h1>Mazer</h1>
-        </div>
-        <div class="header-nav">
-            <button class="tab-btn active" data-target="bio" id="btn-bio">My Bio</button>
-            <button class="tab-btn" data-target="hobbies" id="btn-hobbies">Hobbies</button>
         </div>
         <div class="controls-area">
             <select class="hdr-select" id="theme-select">
-                <option value="midnight">✦ Midnight</option>
+                <option value="default">⚔ Gold</option>
+                <option value="void">✦ Void</option>
+                <option value="blood">🩸 Blood</option>
                 <option value="forest">🌿 Forest</option>
-                <option value="ocean">🌊 Ocean (Ice)</option>
-                <option value="nebula">🌌 Nebula (Void)</option>
-                <option value="gold">⚔ Gold (Default)</option>
             </select>
             <select class="hdr-select" id="lang-select">
-                <option value="en">🇬🇧 EN</option>
-                <option value="ru">🇷🇺 RU</option>
-                <option value="es">🇪🇸 ES</option>
-                <option value="fr">🇫🇷 FR</option>
-                <option value="de">🇩🇪 DE</option>
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
             </select>
         </div>
     </header>
 
     <main>
-        <section id="bio" class="section active">
-            <div class="center-stage">
-                <div style="position: relative; margin-bottom: 25px;">
-                    <div class="wheel-outer"></div>
-                    <img src="avatar.jpg" alt="Avatar" class="avatar" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; position: relative; z-index: 2; border: 2px solid var(--surface); filter: grayscale(20%) sepia(20%);">
+        <div class="main-card">
+            <div class="card-content">
+                <div class="avatar-container">
+                    <div class="avatar-pulse"></div>
+                    <img src="изображение.png" alt="Mazer" class="avatar-img" id="avatar-trigger">
                 </div>
-                
-                <div id="greeting" style="font-family: var(--font-ui); color: var(--text3); text-transform: uppercase; letter-spacing: 3px; font-size: 14px; margin-bottom: 8px;"></div>
-                <h1 id="mazer-title" style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: var(--gold2); letter-spacing: 4px; margin-bottom: 12px; text-transform: uppercase; text-shadow: 0 0 20px var(--gold-glow);">Mazer</h1>
-                <div id="local-time" style="font-family: var(--font-ui); color: var(--text2); font-size: 14px; letter-spacing: 1px; margin-bottom: 40px;"></div>
 
-                <div class="cat-card">
-                    <div class="cat-head" style="justify-content: center; background: var(--bg2);">
-                        <div class="cat-diamond" style="background: var(--danger); box-shadow: 0 0 8px var(--danger-dim);"></div>
-                        <div class="cat-name" id="nohello-title">Communication Etiquette</div>
-                    </div>
-                    <div style="padding: 24px;">
-                        <p id="nohello-text" style="font-size: 13px; color: var(--text2); margin-bottom: 15px; font-family: var(--font-ui); letter-spacing: 1px; text-transform: uppercase;"></p>
-                        <a id="nohello-link" href="https://nohello.net/en/" target="_blank" style="color: var(--gold); font-family: var(--font-display); font-size: 20px; text-decoration: none; display: block; margin-bottom: 25px; text-shadow: 0 0 15px var(--gold-glow);">nohello.net</a>
+                <div class="user-name" id="name-trigger">Mazer</div>
+                <div class="local-time" id="clock">00:00:00</div>
 
-                        <div style="position: relative; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                            <div style="position: relative; width: 34px; height: 18px;">
-                                <label class="switch">
-                                    <input type="checkbox" id="nohello-checkbox" disabled>
-                                    <span class="slider"></span>
-                                </label>
-                                <div id="nohello-overlay" style="position: absolute; inset: 0; z-index: 10;"></div>
+                <div class="tabs-nav">
+                    <button class="tab-btn active" data-target="bio-sec" id="t-bio">Bio</button>
+                    <button class="tab-btn" data-target="music-sec" id="t-music">Music</button>
+                </div>
+
+                <div id="bio-sec" class="section active">
+                    <p id="bio-text" style="color: var(--text2); line-height: 1.7; margin-bottom: 20px;"></p>
+                    <button class="btn-gold" id="btn-telegram">My Telegram</button>
+                </div>
+
+                <div id="music-sec" class="section">
+                    <div class="player-box">
+                        <div class="player-main">
+                            <div class="track-art" id="curr-art">🎵</div>
+                            <div class="track-info">
+                                <div class="track-name" id="curr-name">Track Name</div>
+                                <div class="track-author" id="curr-author">Artist</div>
+                                <div class="visualizer" id="viz">
+                                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                                </div>
                             </div>
-                            <span id="nohello-label" style="font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: 1px; text-transform: uppercase;"></span>
                         </div>
-                        <div id="nohello-warning" style="color: var(--danger); font-family: var(--font-ui); font-size: 11px; margin-top: 12px; display: none; text-transform: uppercase; letter-spacing: 1px;"></div>
-                        
-                        <button id="nohello-submit" class="btn-action" disabled>Continue</button>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="hobbies" class="section">
-            <div class="center-stage">
-                <div class="cat-card" style="max-width: 600px;">
-                    <div class="cat-head">
-                        <div class="cat-diamond" style="background: var(--gold); box-shadow: 0 0 8px var(--gold-glow);"></div>
-                        <div class="cat-name" id="hobbies-title">Hobbies</div>
-                    </div>
-                    <div style="padding: 40px 30px;">
-                        <p id="hobbies-text" style="font-family: var(--font-body); font-size: 16px; color: var(--text); line-height: 1.8; text-align: center;"></p>
+                        <div class="progress-wrap">
+                            <div class="progress-bar" id="p-bar-base">
+                                <div class="progress-fill" id="p-bar-fill"></div>
+                            </div>
+                            <div class="time-labels">
+                                <span id="time-curr">0:00</span>
+                                <span id="time-total">0:00</span>
+                            </div>
+                        </div>
+
+                        <div class="player-controls">
+                            <button class="p-btn" id="p-prev">⏮</button>
+                            <button class="p-btn play-pause-btn" id="p-main">▶</button>
+                            <button class="p-btn" id="p-next">⏭</button>
+                        </div>
+
+                        <div class="playlist" id="playlist-cont"></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <div class="modal-overlay" id="easter-egg-modal">
+    <div class="modal-overlay" id="nohello-modal">
         <div class="modal-box">
-            <div class="corner-deco tl"></div>
-            <div class="corner-deco tr"></div>
-            <div class="corner-deco bl"></div>
-            <div class="corner-deco br"></div>
-            <div class="modal-stripe" style="background: var(--danger);"></div>
-            <div class="modal-body">
-                <img src="troll.gif" alt="Secret" style="width: 120px; height: 120px; border-radius: 8px; margin: 0 auto 20px; display: block; border: 1px solid var(--border3);">
-                <div class="modal-name">Secret Found</div>
-                <div style="font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--danger); margin-bottom: 16px;">Password is</div>
-                <div style="font-family: var(--font-display); font-size: 26px; color: var(--gold2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; margin-bottom: 28px;" id="secret-target"></div>
-                <div class="modal-btns" style="grid-template-columns: 1fr;">
-                    <button class="m-btn again" id="close-modal">Close</button>
-                </div>
+            <div class="modal-stripe"></div>
+            <div class="modal-title" id="m-title">Communication Etiquette</div>
+            <div class="modal-text" id="m-text">Please read this before messaging me:</div>
+            <a href="https://nohello.net/ru/" target="_blank" class="nohello-link" id="nh-link">nohello.net</a>
+            
+            <div class="checkbox-row">
+                <input type="checkbox" id="nh-check" disabled>
+                <label for="nh-check" id="m-check">I have read and understood</label>
             </div>
+            
+            <div id="nh-warn" style="color: var(--danger); font-size: 11px; margin-top: 10px; display: none; text-transform: uppercase;">First open the link!</div>
+            
+            <button class="btn-gold" id="nh-continue" style="opacity: 0.4;">Continue</button>
         </div>
     </div>
 
@@ -319,222 +332,198 @@
         'use strict';
 
         const CONFIG = {
-            secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l',
-            translations: {
-                en: {
-                    bioBtn: "My Bio", hobbiesBtn: "Hobbies", hobbiesTitle: "Hobbies", timePrefix: "My time now: ",
-                    hobbiesText: "I love playing various games and exploring new virtual worlds.",
-                    greetings: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
-                    copied: "Access Granted!",
-                    nohelloTitle: "Communication Etiquette", nohelloText: "Please read this before messaging:",
-                    nohelloLabel: "I have read and understood", nohelloWarning: "First read nohello.net",
-                    continueBtn: "Continue"
-                },
+            tg: 'https://t.me/mazeroxide',
+            langs: {
                 ru: {
-                    bioBtn: "Биография", hobbiesBtn: "Хобби", hobbiesTitle: "Хобби", timePrefix: "Мое время сейчас: ",
-                    hobbiesText: "Обожаю играть в самые разные игры и исследовать новые виртуальные миры.",
-                    greetings: { morning: "Доброе утро", afternoon: "Добрый день", evening: "Добрый вечер", night: "Доброй ночи" },
-                    copied: "Доступ Разрешен!",
-                    nohelloTitle: "Этикет Общения", nohelloText: "Пожалуйста, прочтите перед сообщением:",
-                    nohelloLabel: "Я прочитал и понял", nohelloWarning: "Сначала прочтите nohello.net",
-                    continueBtn: "Продолжить"
+                    bio: "Я Mazer. Создаю цифровые миры, занимаюсь дизайном и интерфейсами. Люблю эстетику и чистый код.",
+                    etiquette: "Прочтите это перед тем, как писать мне:",
+                    check: "Я всё прочитал и осознал",
+                    bioTab: "Био", musicTab: "Музыка",
+                    warn: "Сначала нажми на ссылку!",
+                    time: "Мое время:"
                 },
-                es: {
-                    bioBtn: "Biografía", hobbiesBtn: "Pasatiempos", hobbiesTitle: "Pasatiempos", timePrefix: "Mi hora ahora: ",
-                    hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos virtuales.",
-                    greetings: { morning: "Buenos días", afternoon: "Buenas tardes", evening: "Buenas noches", night: "Buenas noches" },
-                    copied: "¡Acceso Concedido!",
-                    nohelloTitle: "Etiqueta de Comunicación", nohelloText: "Lea esto antes de enviar mensajes:",
-                    nohelloLabel: "He leído y entendido", nohelloWarning: "Primero lea nohello.net",
-                    continueBtn: "Continuar"
-                },
-                fr: {
-                    bioBtn: "Biographie", hobbiesBtn: "Loisirs", hobbiesTitle: "Loisirs", timePrefix: "Mon heure: ",
-                    hobbiesText: "J'adore jouer à divers jeux et explorer de nouveaux mondes virtuels.",
-                    greetings: { morning: "Bonjour", afternoon: "Bon après-midi", evening: "Bonsoir", night: "Bonne nuit" },
-                    copied: "Accès Autorisé!",
-                    nohelloTitle: "Étiquette de Communication", nohelloText: "Veuillez lire ceci avant:",
-                    nohelloLabel: "J'ai lu et compris", nohelloWarning: "Lisez d'abord nohello.net",
-                    continueBtn: "Continuer"
-                },
-                de: {
-                    bioBtn: "Biografie", hobbiesBtn: "Hobbys", hobbiesTitle: "Hobbys", timePrefix: "Meine Zeit: ",
-                    hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und neue virtuelle Welten zu erkunden.",
-                    greetings: { morning: "Guten Morgen", afternoon: "Guten Tag", evening: "Guten Abend", night: "Gute Nacht" },
-                    copied: "Zugang Gewährt!",
-                    nohelloTitle: "Kommunikationsetikette", nohelloText: "Bitte vor dem Schreiben lesen:",
-                    nohelloLabel: "Ich habe gelesen und verstanden", nohelloWarning: "Zuerst nohello.net lesen",
-                    continueBtn: "Fortfahren"
+                en: {
+                    bio: "I'm Mazer. Building digital worlds, focused on design and interfaces. Obsessed with aesthetics and clean code.",
+                    etiquette: "Read this before messaging me:",
+                    check: "I have read and understood",
+                    bioTab: "Bio", musicTab: "Music",
+                    warn: "Open the link first!",
+                    time: "My time:"
                 }
-            }
+            },
+            songs: [
+                { name: "Suffer with Me", artist: "liue", art: "💀" },
+                { name: "Override", artist: "KSLV Noh", art: "⚡" },
+                { name: "Metamorphosis", artist: "INTERWORLD", art: "🔮" },
+                { name: "Rapture", artist: "INTERWORLD", art: "🔥" }
+            ]
         };
 
-        let currentLang = localStorage.getItem('siteLang') || 'en';
-        let currentTheme = localStorage.getItem('siteTheme') || 'gold';
+        let state = {
+            lang: 'ru',
+            theme: 'default',
+            linkOpened: false,
+            currentSong: 0,
+            playing: false,
+            audio: new Audio()
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
             initCursor();
-            initTheme();
-            initLanguage();
-            initNavigation();
-            initTime();
-            initEasterEgg();
-            initNoHello();
+            initClock();
+            initTabs();
+            initModals();
+            initPlayer();
+            updateUI();
+
+            document.getElementById('theme-select').addEventListener('change', (e) => {
+                document.body.setAttribute('data-theme', e.target.value);
+            });
+
+            document.getElementById('lang-select').addEventListener('change', (e) => {
+                state.lang = e.target.value;
+                updateUI();
+            });
         });
 
         function initCursor() {
             const cursor = document.getElementById('cursor');
-            if (window.innerWidth > 768) {
-                document.addEventListener('mousemove', e => {
-                    cursor.style.opacity = '1';
-                    cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
-                });
-                document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-            }
-        }
-
-        function initTheme() {
-            applyTheme(currentTheme);
-            document.getElementById('theme-select').value = currentTheme;
-            document.getElementById('theme-select').addEventListener('change', e => {
-                applyTheme(e.target.value);
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.opacity = '1';
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
             });
+            document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
         }
 
-        function applyTheme(theme) {
-            currentTheme = theme;
-            localStorage.setItem('siteTheme', theme);
-            
-            const map = {
-                'gold': 'default',
-                'midnight': 'void',
-                'forest': 'forest',
-                'ocean': 'ice',
-                'nebula': 'void'
-            };
-            
-            document.body.setAttribute('data-theme', map[theme] || 'default');
+        function initClock() {
+            const el = document.getElementById('clock');
+            setInterval(() => {
+                const now = new Date();
+                const time = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw' });
+                el.textContent = `${CONFIG.langs[state.lang].time} ${time} (PL)`;
+            }, 1000);
         }
 
-        function initLanguage() {
-            applyLanguage(currentLang);
-            document.getElementById('lang-select').value = currentLang;
-            document.getElementById('lang-select').addEventListener('change', e => {
-                applyLanguage(e.target.value);
-            });
-        }
-
-        function applyLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('siteLang', lang);
-            const t = CONFIG.translations[lang] || CONFIG.translations['en'];
-
-            document.getElementById('btn-bio').textContent = t.bioBtn;
-            document.getElementById('btn-hobbies').textContent = t.hobbiesBtn;
-            document.getElementById('hobbies-title').textContent = t.hobbiesTitle;
-            document.getElementById('hobbies-text').textContent = t.hobbiesText;
-            document.getElementById('nohello-title').textContent = t.nohelloTitle;
-            document.getElementById('nohello-text').textContent = t.nohelloText;
-            document.getElementById('nohello-label').textContent = t.nohelloLabel;
-            document.getElementById('nohello-submit').textContent = t.continueBtn;
-            
-            const h = new Date().getHours();
-            const timeOfDay = h < 6 ? 'night' : h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening';
-            document.getElementById('greeting').textContent = t.greetings[timeOfDay];
-        }
-
-        function initNavigation() {
+        function initTabs() {
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', e => {
+                btn.addEventListener('click', () => {
                     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                    e.target.classList.add('active');
-                    document.getElementById(e.target.dataset.target).classList.add('active');
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.target).classList.add('active');
                 });
             });
         }
 
-        function initTime() {
-            function update() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('en-GB', {
-                    timeZone: 'Europe/Warsaw',
-                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-                });
-                const t = CONFIG.translations[currentLang] || CONFIG.translations['en'];
-                document.getElementById('local-time').textContent = `${t.timePrefix}${timeString} (PL)`;
+        function initModals() {
+            const modal = document.getElementById('nohello-modal');
+            const check = document.getElementById('nh-check');
+            const link = document.getElementById('nh-link');
+            const btnCont = document.getElementById('nh-continue');
+            const warn = document.getElementById('nh-warn');
+
+            document.getElementById('btn-telegram').onclick = () => {
+                modal.style.display = 'flex';
+            };
+
+            link.onclick = () => {
+                state.linkOpened = true;
+                check.disabled = false;
+                warn.style.display = 'none';
+            };
+
+            check.onclick = () => {
+                if(!state.linkOpened) {
+                    check.checked = false;
+                    warn.style.display = 'block';
+                }
+                btnCont.style.opacity = check.checked ? '1' : '0.4';
+            };
+
+            btnCont.onclick = () => {
+                if(check.checked) window.open(CONFIG.tg, '_blank');
+            };
+
+            window.onclick = (e) => {
+                if(e.target === modal) modal.style.display = 'none';
+            };
+        }
+
+        function initPlayer() {
+            const playlist = document.getElementById('playlist-cont');
+            CONFIG.songs.forEach((s, i) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item' + (i === 0 ? ' active' : '');
+                item.innerHTML = `<span>${i+1}. ${s.name}</span><span>${s.artist}</span>`;
+                item.onclick = () => loadSong(i);
+                playlist.appendChild(item);
+            });
+
+            document.getElementById('p-main').onclick = togglePlay;
+            document.getElementById('p-next').onclick = () => loadSong((state.currentSong + 1) % CONFIG.songs.length);
+            document.getElementById('p-prev').onclick = () => loadSong((state.currentSong - 1 + CONFIG.songs.length) % CONFIG.songs.length);
+
+            loadSong(0, false);
+        }
+
+        function loadSong(idx, autoPlay = true) {
+            state.currentSong = idx;
+            const s = CONFIG.songs[idx];
+            document.getElementById('curr-name').textContent = s.name;
+            document.getElementById('curr-author').textContent = s.artist;
+            document.getElementById('curr-art').textContent = s.art;
+
+            document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                item.classList.toggle('active', i === idx);
+            });
+
+            if(autoPlay) {
+                state.playing = true;
+                updatePlayerUI();
             }
-            update();
-            setInterval(update, 1000);
         }
 
-        function initNoHello() {
-            const link = document.getElementById('nohello-link');
-            const overlay = document.getElementById('nohello-overlay');
-            const checkbox = document.getElementById('nohello-checkbox');
-            const warning = document.getElementById('nohello-warning');
-            const submitBtn = document.getElementById('nohello-submit');
-            let hasRead = false;
-
-            link.addEventListener('click', () => {
-                hasRead = true;
-                overlay.style.display = 'none';
-                checkbox.disabled = false;
-                warning.style.display = 'none';
-            });
-
-            overlay.addEventListener('click', () => {
-                if (!hasRead) {
-                    warning.textContent = CONFIG.translations[currentLang].nohelloWarning;
-                    warning.style.display = 'block';
-                }
-            });
-
-            checkbox.addEventListener('change', e => {
-                if (e.target.checked) {
-                    submitBtn.disabled = false;
-                    submitBtn.classList.add('enabled');
-                } else {
-                    submitBtn.disabled = true;
-                    submitBtn.classList.remove('enabled');
-                }
-            });
-
-            submitBtn.addEventListener('click', () => {
-                if (submitBtn.disabled) return;
-                showToast(CONFIG.translations[currentLang].copied);
-            });
+        function togglePlay() {
+            state.playing = !state.playing;
+            updatePlayerUI();
         }
 
-        function initEasterEgg() {
-            const h1 = document.getElementById('mazer-title');
-            const modal = document.getElementById('easter-egg-modal');
-            let clickCount = 0;
-            let clickTimer = null;
-
-            h1.addEventListener('click', () => {
-                clickCount++;
-                if (clickTimer) clearTimeout(clickTimer);
-                clickTimer = setTimeout(() => { clickCount = 0; }, 1000);
-
-                if (clickCount === 3) {
-                    document.getElementById('secret-target').textContent = atob(CONFIG.secretTgLink);
-                    modal.classList.add('show');
-                    clickCount = 0;
-                    clearTimeout(clickTimer);
-                }
+        function updatePlayerUI() {
+            const btn = document.getElementById('p-main');
+            const viz = document.querySelectorAll('.v-bar');
+            btn.textContent = state.playing ? '⏸' : '▶';
+            
+            viz.forEach(bar => {
+                bar.style.animationPlayState = state.playing ? 'running' : 'paused';
             });
 
-            document.getElementById('close-modal').addEventListener('click', () => {
-                modal.classList.remove('show');
-            });
+            if(state.playing) {
+                let p = 0;
+                const interval = setInterval(() => {
+                    if(!state.playing) { clearInterval(interval); return; }
+                    p += 0.5;
+                    if(p > 100) p = 0;
+                    document.getElementById('p-bar-fill').style.width = p + '%';
+                }, 100);
+            }
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast-notification');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+        function updateUI() {
+            const l = CONFIG.langs[state.lang];
+            document.getElementById('bio-text').textContent = l.bio;
+            document.getElementById('m-text').textContent = l.etiquette;
+            document.getElementById('m-check').textContent = l.check;
+            document.getElementById('t-bio').textContent = l.bioTab;
+            document.getElementById('t-music').textContent = l.musicTab;
+            document.getElementById('nh-warn').textContent = l.warn;
+        }
+
+        function showToast(text) {
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.style.opacity = '1';
+            setTimeout(() => t.style.opacity = '0', 2000);
         }
     </script>
 </body>
