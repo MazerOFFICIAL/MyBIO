@@ -5,36 +5,388 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mazer Bio</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -webkit-user-drag: none !important;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none !important;
+        }
+
+        :root {
+            --bg: #0e0c09;
+            --bg2: #141208;
+            --surface: #1e1b13;
+            --surface2: #252118;
+            --border: rgba(180,150,80,0.12);
+            --border2: rgba(180,150,80,0.25);
+            --border3: rgba(180,150,80,0.45);
+            --gold: #c9a84c;
+            --gold2: #e8c870;
+            --gold-dim: rgba(201,168,76,0.15);
+            --gold-glow: rgba(201,168,76,0.3);
+            --text: #e8dfc8;
+            --text-muted: #a8987a;
+            
+            --font-display: 'Cinzel', serif;
+            --font-ui: 'Barlow Condensed', sans-serif;
+            --font-body: 'Barlow', sans-serif;
+        }
+
+        body.theme-midnight {
+            --bg: #040408; --bg2: #07070f; --surface: #10101e; --surface2: #16162a;
+            --border: rgba(100,140,255,0.1); --border2: rgba(100,140,255,0.22); --border3: rgba(100,140,255,0.4);
+            --gold: #6688ee; --gold2: #8899ff; --gold-dim: rgba(100,136,238,0.15); --gold-glow: rgba(100,136,238,0.3);
+            --text: #c8d4f8; --text-muted: #7888b8;
+        }
+
+        body.theme-forest {
+            --bg: #050d06; --bg2: #09140a; --surface: #122416; --surface2: #182e1c;
+            --border: rgba(80,160,80,0.12); --border2: rgba(80,160,80,0.25); --border3: rgba(80,160,80,0.4);
+            --gold: #5caa5c; --gold2: #78cc78; --gold-dim: rgba(92,170,92,0.15); --gold-glow: rgba(92,170,92,0.3);
+            --text: #d0f0d0; --text-muted: #80b880;
+        }
+
+        body.theme-blood {
+            --bg: #0f0404; --bg2: #160606; --surface: #230c0c; --surface2: #2d1010;
+            --border: rgba(220,60,60,0.12); --border2: rgba(220,60,60,0.25); --border3: rgba(220,60,60,0.4);
+            --gold: #dd4444; --gold2: #ee6666; --gold-dim: rgba(221,68,68,0.15); --gold-glow: rgba(221,68,68,0.3);
+            --text: #f8d8d8; --text-muted: #c89090;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px);
+            background-size: 40px 40px;
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #cursor {
+            width: 15px;
+            height: 3px;
+            background: var(--gold2);
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 0 8px var(--gold-glow);
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-top: 3px solid var(--gold);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+            transition: all 0.3s;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border: 1px solid var(--border3);
+            padding: 5px;
+            background: var(--gold-dim);
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            color: var(--gold2);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            transition: 0.3s;
+        }
+
+        h1:hover {
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .nav-buttons {
+            display: flex;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-ui);
+            padding: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--gold2);
+            background: var(--surface2);
+            box-shadow: inset 0 -2px 0 var(--gold);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ui-text-gold {
+            font-family: var(--font-ui);
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .display-title {
+            font-family: var(--font-display);
+            color: var(--gold2);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .gold-link {
+            color: var(--gold2);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold-dim);
+            font-weight: 600;
+            padding-bottom: 2px;
+            transition: 0.2s;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .gold-link:hover {
+            border-bottom-color: var(--gold2);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .checkbox-container {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+        #nohello-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gold);
+        }
+
+        #nohello-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+        }
+
+        .warning-text {
+            color: #ff4444;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            height: 1.2rem;
+        }
+
+        .top-btn {
+            position: fixed;
+            top: 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            color: var(--gold2);
+            font-family: var(--font-ui);
+            font-weight: 700;
+            z-index: 100;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .top-btn:hover {
+            background: var(--surface);
+        }
+
+        .lang-btn {
+            right: 85px;
+            padding: 8px 15px;
+        }
+
+        .theme-btn {
+            right: 25px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-menu {
+            position: fixed;
+            top: 65px;
+            background: var(--bg2);
+            border: 1px solid var(--border3);
+            display: none;
+            flex-direction: column;
+            min-width: 120px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+        }
+
+        .dropdown-option {
+            padding: 12px 20px;
+            color: var(--text-muted);
+            font-family: var(--font-ui);
+            border-bottom: 1px solid var(--border);
+            transition: 0.2s;
+        }
+
+        .dropdown-option:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-option:hover {
+            background: var(--surface);
+            color: var(--gold2);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border3);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            min-width: 320px;
+            box-shadow: 0 0 40px var(--gold-glow);
+        }
+
+        .modal-stripe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--gold);
+        }
+
+        .close-modal {
+            margin-top: 30px;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            color: var(--gold);
+            padding: 10px 30px;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover {
+            background: var(--surface2);
+            color: var(--gold2);
+        }
+
+        #toast-notification {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface2);
+            border: 1px solid var(--gold);
+            color: var(--gold2);
+            padding: 12px 25px;
+            font-family: var(--font-ui);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        #toast-notification.show {
+            top: 30px;
+        }
+    </style>
 </head>
 <body ondragstart="return false">
     <div id="cursor"></div>
-    <div id="transition-overlay"></div>
     <div id="toast-notification"></div>
     
-    <div class="lang-btn" id="lang-btn">EN</div>
-    <div class="lang-dropdown" id="lang-dropdown">
-        <div class="lang-option" data-lang="en">English</div>
-        <div class="lang-option" data-lang="ru">Русский</div>
-        <div class="lang-option" data-lang="es">Español</div>
-        <div class="lang-option" data-lang="fr">Français</div>
-        <div class="lang-option" data-lang="de">Deutsch</div>
+    <div class="top-btn lang-btn" id="lang-btn">EN</div>
+    <div class="dropdown-menu" id="lang-dropdown" style="right: 85px;">
+        <div class="dropdown-option" data-lang="en">English</div>
+        <div class="dropdown-option" data-lang="ru">Русский</div>
+        <div class="dropdown-option" data-lang="es">Español</div>
+        <div class="dropdown-option" data-lang="fr">Français</div>
+        <div class="dropdown-option" data-lang="de">Deutsch</div>
     </div>
     
-    <div class="theme-btn" id="theme-btn">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+    <div class="top-btn theme-btn" id="theme-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
     </div>
-    <div class="theme-dropdown" id="theme-dropdown">
-        <div class="theme-option" data-theme="midnight">Midnight</div>
-        <div class="theme-option" data-theme="forest">Forest</div>
-        <div class="theme-option" data-theme="blood">Blood</div>
-        <div class="theme-option" data-theme="void">Void</div>
+    <div class="dropdown-menu" id="theme-dropdown" style="right: 25px;">
+        <div class="dropdown-option" data-theme="default">Default</div>
+        <div class="dropdown-option" data-theme="midnight">Midnight</div>
+        <div class="dropdown-option" data-theme="forest">Forest</div>
+        <div class="dropdown-option" data-theme="blood">Blood</div>
     </div>
 
     <div class="card">
-        <div class="avatar-container">
-            <img src="avatar.jpg" alt="Avatar" class="avatar">
-        </div>
+        <img src="avatar.jpg" alt="Avatar" class="avatar">
         
         <h1 id="mazer-h1">Mazer</h1>
         
@@ -45,37 +397,240 @@
 
         <div id="bio" class="section active">
             <p id="time-display" class="ui-text-gold"></p>
-            <div class="etiquette-box">
-                <h3 class="display-title">Etiquette</h3>
-                <p id="nohello-text">Please read this before messaging:</p>
-                <a id="nohello-link" href="https://nohello.net/en/" target="_blank" class="gold-link">nohello.net</a>
-                
-                <div class="checkbox-wrapper">
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="nohello-checkbox" disabled>
-                        <div id="nohello-overlay"></div>
-                    </div>
-                    <label for="nohello-checkbox" id="nohello-label">I have read and understood</label>
+            
+            <h3 class="display-title" style="margin-top: 15px;">Etiquette</h3>
+            <p id="nohello-text" style="color: var(--text-muted); margin-bottom: 10px;"></p>
+            <a id="nohello-link" href="https://nohello.net/en/" target="_blank" class="gold-link">nohello.net</a>
+            
+            <div class="checkbox-wrapper">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="nohello-checkbox" disabled>
+                    <div id="nohello-overlay"></div>
                 </div>
-                <div id="nohello-warning" class="warning-text"></div>
+                <label for="nohello-checkbox" id="nohello-label" style="color: var(--text-muted);"></label>
             </div>
+            <div id="nohello-warning" class="warning-text"></div>
         </div>
 
         <div id="hobbies" class="section">
             <h2 id="hobbies-title" class="display-title">Hobbies</h2>
-            <p id="hobbies-text" class="body-text"></p>
+            <p id="hobbies-text" style="color: var(--text-muted); line-height: 1.6; padding: 0 10px;"></p>
         </div>
     </div>
 
     <div id="easter-egg-modal" class="modal">
         <div class="modal-content">
             <div class="modal-stripe"></div>
-            <h2 class="display-title">Secret Found</h2>
-            <p>Telegram: <span id="secret-link"></span></p>
-            <button class="close-modal">Close</button>
+            <h2 class="display-title" style="margin-bottom: 20px;">Secret Found</h2>
+            <p style="color: var(--text-muted); font-family: var(--font-ui); font-size: 1.2rem;">Telegram: <span id="secret-link" style="color: var(--gold2);"></span></p>
+            <button class="close-modal" id="close-modal">Close</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        'use strict';
+
+        const CONFIG = {
+            secretTgLink: 'aHR0cHM6Ly90Lm1lL3VzZXJuYW1l',
+            translations: {
+                en: {
+                    bioBtn: "My Bio", hobbiesBtn: "Hobbies", hobbiesTitle: "Hobbies",
+                    timePrefix: "My time: ",
+                    hobbiesText: "I love playing various games and exploring new virtual worlds.",
+                    nohelloText: "Please read this before messaging:",
+                    nohelloLabel: "I have read and understood",
+                    warning: "Please read the etiquette first!"
+                },
+                ru: {
+                    bioBtn: "Биография", hobbiesBtn: "Хобби", hobbiesTitle: "Хобби",
+                    timePrefix: "Мое время: ",
+                    hobbiesText: "Обожаю играть в разные игры и изучать виртуальные миры.",
+                    nohelloText: "Пожалуйста, прочтите это перед сообщением:",
+                    nohelloLabel: "Я прочитал и понял",
+                    warning: "Пожалуйста, сначала прочтите этикет!"
+                },
+                es: {
+                    bioBtn: "Biografía", hobbiesBtn: "Pasatiempos", hobbiesTitle: "Pasatiempos",
+                    timePrefix: "Mi hora: ",
+                    hobbiesText: "Me encanta jugar a varios juegos y explorar nuevos mundos.",
+                    nohelloText: "Lea esto antes de enviar mensajes:",
+                    nohelloLabel: "He leído y entendido",
+                    warning: "¡Lea la etiqueta primero!"
+                },
+                fr: {
+                    bioBtn: "Ma Bio", hobbiesBtn: "Loisirs", hobbiesTitle: "Loisirs",
+                    timePrefix: "Mon heure: ",
+                    hobbiesText: "J'aime jouer à divers jeux et explorer de nouveaux mondes.",
+                    nohelloText: "Veuillez lire ceci avant d'envoyer un message:",
+                    nohelloLabel: "J'ai lu et compris",
+                    warning: "Veuillez d'abord lire l'étiquette!"
+                },
+                de: {
+                    bioBtn: "Meine Bio", hobbiesBtn: "Hobbys", hobbiesTitle: "Hobbys",
+                    timePrefix: "Meine Zeit: ",
+                    hobbiesText: "Ich liebe es, verschiedene Spiele zu spielen und Welten zu erkunden.",
+                    nohelloText: "Bitte lesen Sie dies, bevor Sie schreiben:",
+                    nohelloLabel: "Ich habe gelesen und verstanden",
+                    warning: "Bitte lesen Sie zuerst die Etikette!"
+                }
+            }
+        };
+
+        let currentLang = localStorage.getItem('siteLang') || 'en';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCursor();
+            initTheme();
+            initLang();
+            initNavigation();
+            initEtiquette();
+            initEasterEgg();
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+
+        function initCursor() {
+            const cursor = document.getElementById('cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate3d(${e.clientX - 7.5}px, ${e.clientY - 1.5}px, 0)`;
+                cursor.style.opacity = '1';
+            });
+            document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('siteTheme') || 'default';
+            if (savedTheme !== 'default') {
+                document.body.className = `theme-${savedTheme}`;
+            }
+
+            const btn = document.getElementById('theme-btn');
+            const dropdown = document.getElementById('theme-dropdown');
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+                document.getElementById('lang-dropdown').classList.remove('show');
+            });
+
+            document.querySelectorAll('#theme-dropdown .dropdown-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const theme = opt.dataset.theme;
+                    document.body.className = theme === 'default' ? '' : `theme-${theme}`;
+                    localStorage.setItem('siteTheme', theme);
+                    dropdown.classList.remove('show');
+                });
+            });
+        }
+
+        function initLang() {
+            const btn = document.getElementById('lang-btn');
+            const dropdown = document.getElementById('lang-dropdown');
+            
+            btn.textContent = currentLang.toUpperCase();
+            applyTranslations();
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+
+            document.querySelectorAll('#lang-dropdown .dropdown-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    currentLang = opt.dataset.lang;
+                    localStorage.setItem('siteLang', currentLang);
+                    btn.textContent = currentLang.toUpperCase();
+                    applyTranslations();
+                    dropdown.classList.remove('show');
+                });
+            });
+
+            document.addEventListener('click', () => {
+                dropdown.classList.remove('show');
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+        }
+
+        function initNavigation() {
+            const buttons = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.section');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.target).classList.add('active');
+                });
+            });
+        }
+
+        function initEtiquette() {
+            const link = document.getElementById('nohello-link');
+            const overlay = document.getElementById('nohello-overlay');
+            const checkbox = document.getElementById('nohello-checkbox');
+            const warning = document.getElementById('nohello-warning');
+
+            link.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                checkbox.disabled = false;
+                warning.textContent = '';
+            });
+
+            overlay.addEventListener('click', () => {
+                warning.textContent = CONFIG.translations[currentLang].warning;
+            });
+        }
+
+        function initEasterEgg() {
+            let count = 0;
+            let timer = null;
+            const h1 = document.getElementById('mazer-h1');
+            const modal = document.getElementById('easter-egg-modal');
+            
+            h1.addEventListener('click', () => {
+                count++;
+                
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(() => count = 0, 1000);
+
+                if (count === 3) {
+                    document.getElementById('secret-link').textContent = atob(CONFIG.secretTgLink);
+                    modal.classList.add('active');
+                    count = 0;
+                    clearTimeout(timer);
+                }
+            });
+
+            document.getElementById('close-modal').addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        function applyTranslations() {
+            const t = CONFIG.translations[currentLang];
+            if (!t) return;
+
+            document.getElementById('btn-bio').textContent = t.bioBtn;
+            document.getElementById('btn-hobbies').textContent = t.hobbiesBtn;
+            document.getElementById('hobbies-title').textContent = t.hobbiesTitle;
+            document.getElementById('hobbies-text').textContent = t.hobbiesText;
+            document.getElementById('nohello-text').textContent = t.nohelloText;
+            document.getElementById('nohello-label').textContent = t.nohelloLabel;
+            
+            updateTime();
+        }
+
+        function updateTime() {
+            const t = CONFIG.translations[currentLang];
+            const timeDisplay = document.getElementById('time-display');
+            if (!t || !timeDisplay) return;
+
+            const now = new Date();
+            timeDisplay.textContent = t.timePrefix + now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'ru-RU', { hour12: false });
+        }
+    </script>
 </body>
 </html>
